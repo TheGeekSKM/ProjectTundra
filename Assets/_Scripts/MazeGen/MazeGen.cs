@@ -59,30 +59,22 @@ public class MazeGen : MonoBehaviour
 	}
 
 	//Maze generation adapted from u/DavoMyan on Reddit (and also myself from last semester)
-	class Tile
-	{
-		public int x;
-		public int y;
-		public int[] exits = new int[4];
-		public bool visited;
-		public bool marked;
-	}
-	private List<Tile> visitedCells;
-	private List<Tile> markedCells;
-	private Tile currentCell;
+	private List<MazeTile> visitedCells;
+	private List<MazeTile> markedCells;
+	private MazeTile currentCell;
 	private bool finishedGeneration = false;
-	private Tile[,] grid;
+	private MazeTile[,] grid;
 	void GenerateMaze()
 	{
 		//create a "Tile" array of maze width & height
-		grid = new Tile[mazeWidth, mazeHeight];
+		grid = new MazeTile[mazeWidth, mazeHeight];
 
 		//populate the "Tile" array by instantiating tile objects & assigning them to each slot
 		for (int ny = 0; ny < mazeWidth; ny++) {
 			for (int nx = 0; nx < mazeHeight; nx++)
 			{
 				GameObject go = (GameObject)Instantiate(tilePrefab, transform.TransformPoint(new Vector3(nx*roomWidth, ny*roomHeight, 0)), Quaternion.identity, transform);
-				Tile tile = go.GetComponent<Tile>();
+				MazeTile tile = go.GetComponent<MazeTile>();
 				tile.x = nx; tile.y = ny;
 
 				grid[nx, ny] = tile;
@@ -96,8 +88,8 @@ public class MazeGen : MonoBehaviour
 		bool westVisited;
 
 		//Lists to check off which tiles are visited, & which are marked to be visited soon
-		visitedCells = new List<Tile>();
-		markedCells = new List<Tile>();
+		visitedCells = new List<MazeTile>();
+		markedCells = new List<MazeTile>();
 
 		//Pick a tile, any tile!
 		System.Random r = new System.Random();
