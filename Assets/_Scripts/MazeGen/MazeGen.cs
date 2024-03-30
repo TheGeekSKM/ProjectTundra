@@ -2,20 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PieceType { none, oPiece, iPiece, tPiece, xPiece, rPiece };
-
 public class MazeGen : MonoBehaviour
 {
+	//Room Prefabs
+	[Header("Room Prefabs")]
+
+	[Header("Caps")]
+	[SerializeField]
+	private GameObject[] capNorthExit = new GameObject[1];
+	[SerializeField]
+	private GameObject[] capEastExit = new GameObject[1];
+	[SerializeField]
+	private GameObject[] capSouthExit = new GameObject[1];
+	[SerializeField]
+	private GameObject[] capWestExit = new GameObject[1];
+
+	[Header("Halls")]
+	[SerializeField]
+	private GameObject[] hallHorizontal = new GameObject[1];
+	[SerializeField]
+	private GameObject[] hallVertical = new GameObject[1];
+
+	[Header("Hooks")]
+	[SerializeField]
+	private GameObject[] hookNorthEast = new GameObject[1];
+	[SerializeField]
+	private GameObject[] hookSouthEast = new GameObject[1];
+	[SerializeField]
+	private GameObject[] hookSouthWest = new GameObject[1];
+	[SerializeField]
+	private GameObject[] hookNorthWest = new GameObject[1];
+
+	[Header("T-Shapes")]
+	[SerializeField]
+	private GameObject[] tNorth = new GameObject[1];
+	[SerializeField]
+	private GameObject[] tEast = new GameObject[1];
+	[SerializeField]
+	private GameObject[] tSouth = new GameObject[1];
+	[SerializeField]
+	private GameObject[] tWest = new GameObject[1];
+
+	[Header("Pluses")]
+	[SerializeField]
+	private GameObject[] plus = new GameObject[1];
+
 	//Generation Variables
 	[Header("Generation Variables")]
-	[SerializeField]
-	private bool GenerateRandom;
-	[SerializeField]
+	[SerializeField] [Tooltip("Make sure to plug in the TilePrefab object here from the MazeGen _Scripts folder")]
 	private GameObject tilePrefab;
-	[SerializeField]
-	private GameObject roomPrefab;
 
-	//Standard width and height of our room prefabs
 	[Space(10)]
 	[SerializeField] [Tooltip("Standard width of our room prefabs")]
 	private int roomWidth;
@@ -24,38 +60,29 @@ public class MazeGen : MonoBehaviour
 
 	[Space(10)]
 	[SerializeField] [Tooltip("Total width of the maze")]
-	private int mazeWidth;
+	private int mazeWidth = 2;
 	[SerializeField] [Tooltip("Total height of the maze")]
-	private int mazeHeight;
+	private int mazeHeight = 2;
 
-	//[Space(10)]
-	//[SerializeField]
-	//private bool doesStart;
-	//[SerializeField]
-	//private Vector2 startCoord;
-	//[SerializeField]
-	//private bool doesEnd;
-	//[SerializeField]
-	//private Vector2 endCoord;
+	[Space(10)]
+	[SerializeField] [Tooltip("Pick a tile coordinate using x & y, and add an extra exit using z in the specified direction:\n" +
+							  "0 = North\n" +
+							  "1 = East\n" +
+							  "2 = South\n" +
+							  "3 = West")]
+	private Vector3[] extraExits;
 
 	private void Start()
 	{
-		if (GenerateRandom)
+		//ensure maze has generation dimensions
+		if (mazeWidth == 0 || mazeHeight == 0)
 		{
-			//ensure maze has generation dimensions
-			if (mazeWidth == 0 || mazeHeight == 0)
-			{
-				Debug.LogError("Set the dimensions, dummy");
-				Debug.Break();
-			}
+			Debug.LogError("Set the dimensions, dummy");
+			Debug.Break();
+		}
 
-			//start generation
-			StartCoroutine(GenerateRooms());
-		}
-		else
-		{
-			//TODO
-		}
+		//start generation
+		StartCoroutine(GenerateRooms());
 	}
 
 	//Maze generation adapted from u/DavoMyan on Reddit (and also myself from last semester)
@@ -260,18 +287,17 @@ public class MazeGen : MonoBehaviour
 							break;
 					}
 
-					//Loop this until all directions for this tile are cleared!
+					//Loop this until any direction for this tile has been opened!
 				} while (!northVisited && !eastVisited && !southVisited && !westVisited);
 
 				//Loop this until all tiles have been visited!
 			} while (visitedCells.Count < mazeWidth * mazeHeight);
 
-			////Special case for start & end
-			//if (doesStartToEnd)
-			//{
-			//	grid[(int)startCoord.x, (int)startCoord.y].exits[3] = 1;
-			//	grid[(int)endCoord.x, (int)endCoord.y].exits[1] = 1;
-			//}
+			//Special cases for extra exits
+			for (int i = 0; i < extraExits.Length; i++)
+			{
+				grid[(int)extraExits[i].x, (int)extraExits[i].y].exits[(int)extraExits[i].z] = 1;
+			}
 
 			//We're done generating the maze!
 			finishedGeneration = true;
@@ -295,26 +321,133 @@ public class MazeGen : MonoBehaviour
 		GenerateMaze();
 		yield return new WaitUntil(() => finishedGeneration);
 
-		//puzzle.pieces = new PieceController[puzzle.width, puzzle.height];
+		foreach (MazeTile tile in grid)
+		{
+			GameObject roomPrefab = null;
 
-		//foreach (Tile tile in grid)
-		//{
-		//	int exitSum = tile.exits[0] + tile.exits[1] + tile.exits[2] + tile.exits[3];
-		//	if (exitSum == 2 && tile.exits[0] != tile.exits[2])
-		//		exitSum = 5;
+			//Check which category a tile belongs in
+			int exitSum = tile.exits[0] + tile.exits[1] + tile.exits[2] + tile.exits[3];
+			if (exitSum == 2 && tile.exits[0] != tile.exits[2])
+				exitSum = 5;
 
-		//	//Set piece type and setup piece
-		//	GameObject go = (GameObject)Instantiate(piecePrefab, transform.TransformPoint(new Vector3(tile.x, tile.y, 0)), Quaternion.identity, transform);
-		//	go.name = string.Format("({0},{1})",tile.x,tile.y);
-		//	PieceController piece = go.GetComponent<PieceController>();
-		//	piece.pieceType = (PieceType)exitSum;
-		//	piece.x = tile.x;
-		//	piece.y = tile.y;
-		//	piece.Setup();
+			//variable for picking random room from each set to place
+			int r;
 
-		//	puzzle.pieces[tile.x, tile.y] = piece;
+			//Caps
+			if (exitSum == 1)
+			{
+				//North
+				if (tile.exits[0] == 1)
+				{
+					r = Random.Range(0, capNorthExit.Length);
+					roomPrefab = capNorthExit[r];
+				}
+				//East
+				if (tile.exits[1] == 1)
+				{
+					r = Random.Range(0, capEastExit.Length);
+					roomPrefab = capEastExit[r];
+				}
+				//South
+				if (tile.exits[2] == 1)
+				{
+					r = Random.Range(0, capSouthExit.Length);
+					roomPrefab = capSouthExit[r];
+				}
+				//West
+				if (tile.exits[3] == 1)
+				{
+					r = Random.Range(0, capWestExit.Length);
+					roomPrefab = capWestExit[r];
+				}
+			}
 
-		//	Destroy(tile.gameObject);
-		//}
+			//Halls
+			if (exitSum == 2)
+			{
+				//Vertical
+				if (tile.exits[0] == 1)
+				{
+					r = Random.Range(0, hallVertical.Length);
+					roomPrefab = hallVertical[r];
+				}
+				//Horizontal
+				if (tile.exits[1] == 1)
+				{
+					r = Random.Range(0, hallHorizontal.Length);
+					roomPrefab = hallHorizontal[r];
+				}
+			}
+
+			//Hooks
+			if (exitSum == 5)
+			{
+				//NorthEast
+				if (tile.exits[0] == 1 && tile.exits[1] == 1)
+				{
+					r = Random.Range(0, hookNorthEast.Length);
+					roomPrefab = hookNorthEast[r];
+				}
+				//SouthEast
+				if (tile.exits[1] == 1 && tile.exits[2] == 1)
+				{
+					r = Random.Range(0, hookSouthEast.Length);
+					roomPrefab = hookSouthEast[r];
+				}
+				//SouthWest
+				if (tile.exits[2] == 1 && tile.exits[3] == 1)
+				{
+					r = Random.Range(0, hookSouthWest.Length);
+					roomPrefab = hookSouthWest[r];
+				}
+				//NorthWest
+				if (tile.exits[3] == 1 && tile.exits[0] == 1)
+				{
+					r = Random.Range(0, hookNorthWest.Length);
+					roomPrefab = hookNorthWest[r];
+				}
+			}
+
+			//T-Shapes
+			if (exitSum == 3)
+			{
+				//North
+				if (tile.exits[0] == 1 && tile.exits[1] == 1 && tile.exits[3] == 1)
+				{
+					r = Random.Range(0, tNorth.Length);
+					roomPrefab = tNorth[r];
+				}
+				//East
+				if (tile.exits[1] == 1 && tile.exits[2] == 1 && tile.exits[0] == 1)
+				{
+					r = Random.Range(0, tEast.Length);
+					roomPrefab = tEast[r];
+				}
+				//South
+				if (tile.exits[2] == 1 && tile.exits[3] == 1 && tile.exits[1] == 1)
+				{
+					r = Random.Range(0, tSouth.Length);
+					roomPrefab = tSouth[r];
+				}
+				//West
+				if (tile.exits[3] == 1 && tile.exits[0] == 1 && tile.exits[2] == 1)
+				{
+					r = Random.Range(0, tWest.Length);
+					roomPrefab = tWest[r];
+				}
+			}
+
+			//Pluses
+			if (exitSum == 4)
+			{
+				r = Random.Range(0, plus.Length);
+				roomPrefab = plus[r];
+			}
+
+			GameObject go = (GameObject)Instantiate(roomPrefab, transform.TransformPoint(new Vector3(tile.x*roomWidth, tile.y*roomHeight, 0)), Quaternion.identity, transform);
+			go.name = string.Format("({0},{1})", tile.x, tile.y);
+			
+			Destroy(tile.gameObject);
+		}
 	}
 }
