@@ -12,32 +12,12 @@ public class Tile : MonoBehaviour
         _renderer.color = isOffset ? _offsetColor : _baseColor;
     }
 
-    void OnEnable()
-    {
-        TouchManager.Instance.OnTouchPerformed += OnTouchPerformed;
+    public void Highlight() {
+        _highlight.SetActive(true);
     }
 
-    void OnDisable()
-    {
-        TouchManager.Instance.OnTouchPerformed -= OnTouchPerformed;
-    }
-
-    private void OnTouchPerformed(Vector2 touchPosition)
-    {
-		// touchPosition = new Vector2(touchPosition.x, Camera.main.pixelHeight - touchPosition.y);
-		Vector3 newPos = touchPosition; newPos.z = 10;
-        touchPosition = Camera.main.ScreenToWorldPoint(newPos);
-        var hit = Physics2D.Raycast(touchPosition, Vector2.zero);
-        if (hit.collider != null && hit.collider.gameObject == gameObject)
-        {
-            _highlight.SetActive(true);
-            Debug.Log("Tile Clicked");
-        }
-        else
-        {
-            _highlight.SetActive(false);
-            // Debug.Log("Tile Not Clicked");
-        }
+    public void Deselect() {
+        _highlight.SetActive(false);
     }
  
 }

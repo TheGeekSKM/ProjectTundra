@@ -11,6 +11,17 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform _cam;
  
     private Dictionary<Vector2, Tile> _tiles;
+    [SerializeField] private Tile _previousTile;
+
+    void OnEnable()
+    {
+        TouchManager.Instance.OnTouchStarted += TouchPerformed;
+    }
+
+    void OnDisable()
+    {
+        TouchManager.Instance.OnTouchStarted -= TouchPerformed;
+    }
  
     void Start() {
         GenerateGrid();
@@ -32,6 +43,34 @@ public class GridManager : MonoBehaviour
         }
  
         _cam.transform.position = new Vector3((float)_width/2 -0.5f, (float)_height / 2 - 0.5f,-10);
+    }
+
+    void TouchPerformed(Vector2 touchPosition) {
+        var worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(touchPosition.x, touchPosition.y, 10));
+
+        var hit = Physics2D.Raycast(worldPosition, Vector2.zero);
+        
+        if (hit.collider != null) {
+            var tile = hit.collider.GetComponent<Tile>();
+            if (tile != null) {
+                HighlightTile(tile.transform.position);
+            }
+        }
+    }
+
+    void HighlightTile(Vector2 pos) {
+        var tile = GetTileAtPosition(pos);
+        if (tile != null) {
+            tile.Highlight();
+            if (_previousTile != null && _previousTile != tile) {
+                _previousTile.Deselect();
+                _previousTile = tile;
+            }
+            else
+            {
+                _previousTile = tile;
+            }
+        }
     }
  
     public Tile GetTileAtPosition(Vector2 pos) {

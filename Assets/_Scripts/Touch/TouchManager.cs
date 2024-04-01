@@ -9,12 +9,12 @@ public class TouchManager : MonoBehaviour
 {
     public static TouchManager Instance { get; private set; }
     TouchAction touchAction;
-    public UnityAction<Vector2> OnTouchPerformed;
+    public UnityAction<Vector2> OnTouchStarted;
 
     private void Awake()
     {
         touchAction = new TouchAction();
-        touchAction.Gameplay.Enable();
+        touchAction.Enable();
 
         if (Instance == null)
         {
@@ -28,21 +28,26 @@ public class TouchManager : MonoBehaviour
 
     private void OnEnable()
     {
-        touchAction.Gameplay.Touch.started += ctx => TouchPerformed(ctx);
-        touchAction.Gameplay.Touch.canceled += ctx => TouchEnd(ctx);
+        touchAction.Gameplay.TouchPosition.started += ctx => TouchStarted(ctx);
+        touchAction.Gameplay.TouchPosition.canceled += ctx => TouchEnd(ctx);
     }
 
     private void OnDisable()
     {
-        touchAction.Gameplay.Touch.started -= ctx => TouchPerformed(ctx);
-        touchAction.Gameplay.Touch.canceled -= ctx => TouchEnd(ctx);
+        touchAction.Gameplay.TouchPosition.started -= ctx => TouchStarted(ctx);
+        touchAction.Gameplay.TouchPosition.canceled -= ctx => TouchEnd(ctx);
+    }
+
+    private void TouchStarted(InputAction.CallbackContext ctx)
+    {
+        var touchPosition = ctx.ReadValue<Vector2>();
+        Debug.Log("Touch Position: " + touchPosition);
+        OnTouchStarted?.Invoke(touchPosition);
     }
 
     private void TouchPerformed(InputAction.CallbackContext ctx)
     {
-        var touchPosition = ctx.ReadValue<TouchState>().position;
-        Debug.Log("Touch Position: " + touchPosition);
-        OnTouchPerformed?.Invoke(touchPosition);
+        Debug.Log("Touch Performed");
     }
 
     private void TouchEnd(InputAction.CallbackContext ctx)

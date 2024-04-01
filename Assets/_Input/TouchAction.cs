@@ -71,7 +71,7 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""c0d22797-f33a-4932-81d6-b42a5cc4d192"",
                     ""path"": ""<Touchscreen>/primaryTouch/position"",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap(duration=0.1)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""TouchPosition"",
@@ -92,7 +92,19 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Mobile"",
+            ""bindingGroup"": ""Mobile"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Touchscreen>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
@@ -203,6 +215,15 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+    private int m_MobileSchemeIndex = -1;
+    public InputControlScheme MobileScheme
+    {
+        get
+        {
+            if (m_MobileSchemeIndex == -1) m_MobileSchemeIndex = asset.FindControlSchemeIndex("Mobile");
+            return asset.controlSchemes[m_MobileSchemeIndex];
+        }
+    }
     public interface IGameplayActions
     {
         void OnTouch(InputAction.CallbackContext context);
