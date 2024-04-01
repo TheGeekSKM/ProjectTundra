@@ -24,8 +24,9 @@ public class Tile : MonoBehaviour
 
     private void OnTouchPerformed(Vector2 touchPosition)
     {
-        // touchPosition = new Vector2(touchPosition.x, Camera.main.pixelHeight - touchPosition.y);
-        touchPosition = Camera.main.ScreenToWorldPoint(touchPosition);
+		// touchPosition = new Vector2(touchPosition.x, Camera.main.pixelHeight - touchPosition.y);
+		Vector3 newPos = touchPosition; newPos.z = 10;
+        touchPosition = Camera.main.ScreenToWorldPoint(newPos);
         var hit = Physics2D.Raycast(touchPosition, Vector2.zero);
         if (hit.collider != null && hit.collider.gameObject == gameObject)
         {

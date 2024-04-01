@@ -60,7 +60,7 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""ef7b5742-e67e-49f9-a373-04b18bd7af28"",
                     ""path"": ""<Touchscreen>/primaryTouch"",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Touch"",
