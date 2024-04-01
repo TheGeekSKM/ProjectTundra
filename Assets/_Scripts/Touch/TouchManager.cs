@@ -7,6 +7,9 @@ using UnityEngine.Events;
 
 public class TouchManager : MonoBehaviour
 {
+	private enum TapBehavor { tapBinding, tapInteraction };
+	[SerializeField] private TapBehavor tapBehavor = TapBehavor.tapBinding;
+
     public static TouchManager Instance { get; private set; }
     TouchAction touchAction;
     public UnityAction<Vector2> OnTouchStarted;
@@ -28,31 +31,53 @@ public class TouchManager : MonoBehaviour
 
     private void OnEnable()
     {
-        touchAction.Gameplay.TouchPosition.started += ctx => TouchStarted(ctx);
-        touchAction.Gameplay.TouchPosition.canceled += ctx => TouchEnd(ctx);
-    }
+		if (tapBehavor == TapBehavor.tapBinding)
+		{
+			touchAction.Gameplay.TapBinding.started += ctx => TapStarted(ctx);
+			touchAction.Gameplay.TapBinding.performed += ctx => TapPerformed(ctx);
+			touchAction.Gameplay.TapBinding.canceled += ctx => TapEnd(ctx);
+		}
+		if (tapBehavor == TapBehavor.tapInteraction)
+		{
+			touchAction.Gameplay.TapInteraction.started += ctx => TapStarted(ctx);
+			touchAction.Gameplay.TapInteraction.performed += ctx => TapPerformed(ctx);
+			touchAction.Gameplay.TapInteraction.canceled += ctx => TapEnd(ctx);
+		}
+	}
 
     private void OnDisable()
     {
-        touchAction.Gameplay.TouchPosition.started -= ctx => TouchStarted(ctx);
-        touchAction.Gameplay.TouchPosition.canceled -= ctx => TouchEnd(ctx);
+		if (tapBehavor == TapBehavor.tapBinding)
+		{
+			touchAction.Gameplay.TapBinding.started -= ctx => TapStarted(ctx);
+			touchAction.Gameplay.TapBinding.performed -= ctx => TapPerformed(ctx);
+			touchAction.Gameplay.TapBinding.canceled -= ctx => TapEnd(ctx);
+		}
+		if (tapBehavor == TapBehavor.tapInteraction)
+		{
+			touchAction.Gameplay.TapInteraction.started -= ctx => TapStarted(ctx);
+			touchAction.Gameplay.TapInteraction.performed -= ctx => TapPerformed(ctx);
+			touchAction.Gameplay.TapInteraction.canceled -= ctx => TapEnd(ctx);
+		}
+	}
+
+    private void TapStarted(InputAction.CallbackContext ctx)
+	{
+		Debug.Log("Touch Started.");
     }
 
-    private void TouchStarted(InputAction.CallbackContext ctx)
+    private void TapPerformed(InputAction.CallbackContext ctx)
     {
-        var touchPosition = ctx.ReadValue<Vector2>();
-        Debug.Log("Touch Position: " + touchPosition);
-        OnTouchStarted?.Invoke(touchPosition);
-    }
+		var touchPosition = touchAction.Gameplay.TouchPosition.ReadValue<Vector2>();
+		Debug.Log("Touch Position: " + touchPosition);
+		OnTouchStarted?.Invoke(touchPosition);
 
-    private void TouchPerformed(InputAction.CallbackContext ctx)
-    {
-        Debug.Log("Touch Performed");
-    }
+		Debug.Log("Touch Performed.");
+	}
 
-    private void TouchEnd(InputAction.CallbackContext ctx)
+    private void TapEnd(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Touch End");
-    }
+		Debug.Log("Touch Canceled.");
+	}
 
 }

@@ -46,13 +46,22 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""TouchPress"",
-                    ""type"": ""Button"",
+                    ""name"": ""TapBinding"",
+                    ""type"": ""Value"",
                     ""id"": ""86117f86-135e-4e0a-b083-454d8259d7b4"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TapInteraction"",
+                    ""type"": ""Value"",
+                    ""id"": ""bf5c3e6b-88dc-4024-94b9-d3b234d3d871"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -60,7 +69,7 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""ef7b5742-e67e-49f9-a373-04b18bd7af28"",
                     ""path"": ""<Touchscreen>/primaryTouch"",
-                    ""interactions"": ""Tap"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Touch"",
@@ -71,7 +80,7 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""c0d22797-f33a-4932-81d6-b42a5cc4d192"",
                     ""path"": ""<Touchscreen>/primaryTouch/position"",
-                    ""interactions"": ""Tap(duration=0.1)"",
+                    ""interactions"": ""Tap"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""TouchPosition"",
@@ -81,11 +90,22 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b65fb575-6732-44b3-ba9c-e99148ecf4dd"",
-                    ""path"": ""<Touchscreen>/Press"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TouchPress"",
+                    ""groups"": ""Mobile"",
+                    ""action"": ""TapBinding"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""97f5772f-ca7c-4b43-839f-7d70044c7c3d"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": ""Mobile"",
+                    ""action"": ""TapInteraction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -110,7 +130,8 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Touch = m_Gameplay.FindAction("Touch", throwIfNotFound: true);
         m_Gameplay_TouchPosition = m_Gameplay.FindAction("TouchPosition", throwIfNotFound: true);
-        m_Gameplay_TouchPress = m_Gameplay.FindAction("TouchPress", throwIfNotFound: true);
+        m_Gameplay_TapBinding = m_Gameplay.FindAction("TapBinding", throwIfNotFound: true);
+        m_Gameplay_TapInteraction = m_Gameplay.FindAction("TapInteraction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -172,14 +193,16 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Touch;
     private readonly InputAction m_Gameplay_TouchPosition;
-    private readonly InputAction m_Gameplay_TouchPress;
+    private readonly InputAction m_Gameplay_TapBinding;
+    private readonly InputAction m_Gameplay_TapInteraction;
     public struct GameplayActions
     {
         private @TouchAction m_Wrapper;
         public GameplayActions(@TouchAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @Touch => m_Wrapper.m_Gameplay_Touch;
         public InputAction @TouchPosition => m_Wrapper.m_Gameplay_TouchPosition;
-        public InputAction @TouchPress => m_Wrapper.m_Gameplay_TouchPress;
+        public InputAction @TapBinding => m_Wrapper.m_Gameplay_TapBinding;
+        public InputAction @TapInteraction => m_Wrapper.m_Gameplay_TapInteraction;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -195,9 +218,12 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
                 @TouchPosition.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouchPosition;
                 @TouchPosition.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouchPosition;
                 @TouchPosition.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouchPosition;
-                @TouchPress.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouchPress;
-                @TouchPress.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouchPress;
-                @TouchPress.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouchPress;
+                @TapBinding.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTapBinding;
+                @TapBinding.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTapBinding;
+                @TapBinding.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTapBinding;
+                @TapInteraction.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTapInteraction;
+                @TapInteraction.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTapInteraction;
+                @TapInteraction.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTapInteraction;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -208,9 +234,12 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
                 @TouchPosition.started += instance.OnTouchPosition;
                 @TouchPosition.performed += instance.OnTouchPosition;
                 @TouchPosition.canceled += instance.OnTouchPosition;
-                @TouchPress.started += instance.OnTouchPress;
-                @TouchPress.performed += instance.OnTouchPress;
-                @TouchPress.canceled += instance.OnTouchPress;
+                @TapBinding.started += instance.OnTapBinding;
+                @TapBinding.performed += instance.OnTapBinding;
+                @TapBinding.canceled += instance.OnTapBinding;
+                @TapInteraction.started += instance.OnTapInteraction;
+                @TapInteraction.performed += instance.OnTapInteraction;
+                @TapInteraction.canceled += instance.OnTapInteraction;
             }
         }
     }
@@ -228,6 +257,7 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
     {
         void OnTouch(InputAction.CallbackContext context);
         void OnTouchPosition(InputAction.CallbackContext context);
-        void OnTouchPress(InputAction.CallbackContext context);
+        void OnTapBinding(InputAction.CallbackContext context);
+        void OnTapInteraction(InputAction.CallbackContext context);
     }
 }

@@ -240,6 +240,7 @@ MonoBehaviour:
   _height: 9
   _tilePrefab: {fileID: 2832121763912508846, guid: 67e097f287d184f44a81786d6b794dd9, type: 3}
   _cam: {fileID: 277268707}
+  _previousTile: {fileID: 0}
 --- !u!4 &1675371733
 Transform:
   m_ObjectHideFlags: 0
@@ -317,6 +318,10 @@ PrefabInstance:
     - target: {fileID: 4127388985247395803, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640078775537931823, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: tapBehavor
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5640078775537931823, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
       propertyPath: playerInput
