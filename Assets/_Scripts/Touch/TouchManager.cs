@@ -8,7 +8,8 @@ using UnityEngine.Events;
 public class TouchManager : MonoBehaviour
 {
     public static TouchManager Instance { get; private set; }
-    TouchAction touchAction;
+
+    private TouchAction touchAction;
     public UnityAction<Vector2> OnTouchStarted;
 
     private void Awake()
