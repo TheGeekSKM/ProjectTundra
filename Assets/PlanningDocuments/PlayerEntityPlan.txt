@@ -1,0 +1,28 @@
+Every entity:
+2. Contain Items
+3. Has attributes
+4. Health
+
+PlayerEntity:
+1. PlayerInput-Based Movement
+2. Movement Speed
+
+NPCEntity:
+1. Target Position
+2. Movement Speed 
+3. Aggressiveness Rang -> High AGR means more likely to chase after target and attack, Low AGR means more likely to heal ally
+4. Ally Reference(s)
+
+
+ItemBase:
+1. Durability
+
+WeaponItem:
+1. DamageType
+2. DamageAmount
+3. DamageRange
+4. UseEffect -> delegate event
+
+ConsumableItem:
+1. UseCount
+2. Effect -> delegate event
