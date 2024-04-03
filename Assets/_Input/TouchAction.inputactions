@@ -6,15 +6,6 @@
             "id": "a7e1a67c-f355-49fa-a397-9e4dcf2f9d8c",
             "actions": [
                 {
-                    "name": "Touch",
-                    "type": "Value",
-                    "id": "5267231b-79c1-45cb-babd-2781952a56e2",
-                    "expectedControlType": "Touch",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "TouchPosition",
                     "type": "Value",
                     "id": "2f6f6ef1-9cd8-46fa-8309-dd35116f714a",
@@ -24,32 +15,48 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "TouchPress",
-                    "type": "Button",
-                    "id": "86117f86-135e-4e0a-b083-454d8259d7b4",
-                    "expectedControlType": "Button",
+                    "name": "Touch",
+                    "type": "Value",
+                    "id": "5267231b-79c1-45cb-babd-2781952a56e2",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "TapBinding",
+                    "type": "Value",
+                    "id": "86117f86-135e-4e0a-b083-454d8259d7b4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "TapInteraction",
+                    "type": "Value",
+                    "id": "bf5c3e6b-88dc-4024-94b9-d3b234d3d871",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Swipe",
+                    "type": "Value",
+                    "id": "8072874a-6c13-463a-8f49-8ed23496ff1e",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "ef7b5742-e67e-49f9-a373-04b18bd7af28",
-                    "path": "<Touchscreen>/primaryTouch",
-                    "interactions": "Tap",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Touch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c0d22797-f33a-4932-81d6-b42a5cc4d192",
                     "path": "<Touchscreen>/primaryTouch/position",
-                    "interactions": "Tap(duration=0.1)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "TouchPosition",
@@ -59,11 +66,44 @@
                 {
                     "name": "",
                     "id": "b65fb575-6732-44b3-ba9c-e99148ecf4dd",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mobile",
+                    "action": "TapBinding",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "97f5772f-ca7c-4b43-839f-7d70044c7c3d",
+                    "path": "<Touchscreen>/primaryTouch/press",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "Mobile",
+                    "action": "TapInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c37f852-d321-4775-ba9e-d554356a5418",
+                    "path": "<Touchscreen>/primaryTouch/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mobile",
+                    "action": "Swipe",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef7b5742-e67e-49f9-a373-04b18bd7af28",
                     "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "TouchPress",
+                    "groups": "Mobile",
+                    "action": "Touch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

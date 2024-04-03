@@ -7,9 +7,22 @@ using UnityEngine.Events;
 
 public class TouchManager : MonoBehaviour
 {
+	[Header("Input Controls")]
+	[SerializeField] private bool enableTap = true;
+	[SerializeField] private bool enableSwipe = true;
+
+	private enum TapBehavior { tapBinding, tapInteraction };
+
+	[Header("Input Settings")]
+	[SerializeField] private TapBehavior tapBehavior = TapBehavior.tapInteraction;
+	[SerializeField] private float minimumSwipeMagnitude = 10f;
+	private Vector2 _swipeDirection;
+	private Vector2 _swipeStartpos;
+
     public static TouchManager Instance { get; private set; }
     TouchAction touchAction;
-    public UnityAction<Vector2> OnTouchStarted;
+    public UnityAction<Vector2> OnTap;
+	public UnityAction<Vector2, Vector2> OnSwipe;
 
     private void Awake()
     {
@@ -28,31 +41,119 @@ public class TouchManager : MonoBehaviour
 
     private void OnEnable()
     {
-        touchAction.Gameplay.TouchPosition.started += ctx => TouchStarted(ctx);
-        touchAction.Gameplay.TouchPosition.canceled += ctx => TouchEnd(ctx);
-    }
+		//Taps
+		if (enableTap)
+		{
+			if (tapBehavior == TapBehavior.tapBinding)
+			{
+				touchAction.Gameplay.TapBinding.started += ctx => TapStarted(ctx);
+				touchAction.Gameplay.TapBinding.performed += ctx => TapPerformed(ctx);
+				touchAction.Gameplay.TapBinding.canceled += ctx => TapEnd(ctx);
+			}
+			if (tapBehavior == TapBehavior.tapInteraction)
+			{
+				touchAction.Gameplay.TapInteraction.started += ctx => TapStarted(ctx);
+				touchAction.Gameplay.TapInteraction.performed += ctx => TapPerformed(ctx);
+				touchAction.Gameplay.TapInteraction.canceled += ctx => TapEnd(ctx);
+			}
+		}
+
+		//Swipes
+		if (enableSwipe)
+		{
+			touchAction.Gameplay.Touch.started += ctx => TouchStarted(ctx);
+			touchAction.Gameplay.Swipe.performed += ctx => SwipePerformed(ctx);
+			touchAction.Gameplay.Touch.canceled += ctx => TouchCanceled(ctx);
+		}
+	}
 
     private void OnDisable()
     {
-        touchAction.Gameplay.TouchPosition.started -= ctx => TouchStarted(ctx);
-        touchAction.Gameplay.TouchPosition.canceled -= ctx => TouchEnd(ctx);
+		//Taps
+		if (enableTap)
+		{
+			if (tapBehavior == TapBehavior.tapBinding)
+			{
+				touchAction.Gameplay.TapBinding.started -= ctx => TapStarted(ctx);
+				touchAction.Gameplay.TapBinding.performed -= ctx => TapPerformed(ctx);
+				touchAction.Gameplay.TapBinding.canceled -= ctx => TapEnd(ctx);
+			}
+			if (tapBehavior == TapBehavior.tapInteraction)
+			{
+				touchAction.Gameplay.TapInteraction.started -= ctx => TapStarted(ctx);
+				touchAction.Gameplay.TapInteraction.performed -= ctx => TapPerformed(ctx);
+				touchAction.Gameplay.TapInteraction.canceled -= ctx => TapEnd(ctx);
+			}
+		}
+
+		//Swipes
+		if (enableSwipe)
+		{
+			touchAction.Gameplay.Touch.started -= ctx => TouchStarted(ctx);
+			touchAction.Gameplay.Swipe.performed -= ctx => SwipePerformed(ctx);
+			touchAction.Gameplay.Touch.canceled -= ctx => TouchCanceled(ctx);
+		}
+	}
+
+	//Taps
+    private void TapStarted(InputAction.CallbackContext ctx)
+	{
+		Debug.Log("Tap Started.");
     }
 
-    private void TouchStarted(InputAction.CallbackContext ctx)
+    private void TapPerformed(InputAction.CallbackContext ctx)
     {
-        var touchPosition = ctx.ReadValue<Vector2>();
-        Debug.Log("Touch Position: " + touchPosition);
-        OnTouchStarted?.Invoke(touchPosition);
-    }
+		//Do not perform tap if swiping
+		if (Mathf.Abs(_swipeDirection.magnitude) >= minimumSwipeMagnitude)
+			return;
 
-    private void TouchPerformed(InputAction.CallbackContext ctx)
+		//Get tap position
+		var touchPosition = touchAction.Gameplay.TouchPosition.ReadValue<Vector2>();
+		Debug.Log("Tap Position: " + touchPosition);
+
+		//Call out for tap event
+		OnTap?.Invoke(touchPosition);
+
+		Debug.Log("Tap Performed.");
+	}
+
+    private void TapEnd(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Touch Performed");
-    }
+		Debug.Log("Tap Canceled.");
+	}
 
-    private void TouchEnd(InputAction.CallbackContext ctx)
-    {
-        Debug.Log("Touch End");
-    }
 
+	//Swipes
+	private void TouchStarted(InputAction.CallbackContext ctx)
+	{
+		//Get start position
+		_swipeStartpos = touchAction.Gameplay.TouchPosition.ReadValue<Vector2>();
+
+		if (!enableTap)
+			Debug.Log("Touch Position: " + _swipeStartpos);
+	}
+
+	private void SwipePerformed(InputAction.CallbackContext ctx)
+	{
+		//Get direction
+		_swipeDirection = ctx.ReadValue<Vector2>();
+	}
+
+	private void TouchCanceled(InputAction.CallbackContext ctx)
+	{
+		if (!enableTap)
+			Debug.Log("Touch Complete");
+
+		//Check magnitude for swipe
+		if (Mathf.Abs(_swipeDirection.magnitude) < minimumSwipeMagnitude)
+			return;
+		Debug.Log("Swipe Detected");
+
+		//Call out for swipe event
+		OnSwipe?.Invoke(_swipeDirection, _swipeStartpos);
+
+		//reset variables
+		_swipeDirection = Vector2.zero;
+		_swipeStartpos = Vector2.zero;
+	}
 }

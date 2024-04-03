@@ -15,12 +15,12 @@ public class GridManager : MonoBehaviour
 
     void OnEnable()
     {
-        TouchManager.Instance.OnTouchStarted += TouchPerformed;
+        TouchManager.Instance.OnTap += TouchPerformed;
     }
 
     void OnDisable()
     {
-        TouchManager.Instance.OnTouchStarted -= TouchPerformed;
+        TouchManager.Instance.OnTap -= TouchPerformed;
     }
  
     void Start() {

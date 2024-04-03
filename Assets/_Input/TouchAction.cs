@@ -28,15 +28,6 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
             ""id"": ""a7e1a67c-f355-49fa-a397-9e4dcf2f9d8c"",
             ""actions"": [
                 {
-                    ""name"": ""Touch"",
-                    ""type"": ""Value"",
-                    ""id"": ""5267231b-79c1-45cb-babd-2781952a56e2"",
-                    ""expectedControlType"": ""Touch"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""TouchPosition"",
                     ""type"": ""Value"",
                     ""id"": ""2f6f6ef1-9cd8-46fa-8309-dd35116f714a"",
@@ -46,32 +37,48 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""TouchPress"",
-                    ""type"": ""Button"",
-                    ""id"": ""86117f86-135e-4e0a-b083-454d8259d7b4"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Touch"",
+                    ""type"": ""Value"",
+                    ""id"": ""5267231b-79c1-45cb-babd-2781952a56e2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
-                    ""initialStateCheck"": false
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TapBinding"",
+                    ""type"": ""Value"",
+                    ""id"": ""86117f86-135e-4e0a-b083-454d8259d7b4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TapInteraction"",
+                    ""type"": ""Value"",
+                    ""id"": ""bf5c3e6b-88dc-4024-94b9-d3b234d3d871"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Swipe"",
+                    ""type"": ""Value"",
+                    ""id"": ""8072874a-6c13-463a-8f49-8ed23496ff1e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""ef7b5742-e67e-49f9-a373-04b18bd7af28"",
-                    ""path"": ""<Touchscreen>/primaryTouch"",
-                    ""interactions"": ""Tap"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Touch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""c0d22797-f33a-4932-81d6-b42a5cc4d192"",
                     ""path"": ""<Touchscreen>/primaryTouch/position"",
-                    ""interactions"": ""Tap(duration=0.1)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""TouchPosition"",
@@ -81,11 +88,44 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b65fb575-6732-44b3-ba9c-e99148ecf4dd"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mobile"",
+                    ""action"": ""TapBinding"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""97f5772f-ca7c-4b43-839f-7d70044c7c3d"",
+                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": ""Mobile"",
+                    ""action"": ""TapInteraction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c37f852-d321-4775-ba9e-d554356a5418"",
+                    ""path"": ""<Touchscreen>/primaryTouch/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mobile"",
+                    ""action"": ""Swipe"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef7b5742-e67e-49f9-a373-04b18bd7af28"",
                     ""path"": ""<Touchscreen>/Press"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TouchPress"",
+                    ""groups"": ""Mobile"",
+                    ""action"": ""Touch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -108,9 +148,11 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
 }");
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_Touch = m_Gameplay.FindAction("Touch", throwIfNotFound: true);
         m_Gameplay_TouchPosition = m_Gameplay.FindAction("TouchPosition", throwIfNotFound: true);
-        m_Gameplay_TouchPress = m_Gameplay.FindAction("TouchPress", throwIfNotFound: true);
+        m_Gameplay_Touch = m_Gameplay.FindAction("Touch", throwIfNotFound: true);
+        m_Gameplay_TapBinding = m_Gameplay.FindAction("TapBinding", throwIfNotFound: true);
+        m_Gameplay_TapInteraction = m_Gameplay.FindAction("TapInteraction", throwIfNotFound: true);
+        m_Gameplay_Swipe = m_Gameplay.FindAction("Swipe", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -170,16 +212,20 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
-    private readonly InputAction m_Gameplay_Touch;
     private readonly InputAction m_Gameplay_TouchPosition;
-    private readonly InputAction m_Gameplay_TouchPress;
+    private readonly InputAction m_Gameplay_Touch;
+    private readonly InputAction m_Gameplay_TapBinding;
+    private readonly InputAction m_Gameplay_TapInteraction;
+    private readonly InputAction m_Gameplay_Swipe;
     public struct GameplayActions
     {
         private @TouchAction m_Wrapper;
         public GameplayActions(@TouchAction wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Touch => m_Wrapper.m_Gameplay_Touch;
         public InputAction @TouchPosition => m_Wrapper.m_Gameplay_TouchPosition;
-        public InputAction @TouchPress => m_Wrapper.m_Gameplay_TouchPress;
+        public InputAction @Touch => m_Wrapper.m_Gameplay_Touch;
+        public InputAction @TapBinding => m_Wrapper.m_Gameplay_TapBinding;
+        public InputAction @TapInteraction => m_Wrapper.m_Gameplay_TapInteraction;
+        public InputAction @Swipe => m_Wrapper.m_Gameplay_Swipe;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -189,28 +235,40 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
             {
-                @Touch.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouch;
-                @Touch.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouch;
-                @Touch.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouch;
                 @TouchPosition.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouchPosition;
                 @TouchPosition.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouchPosition;
                 @TouchPosition.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouchPosition;
-                @TouchPress.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouchPress;
-                @TouchPress.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouchPress;
-                @TouchPress.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouchPress;
+                @Touch.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouch;
+                @Touch.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouch;
+                @Touch.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTouch;
+                @TapBinding.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTapBinding;
+                @TapBinding.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTapBinding;
+                @TapBinding.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTapBinding;
+                @TapInteraction.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTapInteraction;
+                @TapInteraction.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTapInteraction;
+                @TapInteraction.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTapInteraction;
+                @Swipe.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwipe;
+                @Swipe.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwipe;
+                @Swipe.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwipe;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Touch.started += instance.OnTouch;
-                @Touch.performed += instance.OnTouch;
-                @Touch.canceled += instance.OnTouch;
                 @TouchPosition.started += instance.OnTouchPosition;
                 @TouchPosition.performed += instance.OnTouchPosition;
                 @TouchPosition.canceled += instance.OnTouchPosition;
-                @TouchPress.started += instance.OnTouchPress;
-                @TouchPress.performed += instance.OnTouchPress;
-                @TouchPress.canceled += instance.OnTouchPress;
+                @Touch.started += instance.OnTouch;
+                @Touch.performed += instance.OnTouch;
+                @Touch.canceled += instance.OnTouch;
+                @TapBinding.started += instance.OnTapBinding;
+                @TapBinding.performed += instance.OnTapBinding;
+                @TapBinding.canceled += instance.OnTapBinding;
+                @TapInteraction.started += instance.OnTapInteraction;
+                @TapInteraction.performed += instance.OnTapInteraction;
+                @TapInteraction.canceled += instance.OnTapInteraction;
+                @Swipe.started += instance.OnSwipe;
+                @Swipe.performed += instance.OnSwipe;
+                @Swipe.canceled += instance.OnSwipe;
             }
         }
     }
@@ -226,8 +284,10 @@ public partial class @TouchAction : IInputActionCollection2, IDisposable
     }
     public interface IGameplayActions
     {
-        void OnTouch(InputAction.CallbackContext context);
         void OnTouchPosition(InputAction.CallbackContext context);
-        void OnTouchPress(InputAction.CallbackContext context);
+        void OnTouch(InputAction.CallbackContext context);
+        void OnTapBinding(InputAction.CallbackContext context);
+        void OnTapInteraction(InputAction.CallbackContext context);
+        void OnSwipe(InputAction.CallbackContext context);
     }
 }
