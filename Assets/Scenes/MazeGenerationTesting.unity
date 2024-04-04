@@ -216,7 +216,7 @@ MonoBehaviour:
   tilePrefab: {fileID: 3217849423528365284, guid: da87d352ee1683e43b96eb4ab1a4c465, type: 3}
   roomWidth: 12
   roomHeight: 10
-  mazeWidth: 5
+  mazeWidth: 10
   mazeHeight: 5
   extraExits:
   - {x: 2, y: 0, z: 2}
@@ -410,7 +410,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2074757324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

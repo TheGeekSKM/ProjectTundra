@@ -100,8 +100,8 @@ public class MazeGen : MonoBehaviour
 		grid = new MazeTile[mazeWidth, mazeHeight];
 
 		//populate the "Tile" array by instantiating tile objects & assigning them to each slot
-		for (int ny = 0; ny < mazeWidth; ny++) {
-			for (int nx = 0; nx < mazeHeight; nx++)
+		for (int ny = 0; ny < mazeHeight; ny++) {
+			for (int nx = 0; nx < mazeWidth; nx++)
 			{
 				GameObject go = (GameObject)Instantiate(tilePrefab, transform.TransformPoint(new Vector3(nx*roomWidth, ny*roomHeight, 0)), Quaternion.identity, transform);
 				MazeTile tile = go.GetComponent<MazeTile>();
