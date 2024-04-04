@@ -167,36 +167,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba907b333161c624b80534cc9030f3c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capNorthExit:
-  - {fileID: 2304966349008715828, guid: 9054d8fa153b6be4bba1cec54f74ecee, type: 3}
-  capEastExit:
-  - {fileID: 7319537710489150920, guid: df6c5766f830fb041b40eacd44f10e4d, type: 3}
-  capSouthExit:
-  - {fileID: 4383833804388330662, guid: bb6bcab110dd01b4fb8ee781e83fb89f, type: 3}
-  capWestExit:
-  - {fileID: 1111902910821715107, guid: 2d3f5379a2d72f8458a17b82680b05fa, type: 3}
-  hallHorizontal:
-  - {fileID: 8033390016668757809, guid: 978c650ec9dfb1848a01ceac30577e6a, type: 3}
-  hallVertical:
-  - {fileID: 3314052345259133097, guid: 73722e4275cc57c429935fe8d3b10d28, type: 3}
-  hookNorthEast:
-  - {fileID: 6398236983750512716, guid: a95a8ff152c8d0843bb50decfed32534, type: 3}
-  hookSouthEast:
-  - {fileID: 3305838626960862048, guid: bc8de3556ce5a7d4b9e1a26dcb09fb87, type: 3}
-  hookSouthWest:
-  - {fileID: 6598685367963959901, guid: dc101771024f4494e930b2bb1c5082e3, type: 3}
-  hookNorthWest:
-  - {fileID: 1266190679285794900, guid: ef0e7b9d4cf711a409e5112fab09581d, type: 3}
-  tNorth:
-  - {fileID: 1434013507641878147, guid: 92d3b1b5d548cfb42b58e96047d259d6, type: 3}
-  tEast:
-  - {fileID: 3087053941880917819, guid: 6650e41b03e55cd4d9b597b5eb6a4e31, type: 3}
-  tSouth:
-  - {fileID: 418999978313872242, guid: a4dbe6e83e5221343a1453ae5f9fa826, type: 3}
-  tWest:
-  - {fileID: 1299751113225832228, guid: 37ff5d633caa3634ab375e148e3f80dc, type: 3}
-  plus:
-  - {fileID: 8932313775095692372, guid: 65f5ef5038c448c4aaa6e2d4bff6d22c, type: 3}
+  roomPrefabs:
+    capNorthExit:
+    - room: {fileID: 2304966349008715828, guid: 9054d8fa153b6be4bba1cec54f74ecee, type: 3}
+      weight: 1
+    capEastExit:
+    - room: {fileID: 7319537710489150920, guid: df6c5766f830fb041b40eacd44f10e4d, type: 3}
+      weight: 1
+    capSouthExit:
+    - room: {fileID: 4383833804388330662, guid: bb6bcab110dd01b4fb8ee781e83fb89f, type: 3}
+      weight: 1
+    capWestExit:
+    - room: {fileID: 1111902910821715107, guid: 2d3f5379a2d72f8458a17b82680b05fa, type: 3}
+      weight: 1
+    hallHorizontal:
+    - room: {fileID: 8033390016668757809, guid: 978c650ec9dfb1848a01ceac30577e6a, type: 3}
+      weight: 1
+    hallVertical:
+    - room: {fileID: 3314052345259133097, guid: 73722e4275cc57c429935fe8d3b10d28, type: 3}
+      weight: 1
+    hookNorthEast:
+    - room: {fileID: 6398236983750512716, guid: a95a8ff152c8d0843bb50decfed32534, type: 3}
+      weight: 1
+    hookSouthEast:
+    - room: {fileID: 3305838626960862048, guid: bc8de3556ce5a7d4b9e1a26dcb09fb87, type: 3}
+      weight: 1
+    hookSouthWest:
+    - room: {fileID: 6598685367963959901, guid: dc101771024f4494e930b2bb1c5082e3, type: 3}
+      weight: 1
+    hookNorthWest:
+    - room: {fileID: 1266190679285794900, guid: ef0e7b9d4cf711a409e5112fab09581d, type: 3}
+      weight: 1
+    tNorth:
+    - room: {fileID: 1434013507641878147, guid: 92d3b1b5d548cfb42b58e96047d259d6, type: 3}
+      weight: 1
+    tEast:
+    - room: {fileID: 3087053941880917819, guid: 6650e41b03e55cd4d9b597b5eb6a4e31, type: 3}
+      weight: 1
+    tSouth:
+    - room: {fileID: 418999978313872242, guid: a4dbe6e83e5221343a1453ae5f9fa826, type: 3}
+      weight: 1
+    tWest:
+    - room: {fileID: 1299751113225832228, guid: 37ff5d633caa3634ab375e148e3f80dc, type: 3}
+      weight: 1
+    plus:
+    - room: {fileID: 8932313775095692372, guid: 65f5ef5038c448c4aaa6e2d4bff6d22c, type: 3}
+      weight: 1
   tilePrefab: {fileID: 3217849423528365284, guid: da87d352ee1683e43b96eb4ab1a4c465, type: 3}
   roomWidth: 12
   roomHeight: 10
@@ -204,6 +220,71 @@ MonoBehaviour:
   mazeHeight: 5
   extraExits:
   - {x: 2, y: 0, z: 2}
+--- !u!1001 &866523084
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4127388985247395801, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: m_Name
+      value: TouchManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127388985247395803, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127388985247395803, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127388985247395803, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127388985247395803, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127388985247395803, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127388985247395803, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127388985247395803, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127388985247395803, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127388985247395803, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127388985247395803, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127388985247395803, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640078775537931823, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: enableTap
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640078775537931823, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
+      propertyPath: minimumSwipeMagnitude
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b0ec482ab4d7de146b52da63fae93c91, type: 3}
 --- !u!1 &1682418180
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,6 +342,8 @@ GameObject:
   - component: {fileID: 2074757326}
   - component: {fileID: 2074757325}
   - component: {fileID: 2074757328}
+  - component: {fileID: 2074757330}
+  - component: {fileID: 2074757329}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -354,3 +437,44 @@ MonoBehaviour:
   m_CropFrameX: 1
   m_CropFrameY: 1
   m_StretchFill: 0
+--- !u!61 &2074757329
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074757324}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 12, y: 10}
+  m_EdgeRadius: 0
+--- !u!114 &2074757330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074757324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd798a622a0b6b54e8959b3f1e18744f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 0}
+  _collider: {fileID: 2074757329}
+  _dimensions: {x: 12, y: 10}
