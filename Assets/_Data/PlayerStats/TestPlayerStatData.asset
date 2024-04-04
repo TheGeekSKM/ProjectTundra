@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd7abb6038cc3e4fb748d8393b2ff3d, type: 3}
   m_Name: TestPlayerStatData
   m_EditorClassIdentifier: 
-  TotalActionPoints: 3
-  TotalHealth: 5
-  Damage: 2
-  AOERange: 1
+  _totalActionPoints: 3
+  _totalHealth: 5
+  _damage: 1
+  _aOERange: 1
+  _totalMovementSpeed: 3
