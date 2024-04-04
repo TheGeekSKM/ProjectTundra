@@ -58,7 +58,7 @@
                     "path": "<Touchscreen>/primaryTouch/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Mobile",
                     "action": "TouchPosition",
                     "isComposite": false,
                     "isPartOfComposite": false

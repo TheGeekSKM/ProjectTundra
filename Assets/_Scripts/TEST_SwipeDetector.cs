@@ -7,6 +7,7 @@ public class TEST_SwipeDetector : MonoBehaviour
 {
 	[SerializeField] private TextMeshProUGUI _text;
 	[SerializeField] private BoxCollider2D _collider;
+	[SerializeField] private Vector2 _dimensions;
 
 	private void OnEnable()
 	{
@@ -31,18 +32,38 @@ public class TEST_SwipeDetector : MonoBehaviour
 			if (Mathf.Abs(swipeDirection.x) > Mathf.Abs(swipeDirection.y))
 			{
 				if (swipeDirection.x > 0)
-					_text.text = "Right";
+				{
+					if (_text != null)
+						_text.text = "Right";
+					if (_dimensions != Vector2.zero)
+						transform.position = new Vector3(transform.position.x + _dimensions.x, transform.position.y, transform.position.z);
+				}
 				if (swipeDirection.x < 0)
-					_text.text = "Left";
+				{
+					if (_text != null)
+						_text.text = "Left";
+					if (_dimensions != Vector2.zero)
+						transform.position = new Vector3(transform.position.x - _dimensions.x, transform.position.y, transform.position.z);
+				}
 			}
 
 			//Check vertical direction
 			if (Mathf.Abs(swipeDirection.y) > Mathf.Abs(swipeDirection.x))
 			{
 				if (swipeDirection.y > 0)
-					_text.text = "Up";
+				{
+					if (_text != null)
+						_text.text = "Up";
+					if (_dimensions != Vector2.zero)
+						transform.position = new Vector3(transform.position.x, transform.position.y + _dimensions.y, transform.position.z);
+				}
 				if (swipeDirection.y < 0)
-					_text.text = "Down";
+				{
+					if (_text != null)
+						_text.text = "Down";
+					if (_dimensions != Vector2.zero)
+						transform.position = new Vector3(transform.position.x, transform.position.y - _dimensions.y, transform.position.z);
+				}
 			}
 	}
 }

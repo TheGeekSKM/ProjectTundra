@@ -49,6 +49,7 @@ public class GridManager : MonoBehaviour
     }
 
     void TouchPerformed(Vector2 touchPosition) {
+
         var worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(touchPosition.x, touchPosition.y, 10));
 
         var hit = Physics2D.Raycast(worldPosition, Vector2.zero);
@@ -56,13 +57,15 @@ public class GridManager : MonoBehaviour
         if (hit.collider != null) {
             var tile = hit.collider.GetComponent<Tile>();
             if (tile != null) {
-                HighlightTile(tile.transform.position);
+				//HighlightTile(tile.transform.position);
+				HighlightTile(tile);
             }
         }
     }
 
-    void HighlightTile(Vector2 pos) {
-        var tile = GetTileAtPosition(pos);
+	//void HighlightTile(Vector2 pos) {
+    void HighlightTile(Tile tile) {
+        //var tile = GetTileAtPosition(pos);
         if (tile != null) {
             tile.Highlight();
             if (_previousTile != null && _previousTile != tile) {

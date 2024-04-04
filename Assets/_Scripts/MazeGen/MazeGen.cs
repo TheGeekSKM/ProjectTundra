@@ -2,60 +2,90 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PieceType { none, oPiece, iPiece, tPiece, xPiece, rPiece };
-
 public class MazeGen : MonoBehaviour
 {
+
+	//This might be a stupid idea but hey maybe it's okay
+
+	//Room input Structure
+	[System.Serializable]
+	private struct Rooms
+	{
+		public GameObject room;
+		[Range(0, 10)]
+		public int weight;
+	}
+
+	//Room Prefabs
+	[System.Serializable]
+	private class RoomInputs
+	{
+		[Header("Caps")]
+		public Rooms[] capNorthExit;
+		public Rooms[] capEastExit;
+		public Rooms[] capSouthExit;
+		public Rooms[] capWestExit;
+
+		[Header("Halls")]
+		public Rooms[] hallHorizontal;
+		public Rooms[] hallVertical;
+
+		[Header("Hooks")]
+		public Rooms[] hookNorthEast;
+		public Rooms[] hookSouthEast;
+		public Rooms[] hookSouthWest;
+		public Rooms[] hookNorthWest;
+
+		[Header("T-Shapes")]
+		public Rooms[] tNorth;
+		public Rooms[] tEast;
+		public Rooms[] tSouth;
+		public Rooms[] tWest;
+
+		[Header("Pluses")]
+		public Rooms[] plus;
+	}
+	[Header("Room Prefabs")]
+	[Tooltip("Here's a bunch of nested arrays to place designed room prefabs into, as well as select weighting for each room.\n\n" +
+			 "Rooms of weight 0 will never appear (unless they're the only one), and higher numbers should, in theory, mean higher chances of appearing.")]
+	[SerializeField] private RoomInputs roomPrefabs;
+
 	//Generation Variables
 	[Header("Generation Variables")]
-	[SerializeField]
-	private bool GenerateRandom;
-	[SerializeField]
-	private GameObject tilePrefab;
-	[SerializeField]
-	private GameObject roomPrefab;
-
-	//Standard width and height of our room prefabs
-	[Space(10)]
-	[SerializeField] [Tooltip("Standard width of our room prefabs")]
-	private int roomWidth;
-	[SerializeField] [Tooltip("Standard height of our room prefabs")]
-	private int roomHeight;
+	[Tooltip("Make sure to plug in the TilePrefab object here from the MazeGen _Scripts folder")]
+	[SerializeField] private GameObject tilePrefab;
 
 	[Space(10)]
-	[SerializeField] [Tooltip("Total width of the maze")]
-	private int mazeWidth;
-	[SerializeField] [Tooltip("Total height of the maze")]
-	private int mazeHeight;
+	[Tooltip("Standard width of our room prefabs")]
+	[SerializeField] private int roomWidth;
+	[Tooltip("Standard height of our room prefabs")]
+	[SerializeField] private int roomHeight;
 
-	//[Space(10)]
-	//[SerializeField]
-	//private bool doesStart;
-	//[SerializeField]
-	//private Vector2 startCoord;
-	//[SerializeField]
-	//private bool doesEnd;
-	//[SerializeField]
-	//private Vector2 endCoord;
+	[Space(10)]
+	[Tooltip("Total width of the maze")]
+	[SerializeField] private int mazeWidth = 2;
+	[Tooltip("Total height of the maze")]
+	[SerializeField] private int mazeHeight = 2;
+
+	[Space(10)]
+	[Tooltip("Pick a tile coordinate using x & y, and add an extra exit using z in the specified direction:\n" +
+			 "0 = North\n" +
+			 "1 = East\n" +
+			 "2 = South\n" +
+			 "3 = West")]
+	[SerializeField] private Vector3[] extraExits;
 
 	private void Start()
 	{
-		if (GenerateRandom)
+		//ensure maze has generation dimensions
+		if (mazeWidth == 0 || mazeHeight == 0)
 		{
-			//ensure maze has generation dimensions
-			if (mazeWidth == 0 || mazeHeight == 0)
-			{
-				Debug.LogError("Set the dimensions, dummy");
-				Debug.Break();
-			}
+			Debug.LogError("Set the dimensions, dummy");
+			Debug.Break();
+		}
 
-			//start generation
-			StartCoroutine(GenerateRooms());
-		}
-		else
-		{
-			//TODO
-		}
+		//start generation
+		StartCoroutine(GenerateRooms());
 	}
 
 	//Maze generation adapted from u/DavoMyan on Reddit (and also myself from last semester)
@@ -260,18 +290,17 @@ public class MazeGen : MonoBehaviour
 							break;
 					}
 
-					//Loop this until all directions for this tile are cleared!
+					//Loop this until any direction for this tile has been opened!
 				} while (!northVisited && !eastVisited && !southVisited && !westVisited);
 
 				//Loop this until all tiles have been visited!
 			} while (visitedCells.Count < mazeWidth * mazeHeight);
 
-			////Special case for start & end
-			//if (doesStartToEnd)
-			//{
-			//	grid[(int)startCoord.x, (int)startCoord.y].exits[3] = 1;
-			//	grid[(int)endCoord.x, (int)endCoord.y].exits[1] = 1;
-			//}
+			//Special cases for extra exits
+			for (int i = 0; i < extraExits.Length; i++)
+			{
+				grid[(int)extraExits[i].x, (int)extraExits[i].y].exits[(int)extraExits[i].z] = 1;
+			}
 
 			//We're done generating the maze!
 			finishedGeneration = true;
@@ -295,26 +324,115 @@ public class MazeGen : MonoBehaviour
 		GenerateMaze();
 		yield return new WaitUntil(() => finishedGeneration);
 
-		//puzzle.pieces = new PieceController[puzzle.width, puzzle.height];
+		foreach (MazeTile tile in grid)
+		{
+			GameObject roomPrefab = null;
 
-		//foreach (Tile tile in grid)
-		//{
-		//	int exitSum = tile.exits[0] + tile.exits[1] + tile.exits[2] + tile.exits[3];
-		//	if (exitSum == 2 && tile.exits[0] != tile.exits[2])
-		//		exitSum = 5;
+			//Check which category a tile belongs in
+			int exitSum = tile.exits[0] + tile.exits[1] + tile.exits[2] + tile.exits[3];
+			if (exitSum == 2 && tile.exits[0] != tile.exits[2])
+				exitSum = 5;
 
-		//	//Set piece type and setup piece
-		//	GameObject go = (GameObject)Instantiate(piecePrefab, transform.TransformPoint(new Vector3(tile.x, tile.y, 0)), Quaternion.identity, transform);
-		//	go.name = string.Format("({0},{1})",tile.x,tile.y);
-		//	PieceController piece = go.GetComponent<PieceController>();
-		//	piece.pieceType = (PieceType)exitSum;
-		//	piece.x = tile.x;
-		//	piece.y = tile.y;
-		//	piece.Setup();
+			//Caps
+			if (exitSum == 1)
+			{
+				//North
+				if (tile.exits[0] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.capNorthExit);
+				//East
+				if (tile.exits[1] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.capEastExit);
+				//South
+				if (tile.exits[2] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.capSouthExit);
+				//West
+				if (tile.exits[3] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.capWestExit);
+			}
 
-		//	puzzle.pieces[tile.x, tile.y] = piece;
+			//Halls
+			if (exitSum == 2)
+			{
+				//Vertical
+				if (tile.exits[0] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.hallVertical);
+				//Horizontal
+				if (tile.exits[1] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.hallHorizontal);
+			}
 
-		//	Destroy(tile.gameObject);
-		//}
+			//Hooks
+			if (exitSum == 5)
+			{
+				//NorthEast
+				if (tile.exits[0] == 1 && tile.exits[1] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.hookNorthEast);
+				//SouthEast
+				if (tile.exits[1] == 1 && tile.exits[2] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.hookSouthEast);
+				//SouthWest
+				if (tile.exits[2] == 1 && tile.exits[3] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.hookSouthWest);
+				//NorthWest
+				if (tile.exits[3] == 1 && tile.exits[0] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.hookNorthWest);
+			}
+
+			//T-Shapes
+			if (exitSum == 3)
+			{
+				//North
+				if (tile.exits[0] == 1 && tile.exits[1] == 1 && tile.exits[3] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.tNorth);
+				//East
+				if (tile.exits[1] == 1 && tile.exits[2] == 1 && tile.exits[0] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.tEast);
+				//South
+				if (tile.exits[2] == 1 && tile.exits[3] == 1 && tile.exits[1] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.tSouth);
+				//West
+				if (tile.exits[3] == 1 && tile.exits[0] == 1 && tile.exits[2] == 1)
+					roomPrefab = RandomRoom(roomPrefabs.tWest);
+			}
+
+			//Pluses
+			if (exitSum == 4)
+				roomPrefab = RandomRoom(roomPrefabs.plus);
+
+			GameObject go = (GameObject)Instantiate(roomPrefab, transform.TransformPoint(new Vector3(tile.x*roomWidth, tile.y*roomHeight, 0)), Quaternion.identity, transform);
+			go.name = string.Format("({0},{1})", tile.x, tile.y);
+			
+			Destroy(tile.gameObject);
+		}
+	}
+
+	private GameObject RandomRoom(Rooms[] rooms)
+	{
+		if (rooms == null || rooms.Length == 0) return null;
+
+		//Get total of all weights
+		int totalWeight = 0;
+		for (int i = 0; i < rooms.Length; i++)
+		{
+			totalWeight += rooms[i].weight;
+		}
+
+		//Generate a random weight threshold
+		int r = Random.Range(0, totalWeight);
+		int c = 0;
+
+		//Loop through each possibility
+		for (int i = 0; i < rooms.Length; i++)
+		{
+			//Add current room's wieght to counter
+			c += rooms[i].weight;
+
+			//Compare counter to weight threshold - if explicitly higher, return this room, else continue
+			if (c > r)
+				return rooms[i].room;
+		}
+
+		//if, for some reason, the above check failed, return last room in array
+		return rooms[rooms.Length-1].room;
 	}
 }
