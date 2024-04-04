@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff256a14b4e21742948da45eb2348f5, type: 3}
+  m_Name: TestRangedWeapon
+  m_EditorClassIdentifier: 
+  _itemName: Spit
+  _description: you got spit on
+  _durability: 0
+  _damageBonus: 0
+  _damageType: 1
+  _attackRange: 1
+  _attackPrefab: {fileID: 4013903374584103793, guid: e92448def48fee041b81976671617ce6, type: 3}
+  _hitEffectPrefab: {fileID: 0}
+  _attackType: 1
