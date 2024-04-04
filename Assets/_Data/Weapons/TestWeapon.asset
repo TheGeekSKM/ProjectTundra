@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemName: Fists
   _description: You got boned
-  _durability: 1
+  _durability: 9
   _damageBonus: 0
   _damageType: 0
   _attackRange: 2
