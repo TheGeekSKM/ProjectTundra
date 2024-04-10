@@ -166,6 +166,18 @@ PrefabInstance:
       propertyPath: extraExits.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: mazeWidth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: mazeHeight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: extraExits.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
 --- !u!224 &237106966 stripped

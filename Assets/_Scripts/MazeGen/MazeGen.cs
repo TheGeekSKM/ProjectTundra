@@ -43,7 +43,7 @@ public class MazeGen : MonoBehaviour
 		public Rooms[] plus;
 	}
 	[Header("Room Prefabs")]
-	[Tooltip("Here's a bunch of nested arrays to place designed room prefabs into, as well as select weighting for each room.\n\n" +
+	[Tooltip("Here's a bunch of nested arrays to place designed room prefabs into, as well as select weighting for each room. Don't use element 0 in the arrays (due to graphical bugs in editor)\n\n" +
 			 "Rooms of weight 0 will never appear (unless they're the only one), and higher numbers should, in theory, mean higher chances of appearing.")]
 	[SerializeField] private RoomInputs roomPrefabs;
 
