@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2699985811050198348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2699985811050198350}
+  - component: {fileID: 2699985811050198349}
+  m_Layer: 0
+  m_Name: MazeGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2699985811050198350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2699985811050198348}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2699985811939941604}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!156049354 &2699985811050198349
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2699985811050198348}
+  m_Enabled: 1
+  m_CellSize: {x: 1, y: 1, z: 1}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
+--- !u!1 &2699985811939941603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2699985811939941604}
+  - component: {fileID: 2699985811939941605}
+  m_Layer: 0
+  m_Name: MazeGen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2699985811939941604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2699985811939941603}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2699985811050198350}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2699985811939941605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2699985811939941603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba907b333161c624b80534cc9030f3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomPrefabs:
+    capNorthExit:
+    - room: {fileID: 2304966349008715828, guid: 9054d8fa153b6be4bba1cec54f74ecee, type: 3}
+      weight: 1
+    capEastExit:
+    - room: {fileID: 7319537710489150920, guid: df6c5766f830fb041b40eacd44f10e4d, type: 3}
+      weight: 1
+    capSouthExit:
+    - room: {fileID: 4383833804388330662, guid: bb6bcab110dd01b4fb8ee781e83fb89f, type: 3}
+      weight: 1
+    capWestExit:
+    - room: {fileID: 1111902910821715107, guid: 2d3f5379a2d72f8458a17b82680b05fa, type: 3}
+      weight: 1
+    hallHorizontal:
+    - room: {fileID: 8033390016668757809, guid: 978c650ec9dfb1848a01ceac30577e6a, type: 3}
+      weight: 1
+    hallVertical:
+    - room: {fileID: 3314052345259133097, guid: 73722e4275cc57c429935fe8d3b10d28, type: 3}
+      weight: 1
+    hookNorthEast:
+    - room: {fileID: 6398236983750512716, guid: a95a8ff152c8d0843bb50decfed32534, type: 3}
+      weight: 1
+    hookSouthEast:
+    - room: {fileID: 3305838626960862048, guid: bc8de3556ce5a7d4b9e1a26dcb09fb87, type: 3}
+      weight: 1
+    hookSouthWest:
+    - room: {fileID: 6598685367963959901, guid: dc101771024f4494e930b2bb1c5082e3, type: 3}
+      weight: 1
+    hookNorthWest:
+    - room: {fileID: 1266190679285794900, guid: ef0e7b9d4cf711a409e5112fab09581d, type: 3}
+      weight: 1
+    tNorth:
+    - room: {fileID: 1434013507641878147, guid: 92d3b1b5d548cfb42b58e96047d259d6, type: 3}
+      weight: 1
+    tEast:
+    - room: {fileID: 3087053941880917819, guid: 6650e41b03e55cd4d9b597b5eb6a4e31, type: 3}
+      weight: 1
+    tSouth:
+    - room: {fileID: 418999978313872242, guid: a4dbe6e83e5221343a1453ae5f9fa826, type: 3}
+      weight: 1
+    tWest:
+    - room: {fileID: 1299751113225832228, guid: 37ff5d633caa3634ab375e148e3f80dc, type: 3}
+      weight: 1
+    plus:
+    - room: {fileID: 8932313775095692372, guid: 65f5ef5038c448c4aaa6e2d4bff6d22c, type: 3}
+      weight: 1
+  tilePrefab: {fileID: 3217849423528365284, guid: da87d352ee1683e43b96eb4ab1a4c465, type: 3}
+  roomWidth: 12
+  roomHeight: 10
+  roomCenterOffset: {x: 5.5, y: 4.5}
+  mazeWidth: 5
+  mazeHeight: 5
+  extraExits:
+  - {x: 2, y: 0, z: 2}

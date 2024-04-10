@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class MazeGen : MonoBehaviour
 {
-
-	//This might be a stupid idea but hey maybe it's okay
-
 	//Room input Structure
 	[System.Serializable]
 	private struct Rooms
@@ -60,6 +57,10 @@ public class MazeGen : MonoBehaviour
 	[SerializeField] private int roomWidth;
 	[Tooltip("Standard height of our room prefabs")]
 	[SerializeField] private int roomHeight;
+
+	[Space(10)]
+	[Tooltip("Offsets center of rooms from the Maze Generator's origin location")]
+	[SerializeField] private Vector2 roomCenterOffset;
 
 	[Space(10)]
 	[Tooltip("Total width of the maze")]
@@ -399,7 +400,7 @@ public class MazeGen : MonoBehaviour
 			if (exitSum == 4)
 				roomPrefab = RandomRoom(roomPrefabs.plus);
 
-			GameObject go = (GameObject)Instantiate(roomPrefab, transform.TransformPoint(new Vector3(tile.x*roomWidth, tile.y*roomHeight, 0)), Quaternion.identity, transform);
+			GameObject go = (GameObject)Instantiate(roomPrefab, transform.TransformPoint(new Vector3((tile.x*roomWidth)+roomCenterOffset.x, (tile.y*roomHeight)+roomCenterOffset.y, 0)), Quaternion.identity, transform);
 			go.name = string.Format("({0},{1})", tile.x, tile.y);
 			
 			Destroy(tile.gameObject);
