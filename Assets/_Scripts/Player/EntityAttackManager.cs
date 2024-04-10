@@ -34,7 +34,7 @@ public class EntityAttackManager : MonoBehaviour
                 _entityStatsContainer.PlayerStatsData.ResetActionPoints();
                 break;
             case CombatTurnState.Enemy:
-                _entityStatsContainer.PlayerStatsData.CurrentActionPoints = 0;
+                //_entityStatsContainer.PlayerStatsData.CurrentActionPoints = 0;
                 _ignoreInput = true;
                 break;
             case CombatTurnState.NonCombat:

@@ -33,6 +33,7 @@ public class EntityMovement : MonoBehaviour
 
         // Subtract the movement cost from the player's action points
         _playerStatsData.CurrentActionPoints -= _movementCost;
+		Debug.Log("Subtracted " + _movementCost + " movement point from total action points, resulting in " + _playerStatsData.CurrentActionPoints + " total points!");
     }
 
 
