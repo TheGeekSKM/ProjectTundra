@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemName: Spit
   _description: you got spit on
-  _durability: 0
+  _durability: -1
+  _apCost: 1
   _damageBonus: 0
   _damageType: 1
   _attackRange: 1

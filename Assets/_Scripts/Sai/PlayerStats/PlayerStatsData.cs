@@ -18,6 +18,18 @@ public class PlayerStatsData : ScriptableObject
         }
     }
     public event Action OnTotalActionPointsChanged;
+
+    private int _currentActionPoints;
+    public int CurrentActionPoints
+    {
+        get => _currentActionPoints;
+        set
+        {
+            _currentActionPoints = value;
+            OnCurrentActionPointsChanged?.Invoke();
+        }
+    }
+    public event Action OnCurrentActionPointsChanged;
     
     
     [SerializeField] private int _totalHealth;
@@ -58,18 +70,7 @@ public class PlayerStatsData : ScriptableObject
     }
     public event Action OnAOERangeChanged;
     
-    
-    [SerializeField] private int _totalMovementSpeed;
-    public int TotalMovementSpeed
-    {
-        get => _totalMovementSpeed;
-        set
-        {
-            _totalMovementSpeed = value;
-            OnMovementSpeedChanged?.Invoke();
-        }
-    }
-    public event Action OnMovementSpeedChanged;
+
 
     [Header("Hidden Stats")]
     [SerializeField] private int _armor;
@@ -83,5 +84,11 @@ public class PlayerStatsData : ScriptableObject
         }
     }
     public event Action OnArmorChanged;
+
+
+    public void ResetActionPoints()
+    {
+        CurrentActionPoints = TotalActionPoints;
+    }
 
 }

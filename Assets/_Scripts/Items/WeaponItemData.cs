@@ -29,14 +29,15 @@ public class WeaponItemData : BaseItemData
     [SerializeField] private AttackType _attackType;
     public AttackType AttackType => _attackType;
 
-    public override void Use()
+    public override int Use()
     {
         base.Use();
         if (ItemBroken)
         {
-            return;
+            return _apCost;
         }
         Debug.Log($"Dealt {_damageBonus} {_damageType} damage with {ItemName} at a range of {_attackRange} units.");
+        return _apCost;
     }
 }
 

@@ -16,4 +16,4 @@ MonoBehaviour:
   _totalHealth: 5
   _damage: 1
   _aOERange: 1
-  _totalMovementSpeed: 3
+  _armor: 0

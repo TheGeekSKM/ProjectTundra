@@ -12,10 +12,11 @@ public class ConsumableItemData : BaseItemData
     [SerializeField] private EStatType _statType;
     public EStatType StatType => _statType;
 
-    public override void Use()
+    public override int Use()
     {
         base.Use();
         Debug.Log($"Consumed {_amountPerUse} of {ItemName}");
+        return _apCost;
     }
 
     

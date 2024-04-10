@@ -15,20 +15,24 @@ public abstract class BaseItemData : ScriptableObject
     [SerializeField] private int _durability = 1;
     public int Durability => _durability;
 
-    public bool ItemBroken => _durability <= 0;
+    public bool ItemBroken => _durability == 0;
+
+    [SerializeField] protected int _apCost;
+    public int APCost => _apCost;
 
     protected readonly List<Action> _useEffects = new List<Action>();
 
-    public virtual void Use()
+    public virtual int Use()
     {
         if (_durability == 0)
         {
             Broken();
-            return;
+            return _apCost;
         }
 
         _durability--;
         RaiseUseEffects();
+        return _apCost;
     }
 
     public virtual void Broken()

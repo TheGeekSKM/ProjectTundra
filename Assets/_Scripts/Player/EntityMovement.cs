@@ -6,14 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(EntityStatsContainer))]
 public class EntityMovement : MonoBehaviour
 {
-
     [SerializeField] int _movementLeft;
     public int MovementLeft => _movementLeft;
 
-    private int _totalMovementSpeed;
-    public int TotalMoveSpeed => _totalMovementSpeed;
-
     PlayerStatsData _playerStatsData;
+    CombatManager _combatManager;
     Rigidbody2D _rb;
 
     void OnValidate()
@@ -24,34 +21,83 @@ public class EntityMovement : MonoBehaviour
 
     void Awake()
     {
-        _playerStatsData.OnMovementSpeedChanged += CheckTotalMovementSpeed;
+        _playerStatsData.OnTotalActionPointsChanged += CheckTotalMovementSpeed;
     }
 
-    private void Start()
+    void OnEnable()
+    {
+        _combatManager = CombatManager.Instance;
+        _combatManager.OnTurnChanged += HandleTurnChange;
+    }
+
+    void Start()
     {
         CheckTotalMovementSpeed();
     }
 
-    private void CheckTotalMovementSpeed()
+    void OnDisable()
     {
-        _totalMovementSpeed = _playerStatsData.TotalMovementSpeed;
-        Debug.Log($"Total Movement Speed: {_totalMovementSpeed}");
-        _movementLeft = _totalMovementSpeed;
+        _playerStatsData.OnTotalActionPointsChanged -= CheckTotalMovementSpeed;
+        _combatManager.OnTurnChanged -= HandleTurnChange;
     }
 
+    void HandleTurnChange(CombatTurnState turnState)
+    {
+        switch (turnState)
+        {
+            // Reset movement when it's the player's turn
+            case CombatTurnState.Player:
+                CheckTotalMovementSpeed();
+                break;
+            
+            // player can't move when it's the enemy's turn
+            case CombatTurnState.Enemy:
+                _movementLeft = 0;
+                break;
+
+            // player's movement is not counted when it's not in combat
+            case CombatTurnState.NonCombat:
+                DisableMovementCounter();
+                break;
+        }
+    }
+
+    // Disable movement counter when player is not in combat
+    void DisableMovementCounter()
+    {
+        _movementLeft = -1;
+    }
+
+    // Enable movement counter when player is in combat
+    private void CheckTotalMovementSpeed()
+    {
+        // Reset movement counter to total action points remaining
+        _movementLeft = _playerStatsData.CurrentActionPoints;
+    }
+
+    /// <summary>
+    ///  Move the entity in the specified direction
+    /// </summary>
+    /// <param name="direction">Input a Vector2 Direction that you want the entity to move</param>
     public void Move(Vector2 direction)
     {
         Debug.Log("Moving");
-        if (_movementLeft <= 0)
+        if (_movementLeft == 0)
         {
             Debug.Log("No movement left");
             return;
         }
 
-        _movementLeft--;
+        if (_movementLeft > 0) 
+        {
+            _movementLeft--;
+            _playerStatsData.CurrentActionPoints--;
+        }
         direction.Normalize();
         _rb.MovePosition(_rb.position + direction);
     }
+
+
 
     [ContextMenu("Move Up")]
     public void MoveUp()

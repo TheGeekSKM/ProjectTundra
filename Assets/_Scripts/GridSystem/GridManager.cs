@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] private int _width, _height;
- 
+    [Header("Grid Settings")]
+    [SerializeField] private Vector2Int _gridSize;
+    [SerializeField] private Vector2 _cameraOffset;
+    [SerializeField] bool _moveCamera = false;
+    
+    [Header("References")]
     [SerializeField] private Tile _tilePrefab;
- 
     [SerializeField] private Transform _cam;
- 
-    private Dictionary<Vector2, Tile> _tiles;
     [SerializeField] private Tile _previousTile;
+    
+    private Dictionary<Vector2, Tile> _tiles;
 
     void OnEnable()
     {
@@ -24,14 +27,14 @@ public class GridManager : MonoBehaviour
     }
  
     void Start() {
-
+        UpdateCamera();
     }
  
     [ContextMenu("Generate Grid")]
     void GenerateGrid() {
         _tiles = new Dictionary<Vector2, Tile>();
-        for (int x = 0; x < _width; x++) {
-            for (int y = 0; y < _height; y++) {
+        for (int x = 0; x < _gridSize.x; x++) {
+            for (int y = 0; y < _gridSize.y; y++) {
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, y), Quaternion.identity);
                 spawnedTile.name = $"Tile {x} {y}";
  
@@ -44,10 +47,22 @@ public class GridManager : MonoBehaviour
                 _tiles[new Vector2(x, y)] = spawnedTile;
             }
         }
- 
-        _cam.transform.position = new Vector3((float)_width/2 -0.5f, (float)_height / 2 - 0.5f,-10);
+        
+
+        UpdateCamera();
     }
 
+
+    // move the camera to the center of the grid
+    void UpdateCamera()
+    {
+        if (!_moveCamera) return;
+        float _x = (float)(_gridSize.x + _cameraOffset.x) / 2 - 0.5f;
+        float _y = (float)(_gridSize.y + _cameraOffset.y) / 2 - 0.5f;
+        _cam.transform.position = new Vector3(_x, _y, -10);
+    }
+
+    // run this function when a touch is performed
     void TouchPerformed(Vector2 touchPosition) {
 
         var worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(touchPosition.x, touchPosition.y, 10));
@@ -62,6 +77,27 @@ public class GridManager : MonoBehaviour
             }
         }
     }
+
+    [ContextMenu("Clear All Tiles")]
+    public void ClearAllTiles() {
+        
+        // if the tiles dictionary is null, then delete all children of the grid
+        if (_tiles == null) 
+        {
+            //deletes all children of the grid
+            foreach (Transform child in transform) {
+                Destroy(child.gameObject);
+            }
+            return;
+        }
+
+        // if the tiles dictionary is not null, then delete all tiles in the dictionary
+        foreach (var tile in _tiles.Values) {
+            Destroy(tile.gameObject);
+        }
+        _tiles.Clear();
+    }
+
 
 	//void HighlightTile(Vector2 pos) {
     void HighlightTile(Tile tile) {
