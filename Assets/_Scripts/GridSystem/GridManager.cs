@@ -64,7 +64,8 @@ public class GridManager : MonoBehaviour
 
     // run this function when a touch is performed
     void TouchPerformed(Vector2 touchPosition) {
-
+        if (ChestViewManager.Instance.IsChestOpen) return;
+        
         var worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(touchPosition.x, touchPosition.y, 10));
 
         var hit = Physics2D.Raycast(worldPosition, Vector2.zero);
