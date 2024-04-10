@@ -62,7 +62,7 @@ public class AttackObjectController : MonoBehaviour
         var entityStatsContainer = other.GetComponent<EntityStatsContainer>();
         if (entityStatsContainer != null && entityStatsContainer.EntityType != _spawnerType)
         {
-            entityStatsContainer.PlayerStatsData.TotalHealth -= _damage;
+            entityStatsContainer.PlayerStatsData.Health -= _damage;
             
             if (_weaponItemData.HitEffectPrefab != null)
                 Instantiate(_weaponItemData.HitEffectPrefab, transform.position, Quaternion.identity);

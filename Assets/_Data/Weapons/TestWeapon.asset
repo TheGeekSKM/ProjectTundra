@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff256a14b4e21742948da45eb2348f5, type: 3}
   m_Name: TestWeapon
   m_EditorClassIdentifier: 
+  _itemSprite: {fileID: 0}
   _itemName: Fists
   _description: You got boned
   _durability: 9
+  _apCost: 0
   _damageBonus: 0
   _damageType: 0
-  _attackRange: 2
+  _attackRange: 1
   _attackPrefab: {fileID: 4369071744538415893, guid: cae175b6376db4247b4c712f2beb3041, type: 3}
   _hitEffectPrefab: {fileID: 0}
   _attackType: 0

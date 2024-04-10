@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: PSD_Player
   m_EditorClassIdentifier: 
   _totalActionPoints: 3
-  _totalHealth: 5
+  _currentActionPoints: 3
+  _health: 5
   _damage: 1
   _aOERange: 1
   _armor: 0

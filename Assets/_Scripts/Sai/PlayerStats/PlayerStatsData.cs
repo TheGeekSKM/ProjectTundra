@@ -19,7 +19,7 @@ public class PlayerStatsData : ScriptableObject
     }
     public event Action OnTotalActionPointsChanged;
 
-    private int _currentActionPoints;
+    [SerializeField] private int _currentActionPoints;
     public int CurrentActionPoints
     {
         get => _currentActionPoints;
@@ -32,17 +32,17 @@ public class PlayerStatsData : ScriptableObject
     public event Action OnCurrentActionPointsChanged;
     
     
-    [SerializeField] private int _totalHealth;
-    public int TotalHealth
+    [SerializeField] private int _health;
+    public int Health
     {
-        get => _totalHealth;
+        get => _health;
         set
         {
-            _totalHealth = value;
-            OnTotalHealthChanged?.Invoke();
+            _health = value;
+            OnHealthChanged?.Invoke();
         }
     }
-    public event Action OnTotalHealthChanged;
+    public event Action OnHealthChanged;
     
     
     [SerializeField] private int _damage;

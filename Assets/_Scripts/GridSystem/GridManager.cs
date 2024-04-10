@@ -19,15 +19,29 @@ public class GridManager : MonoBehaviour
     void OnEnable()
     {
         TouchManager.Instance.OnTap += TouchPerformed;
+        CombatManager.Instance.OnTurnChanged += HandleTurnChange;
     }
 
     void OnDisable()
     {
         TouchManager.Instance.OnTap -= TouchPerformed;
+        CombatManager.Instance.OnTurnChanged -= HandleTurnChange;
     }
  
     void Start() {
         UpdateCamera();
+    }
+
+    void HandleTurnChange(CombatTurnState state)
+    {
+        if (state != CombatTurnState.NonCombat)
+        {
+            GenerateGrid();
+        }
+        else
+        {
+            ClearAllTiles();
+        }
     }
  
     [ContextMenu("Generate Grid")]
