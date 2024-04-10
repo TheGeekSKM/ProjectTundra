@@ -21,7 +21,7 @@ public abstract class BaseItemData : ScriptableObject
 
     public virtual void Use()
     {
-        if (_durability <= 0)
+        if (_durability == 0)
         {
             Broken();
             return;
