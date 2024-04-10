@@ -46,6 +46,12 @@ public class GridManager : MonoBehaviour
  
     [ContextMenu("Generate Grid")]
     void GenerateGrid() {
+
+        //check to see if children already exist
+        if (transform.childCount > 0) {
+            return;
+        }
+
         _tiles = new Dictionary<Vector2, Tile>();
         for (int x = 0; x < _gridSize.x; x++) {
             for (int y = 0; y < _gridSize.y; y++) {

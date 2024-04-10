@@ -17,12 +17,14 @@ public class CombatManager : MonoBehaviour
     public static CombatManager Instance;
     [SerializeField] CombatFSM combatFSM;
 
-    [SerializeField] private List<EntityStatsContainer> _enemies;
-    public List<EntityStatsContainer> Enemies => _enemies;
+    [SerializeField] private List<EnemyBrain> _enemies;
+    public List<EnemyBrain> Enemies => _enemies;
 
     [SerializeField] CombatTurnState _currentTurnState;
     public event System.Action<CombatTurnState> OnTurnChanged;
     [SerializeField] private PlayerStatsData _playerStatsData;
+
+    int _currentEnemyIndex = 0;
 
     void OnValidate()
     {
@@ -32,12 +34,12 @@ public class CombatManager : MonoBehaviour
 
     void OnEnable()
     {
-        _playerStatsData.OnTotalActionPointsChanged += HandlePlayerStatsChange;
+        _playerStatsData.OnCurrentActionPointsChanged += HandlePlayerStatsChange;
     }
 
     void OnDisable()
     {
-        _playerStatsData.OnTotalActionPointsChanged -= HandlePlayerStatsChange;
+        _playerStatsData.OnCurrentActionPointsChanged -= HandlePlayerStatsChange;
     }
 
     // Check if player has enough action points, and if they don't, switch to enemy turn
@@ -55,16 +57,43 @@ public class CombatManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void AddEnemy(EntityStatsContainer enemy)
+    public void AddEnemy(EnemyBrain enemy)
     {
         _enemies.Add(enemy);
+
+        combatFSM.ChangeState(combatFSM.PlayerCombatState);
     }
 
-    public void RemoveEnemy(EntityStatsContainer enemy)
+    public void RemoveEnemy(EnemyBrain enemy)
     {
         _enemies.Remove(enemy);
         WinCheck();
     }
+
+
+    void EnemyTurn()
+    {
+        if (_enemies.Count > 0)
+        {
+            _enemies[0].StartEnemyTurn();
+        }
+    }
+
+    void EnemyTurnEnded()
+    {
+        if (_currentEnemyIndex >= _enemies.Count)
+        {
+            _currentEnemyIndex = 0;
+            combatFSM.ChangeState(combatFSM.PlayerCombatState);
+        }
+        else
+        {
+            _currentEnemyIndex++;
+            _enemies[_currentEnemyIndex].StartEnemyTurn();
+        }
+
+    }
+
 
     void FireEvent()
     {

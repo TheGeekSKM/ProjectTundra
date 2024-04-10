@@ -6,6 +6,7 @@ public class EntityAttackManager : MonoBehaviour
 {
     private EntityStatsContainer _entityStatsContainer;
     [SerializeField] Transform _attackPoint;
+    public Transform AttackPoint => _attackPoint;
 
     bool _ignoreInput = false;
 

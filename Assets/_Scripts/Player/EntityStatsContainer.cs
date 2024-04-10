@@ -18,7 +18,4 @@ public class EntityStatsContainer : MonoBehaviour
 
     [SerializeField] private ItemContainer _itemContainer;
     public ItemContainer ItemContainer => _itemContainer;
-
-    public System.Action OnDeath;
-    public System.Action OnTurnEnded;
 }

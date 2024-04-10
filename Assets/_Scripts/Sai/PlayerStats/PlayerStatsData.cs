@@ -14,10 +14,9 @@ public class PlayerStatsData : ScriptableObject
         set
         {
             _totalActionPoints = value;
-            OnTotalActionPointsChanged?.Invoke();
         }
     }
-    public event Action OnTotalActionPointsChanged;
+
 
     [SerializeField] private int _currentActionPoints;
     public int CurrentActionPoints
