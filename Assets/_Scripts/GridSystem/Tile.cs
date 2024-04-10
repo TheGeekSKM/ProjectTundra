@@ -7,16 +7,18 @@ public class Tile : MonoBehaviour
     [SerializeField] private Color _baseColor, _offsetColor;
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private GameObject _highlight;
+    [SerializeField] private bool _useCustomSprite = false;
  
-    public void Init(bool isOffset) {
+    public virtual void Init(bool isOffset) {
+        if (_useCustomSprite) return;
         _renderer.color = isOffset ? _offsetColor : _baseColor;
     }
 
-    public void Highlight() {
+    public virtual void Highlight() {
         _highlight.SetActive(true);
     }
 
-    public void Deselect() {
+    public virtual void Deselect() {
         _highlight.SetActive(false);
     }
  

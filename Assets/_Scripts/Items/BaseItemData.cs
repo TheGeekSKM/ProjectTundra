@@ -5,6 +5,9 @@ using UnityEngine;
 
 public abstract class BaseItemData : ScriptableObject
 {
+
+    [SerializeField] private Sprite _itemSprite;
+    public Sprite ItemSprite => _itemSprite;
     [SerializeField] private string _itemName;
     public string ItemName => _itemName;
 

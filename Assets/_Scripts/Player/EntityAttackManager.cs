@@ -45,6 +45,7 @@ public class EntityAttackManager : MonoBehaviour
     [ContextMenu("Attack")]
     public void Attack()
     {
+        // if not in combat state, player cannot attack
         if (_ignoreInput) return; 
 
         // get the weapon from the player's inventory
@@ -68,6 +69,7 @@ public class EntityAttackManager : MonoBehaviour
         // initialize the attack object
         if (weapon.AttackType == AttackType.Melee)
         {
+            Debug.Log("Melee attack");
             attackObject.Initialize(0f, 0.5f, 
                 _entityStatsContainer.PlayerStatsData.AOERange, 
                 _entityStatsContainer.PlayerStatsData.Damage + weapon.DamageBonus,
@@ -76,6 +78,7 @@ public class EntityAttackManager : MonoBehaviour
         }
         else if (weapon.AttackType == AttackType.Ranged)
         {
+            Debug.Log("Ranged attack");
             attackObject.Initialize(20f, 3f, 0.2f, _entityStatsContainer.PlayerStatsData.Damage + weapon.DamageBonus, weapon, _entityStatsContainer.EntityType);
         }
 
