@@ -31,10 +31,4 @@ public class CombatFSM : BaseStateMachine
         LoseCombatState = new LoseCombatState(_combatManager, this);
         WinCombatState = new WinCombatState(_combatManager, this);
     }
-
-    IEnumerator Start()
-    {
-        yield return new WaitForSecondsRealtime(0.2f);
-        ChangeState(NonCombatState);
-    }
 }

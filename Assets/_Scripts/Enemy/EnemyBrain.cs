@@ -48,6 +48,7 @@ public class EnemyBrain : MonoBehaviour
     // Check if the enemy has enough action points to take a turn
     void HandleAPCheck()
     {
+        Debug.Log($"Current AP: {_entityStatsContainer.PlayerStatsData.CurrentActionPoints}");
         if (_entityStatsContainer.PlayerStatsData.CurrentActionPoints <= 0)
         {
             _isMyTurn = false;
@@ -116,7 +117,7 @@ public class EnemyBrain : MonoBehaviour
         var direction = Player.Instance.transform.position - transform.position;
 
         // start the movement coroutine
-        _currentAction = StartCoroutine(MoveAction(direction.normalized));
+        _currentAction = StartCoroutine(MoveAction(direction));
         
     }
 

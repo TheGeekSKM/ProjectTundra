@@ -42,6 +42,11 @@ public class CombatManager : MonoBehaviour
         _playerStatsData.OnCurrentActionPointsChanged -= HandlePlayerStatsChange;
     }
 
+    void Start()
+    {
+        combatFSM.ChangeState(combatFSM.NonCombatState);
+    }
+
     // Check if player has enough action points, and if they don't, switch to enemy turn
     void HandlePlayerStatsChange()
     {
@@ -60,18 +65,22 @@ public class CombatManager : MonoBehaviour
     public void AddEnemy(EnemyBrain enemy)
     {
         _enemies.Add(enemy);
+        enemy.OnEnemyTurnEnded += EnemyTurnEnded;
 
         combatFSM.ChangeState(combatFSM.PlayerCombatState);
     }
 
     public void RemoveEnemy(EnemyBrain enemy)
     {
+        enemy.OnEnemyTurnEnded -= EnemyTurnEnded;
         _enemies.Remove(enemy);
+        
         WinCheck();
     }
 
 
-    void EnemyTurn()
+    // starts off the enemy turns by calling the first enemy in the list and starting their turn
+    void StartEnemiesTurn()
     {
         if (_enemies.Count > 0)
         {
@@ -81,12 +90,13 @@ public class CombatManager : MonoBehaviour
 
     void EnemyTurnEnded()
     {
-        if (_currentEnemyIndex >= _enemies.Count)
+        // if there are no more enemies, switch to player turn
+        if (_currentEnemyIndex >= _enemies.Count - 1)
         {
             _currentEnemyIndex = 0;
             combatFSM.ChangeState(combatFSM.PlayerCombatState);
         }
-        else
+        else // if there are more enemies, start the next enemy's turn
         {
             _currentEnemyIndex++;
             _enemies[_currentEnemyIndex].StartEnemyTurn();
@@ -117,6 +127,7 @@ public class CombatManager : MonoBehaviour
 
     public void EnemyTurnIntro()
     {
+        StartEnemiesTurn();
         _currentTurnState = CombatTurnState.Enemy;
         FireEvent();
     }

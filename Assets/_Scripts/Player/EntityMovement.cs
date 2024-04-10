@@ -30,7 +30,9 @@ public class EntityMovement : MonoBehaviour
 
         direction.Normalize();
         _rb.MovePosition(_rb.position + direction);
-        _playerStatsData.CurrentActionPoints--;
+
+        // Subtract the movement cost from the player's action points
+        _playerStatsData.CurrentActionPoints -= _movementCost;
     }
 
 
