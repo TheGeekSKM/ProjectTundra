@@ -7,6 +7,7 @@ public class PlayerInputBrain : MonoBehaviour
     [SerializeField] private EntityAttackManager _entityAttackManager;
 
     bool _ignoreInput = false;
+    bool _ignoreAPCost = false;
 
 
     void Awake()
@@ -54,12 +55,14 @@ public class PlayerInputBrain : MonoBehaviour
         {
             case CombatTurnState.Player:
                 _ignoreInput = false;
+                _ignoreAPCost = false;
                 break;
             case CombatTurnState.Enemy:
                 _ignoreInput = true;
                 break;
             case CombatTurnState.NonCombat:
                 _ignoreInput = false;
+                _ignoreAPCost = true;
                 break;
         }
     }
@@ -71,16 +74,16 @@ public class PlayerInputBrain : MonoBehaviour
         switch (direction)
         {
             case MoveDirection.Up:
-                _entityMovement.Move(Vector2Int.up);
+                _entityMovement.MoveUp(!_ignoreAPCost);
                 break;
             case MoveDirection.Down:
-                _entityMovement.Move(Vector2Int.down);
+                _entityMovement.MoveDown(!_ignoreAPCost);
                 break;
             case MoveDirection.Left:
-                _entityMovement.Move(Vector2Int.left);
+                _entityMovement.MoveLeft(!_ignoreAPCost);
                 break;
             case MoveDirection.Right:
-                _entityMovement.Move(Vector2Int.right);
+                _entityMovement.MoveRight(!_ignoreAPCost);
                 break;
         }
     }

@@ -17,11 +17,13 @@ public class NonCombatState : BaseState
     {
         _combatManager.NonCombat();
         _combatManager.AnimatePlayerControlsOutro();
+        _combatManager.AnimatePlayerMovementControlsIntro();
         // Debug.Log("NonCombatState Enter");
     }
 
     public override void Exit()
     {
+        _combatManager.AnimatePlayerMovementControlsOutro();
         // Debug.Log("NonCombatState Exit");
     }
 }

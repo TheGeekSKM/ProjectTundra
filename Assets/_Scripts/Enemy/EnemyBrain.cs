@@ -10,7 +10,7 @@ public class EnemyBrain : MonoBehaviour
     [SerializeField] float _timeBetweenActions = 1f;
     Coroutine _currentAction;
 
-    public System.Action OnEnemyTurnEnded;
+    public System.Action<string> OnEnemyTurnEnded;
 
     bool _isMyTurn = false;
     int _attackRange = 1;
@@ -24,19 +24,6 @@ public class EnemyBrain : MonoBehaviour
         
     }
 
-    // Subscribe to events
-    void OnEnable()
-    {
-        // _entityStatsContainer.PlayerStatsData.OnCurrentActionPointsChanged += HandleAPCheck;
-        // _entityStatsContainer.PlayerStatsData.OnHealthChanged += HandleDeathCheck;
-    }
-
-    void OnDisable()
-    {
-        // _entityStatsContainer.PlayerStatsData.OnCurrentActionPointsChanged -= HandleAPCheck;
-        // _entityStatsContainer.PlayerStatsData.OnHealthChanged -= HandleDeathCheck;
-    }
-
     void Start()
     {
         _entityStatsContainer.PlayerStatsData.ResetActionPoints();
@@ -46,14 +33,14 @@ public class EnemyBrain : MonoBehaviour
         CombatManager.Instance.AddEnemy(this);
     }
 
+    #region CheckingMethods
     // Check if the enemy has enough action points to take a turn
     void HandleAPCheck()
     {
         // Debug.Log($"Enemy Current AP: {_entityStatsContainer.PlayerStatsData.CurrentActionPoints}");
         if (_entityStatsContainer.PlayerStatsData.CurrentActionPoints <= 0)
         {
-            _isMyTurn = false;
-            OnEnemyTurnEnded?.Invoke();
+            EndTurn();
         }
         else
         {
@@ -66,12 +53,14 @@ public class EnemyBrain : MonoBehaviour
     {
         if (_entityStatsContainer.PlayerStatsData.Health <= 0)
         {
-            _isMyTurn = false;
-            OnEnemyTurnEnded?.Invoke();
+            EndTurn();
+
             CombatManager.Instance.RemoveEnemy(this);
             Destroy(gameObject);
         }
     }
+
+    #endregion
 
     // Start the enemy's turn -> THIS IS MEANT TO BE CALLED BY THE COMBAT MANAGER
     public void StartEnemyTurn()
@@ -82,6 +71,12 @@ public class EnemyBrain : MonoBehaviour
         HandleTurnLogic();
     }
 
+    #region TurnLogicHandlers
+    void EndTurn()
+    {
+        _isMyTurn = false;
+        OnEnemyTurnEnded?.Invoke(gameObject.name);
+    }
 
     void HandleTurnLogic()
     {
@@ -136,12 +131,12 @@ public class EnemyBrain : MonoBehaviour
             if (direction.x > 0)
             {
 				// Debug.Log("Enemy Moving Right!");
-                _entityMovement.MoveRight();
+                _entityMovement.MoveRight(true);
             }
             else
             {
 				// Debug.Log("Enemy Moving Left!");
-				_entityMovement.MoveLeft();
+				_entityMovement.MoveLeft(true);
             }
         }
         else
@@ -150,12 +145,12 @@ public class EnemyBrain : MonoBehaviour
             if (direction.y > 0)
             {
 				// Debug.Log("Enemy Moving Up!");
-				_entityMovement.MoveUp();
+				_entityMovement.MoveUp(true);
             }
             else
             {
 				// Debug.Log("Enemy Moving Down!");
-				_entityMovement.MoveDown();
+				_entityMovement.MoveDown(true);
             }
         }
 
@@ -175,20 +170,17 @@ public class EnemyBrain : MonoBehaviour
         yield return new WaitForSeconds(_timeBetweenActions);
         HandleTurnLogic();
     }
+    #endregion
 
-    // void Update()
-    // {
-    //     if (!_isMyTurn) return;
+    #region DebugMethods
 
-    //     if (Vector3.Distance(transform.position, Player.Instance.transform.position) <= _attackRange)
-    //     {
-    //         HandleAttack();
-    //     }
-    //     else
-    //     {
-    //         HandleMovement();
-    //     }
-    // }
+    [ContextMenu("Kill Enemy")]
+    void KillEnemy()
+    {
+        _entityStatsContainer.PlayerStatsData.Health = 0;
+        HandleDeathCheck();
+    }
 
+    #endregion
 
 }
