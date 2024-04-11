@@ -17,6 +17,7 @@ public class NonCombatState : BaseState
     {
         _combatManager.NonCombat();
         _combatManager.AnimatePlayerControlsOutro();
+        _combatManager.AnimatePlayerMovementControlsIntro();
         // Debug.Log("NonCombatState Enter");
     }
 
