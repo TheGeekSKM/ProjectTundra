@@ -15,16 +15,12 @@ public class CombatFSM : BaseStateMachine
     public WinCombatState WinCombatState { get; private set; }
 
 
-    void OnValidate()
+    void Awake()
     {
         if (_combatManager == null)
         {
             _combatManager = GetComponent<CombatManager>();
         }
-    }
-
-    void Awake()
-    {
         NonCombatState = new NonCombatState(_combatManager, this);
         PlayerCombatState = new PlayerCombatState(_combatManager, this);
         EnemyCombatState = new EnemyCombatState(_combatManager, this);

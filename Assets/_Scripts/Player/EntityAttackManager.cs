@@ -10,11 +10,10 @@ public class EntityAttackManager : MonoBehaviour
 
     bool _ignoreInput = false;
 
-    void OnValidate()
+    void Awake()
     {
         _entityStatsContainer = GetComponent<EntityStatsContainer>();
     }
-
     void OnEnable()
     {
         CombatManager.Instance.OnTurnChanged += HandleTurnChange;

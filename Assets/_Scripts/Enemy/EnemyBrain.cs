@@ -15,12 +15,13 @@ public class EnemyBrain : MonoBehaviour
     bool _isMyTurn = false;
     int _attackRange = 1;
 
-    // Grab references to components if they are not assigned
-    void OnValidate()
+    // Grab references to components if they are not set
+    void Awake()
     {
         if (_entityStatsContainer == null) _entityStatsContainer = GetComponent<EntityStatsContainer>();
         if (_entityAttackManager == null) _entityAttackManager = GetComponent<EntityAttackManager>();
         if (_entityMovement == null) _entityMovement = GetComponent<EntityMovement>();
+        
     }
 
     // Subscribe to events

@@ -8,7 +8,8 @@ public class PlayerInputBrain : MonoBehaviour
 
     bool _ignoreInput = false;
 
-    void OnValidate()
+
+    void Awake()
     {
         if (_entityMovement == null)
         {
