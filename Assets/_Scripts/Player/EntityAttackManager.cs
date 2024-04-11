@@ -47,7 +47,7 @@ public class EntityAttackManager : MonoBehaviour
     public void Attack()
     {
         // if not in combat state, player cannot attack
-        if (_ignoreInput) return;
+        //if (_ignoreInput) return;
 
         // if player has no action points, player cannot attack
         if (_entityStatsContainer.PlayerStatsData.CurrentActionPoints <= 0) return;

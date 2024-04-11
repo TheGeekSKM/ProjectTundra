@@ -16,7 +16,7 @@ MonoBehaviour:
   _itemName: Fists
   _description: You got boned
   _durability: 9
-  _apCost: 0
+  _apCost: 1
   _damageBonus: 0
   _damageType: 0
   _attackRange: 1

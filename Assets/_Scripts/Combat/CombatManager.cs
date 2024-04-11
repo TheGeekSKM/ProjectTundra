@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 public enum CombatTurnState
 {
@@ -32,6 +33,9 @@ public class CombatManager : MonoBehaviour
 
     int _currentEnemyIndex = 0;
 
+	//Audio
+	[SerializeField] private AudioSource _audioSource;
+
     void OnValidate()
     {
         if (combatFSM == null) combatFSM = GetComponent<CombatFSM>();
@@ -58,8 +62,9 @@ public class CombatManager : MonoBehaviour
     {
         if (_playerStatsData.CurrentActionPoints <= 0)
         {
-            combatFSM.ChangeState(combatFSM.EnemyCombatState);
-        }
+			//There should be a delay here!
+			combatFSM.ChangeState(combatFSM.EnemyCombatState);
+		}
     }
 
     void Awake()
@@ -92,6 +97,11 @@ public class CombatManager : MonoBehaviour
         {
             _enemies[0].StartEnemyTurn();
         }
+		else
+		{
+			Debug.Log("No Enemies, Ending Enemy Turn");
+			EnemyTurnEnded();
+		}
     }
 
     void EnemyTurnEnded()
@@ -99,11 +109,15 @@ public class CombatManager : MonoBehaviour
         // if there are no more enemies, switch to player turn
         if (_currentEnemyIndex >= _enemies.Count - 1)
         {
+			Debug.Log("Last Enemy Turn Ended. Switching to Player");
+
             _currentEnemyIndex = 0;
             combatFSM.ChangeState(combatFSM.PlayerCombatState);
         }
         else // if there are more enemies, start the next enemy's turn
         {
+			Debug.Log("Next enemy's turns starting");
+
             _currentEnemyIndex++;
             _enemies[_currentEnemyIndex].StartEnemyTurn();
         }
@@ -127,6 +141,8 @@ public class CombatManager : MonoBehaviour
 
     public void PlayerTurnIntro()
     {
+		_audioSource.Play();
+
         _currentTurnState = CombatTurnState.Player;
         FireEvent();
     }
@@ -154,12 +170,12 @@ public class CombatManager : MonoBehaviour
     }
 
     public void EnemyTurnIntro()
-    {
-        
-        StartEnemiesTurn();
+	{
         _currentTurnState = CombatTurnState.Enemy;
         FireEvent();
-    }
+
+		StartEnemiesTurn();
+	}
 
     public void RoomTurnIntro()
     {

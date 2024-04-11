@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class EnemyBrain : MonoBehaviour
 {
     [SerializeField] EntityStatsContainer _entityStatsContainer;
@@ -14,6 +15,12 @@ public class EnemyBrain : MonoBehaviour
 
     bool _isMyTurn = false;
     int _attackRange = 1;
+
+	//Audio
+	[Header("Audio")]
+	[SerializeField] private AudioSource audioSource;
+	[SerializeField] private AudioClip _audioEnemyAttack;
+	[SerializeField] private AudioClip _audioEnemyMove;
 
     // Grab references to components if they are not assigned
     void OnValidate()
@@ -98,7 +105,7 @@ public class EnemyBrain : MonoBehaviour
 
         // get the distance between the enemy and the player
         var dist = Vector3.Distance(transform.position, Player.Instance.transform.position);
-		// Debug.Log("Distance between enemy and player is: " + dist);
+		Debug.Log("Distance between enemy and player is: " + dist);
 
         // the attack point should always look at the player
         _entityAttackManager.AttackPoint.LookAt(Player.Instance.transform);
@@ -127,6 +134,10 @@ public class EnemyBrain : MonoBehaviour
     IEnumerator MoveAction(Vector3 direction)
     {
 		Debug.Log("Enemy Moving!");
+
+		//Audio
+		audioSource.clip = _audioEnemyMove;
+		audioSource.Play();
 
         // check if the direction's x or y is greater
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
@@ -165,7 +176,11 @@ public class EnemyBrain : MonoBehaviour
 
     void HandleAttack()
     {
-        _entityAttackManager.Attack();
+		//Audio
+		audioSource.clip = _audioEnemyAttack;
+		audioSource.Play();
+
+		_entityAttackManager.Attack();
         _currentAction = StartCoroutine(WaitForNextAction());
     }
 

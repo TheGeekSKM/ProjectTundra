@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(AudioSource))]
 public class AttackObjectController : MonoBehaviour
 {
     [Header("Attack Object Settings")]
@@ -18,6 +19,12 @@ public class AttackObjectController : MonoBehaviour
     [SerializeField] private Rigidbody2D _rigidbody2D;
 
     bool _isInitialized = false;
+
+	//Audio
+	[Header("Audio")]
+	[SerializeField] private AudioSource audioSource;
+	[SerializeField] private AudioClip _audioEnemyHit;
+	[SerializeField] private AudioClip _audioPlayerHit;
 
     private void Start()
     {
@@ -63,11 +70,18 @@ public class AttackObjectController : MonoBehaviour
         if (entityStatsContainer != null && entityStatsContainer.EntityType != _spawnerType)
         {
             entityStatsContainer.PlayerStatsData.Health -= _damage;
-            
-            if (_weaponItemData.HitEffectPrefab != null)
+
+			//Audio
+			if (entityStatsContainer.EntityType == EntityType.Enemy)
+				audioSource.clip = _audioEnemyHit;
+			else
+				audioSource.clip = _audioPlayerHit;
+			audioSource.Play();
+
+			if (_weaponItemData.HitEffectPrefab != null)
                 Instantiate(_weaponItemData.HitEffectPrefab, transform.position, Quaternion.identity);
 
-            Destroy(gameObject);
-        }
+			Destroy(gameObject);
+		}
     }
 }

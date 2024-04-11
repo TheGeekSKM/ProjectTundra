@@ -1,12 +1,20 @@
 using UnityEngine;
 
 [RequireComponent(typeof(EntityMovement))]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerInputBrain : MonoBehaviour
 {
     [SerializeField] private EntityMovement _entityMovement;
     [SerializeField] private EntityAttackManager _entityAttackManager;
 
     bool _ignoreInput = false;
+
+	//Audio
+	[Header("Audio")]
+	[SerializeField] private AudioSource audioSource;
+	[SerializeField] private AudioClip _audioMove;
+	[SerializeField] private AudioClip _audioHeal;
+	[SerializeField] private AudioClip _audioAttack;
 
     void OnValidate()
     {
@@ -38,12 +46,20 @@ public class PlayerInputBrain : MonoBehaviour
 
     void Attack()
     {
+		//Audio
+		audioSource.clip = _audioAttack;
+		audioSource.Play();
+
         _entityAttackManager.Attack();
     }
 
     void Heal()
     {
-        Debug.Log("Heal");
+		//Audio
+		audioSource.clip = _audioHeal;
+		audioSource.Play();
+
+		Debug.Log("Heal");
         // TODO: Implement heal
     }
 
@@ -67,7 +83,11 @@ public class PlayerInputBrain : MonoBehaviour
     {
         if (_ignoreInput) return;
 
-        switch (direction)
+		//Audio
+		audioSource.clip = _audioMove;
+		audioSource.Play();
+
+		switch (direction)
         {
             case MoveDirection.Up:
                 _entityMovement.Move(Vector2Int.up);
