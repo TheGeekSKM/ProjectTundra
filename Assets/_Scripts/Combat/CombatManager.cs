@@ -32,10 +32,13 @@ public class CombatManager : MonoBehaviour
 
     int _currentEnemyIndex = 0;
 
-    void OnValidate()
+    void Awake()
     {
         if (combatFSM == null) combatFSM = GetComponent<CombatFSM>();
         if (combatFSM == null) combatFSM = gameObject.AddComponent<CombatFSM>();
+
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     void OnEnable()
@@ -62,11 +65,6 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-    }
 
     public void AddEnemy(EnemyBrain enemy)
     {

@@ -13,7 +13,8 @@ public class EntityMovement : MonoBehaviour
     CombatManager _combatManager;
     Rigidbody2D _rb;
 
-    void OnValidate()
+
+    void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _playerStatsData = GetComponent<EntityStatsContainer>().PlayerStatsData;

@@ -16,18 +16,11 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        HandleReferences();
     }
 
-    [SerializeField] EntityStatsContainer _playerStats;
-    public EntityStatsContainer PlayerStats => _playerStats;
-    [SerializeField] EntityMovement _playerMovement;
-    public EntityMovement PlayerMovement => _playerMovement;
-    [SerializeField] EntityAttackManager _playerAttackManager;
-    public EntityAttackManager PlayerAttackManager => _playerAttackManager;
-    [SerializeField] PlayerInputBrain _playerInputBrain;
-    public PlayerInputBrain PlayerInputBrain => _playerInputBrain;
-
-    void OnValidate()
+    void HandleReferences()
     {
         if (_playerStats == null)
         {
@@ -46,4 +39,15 @@ public class Player : MonoBehaviour
             _playerInputBrain = GetComponent<PlayerInputBrain>();
         }
     }
+
+    [SerializeField] EntityStatsContainer _playerStats;
+    public EntityStatsContainer PlayerStats => _playerStats;
+    [SerializeField] EntityMovement _playerMovement;
+    public EntityMovement PlayerMovement => _playerMovement;
+    [SerializeField] EntityAttackManager _playerAttackManager;
+    public EntityAttackManager PlayerAttackManager => _playerAttackManager;
+    [SerializeField] PlayerInputBrain _playerInputBrain;
+    public PlayerInputBrain PlayerInputBrain => _playerInputBrain;
+
+
 }
