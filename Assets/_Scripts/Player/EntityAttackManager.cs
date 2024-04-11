@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 [RequireComponent(typeof(EntityStatsContainer))]
 public class EntityAttackManager : MonoBehaviour
 {
@@ -48,24 +49,62 @@ public class EntityAttackManager : MonoBehaviour
         // if not in combat state, player cannot attack
         if (_ignoreInput) return;
 
-        // if player has no action points, player cannot attack
-        if (_entityStatsContainer.PlayerStatsData.CurrentActionPoints <= 0) return;
-
         // get the weapon from the player's inventory
         var weapon = _entityStatsContainer.ItemContainer.GetWeapon();
+
+        // if player has no action points, player cannot attack
+        if (_entityStatsContainer.PlayerStatsData.CurrentActionPoints <= 0) return;
+        
+        // if weapon is not equipped, player cannot attack
+        if (!HandleWeaponChecks(weapon)) return;
+
+        // subtract the action points from the player
+        SubtractAP(weapon.APCost);
+
+        // initialize the attack object
+        InitializeAttackObject(weapon);
+    }
+
+    /// <summary>
+    ///  Subtract the action points from the player
+    /// </summary>
+    /// <param name="cost">Cost of AP to subtract </param>
+    void SubtractAP(int cost)
+    {
+        // reduce the player's action points
+        _entityStatsContainer.PlayerStatsData.CurrentActionPoints -= cost;
+    }
+
+    /// <summary>
+    ///  Check if the player can attack
+    /// </summary>
+    /// <param name="weapon"> Weapon to check </param> 
+    /// <returns> True if the player can attack, false otherwise </returns> 
+    bool HandleWeaponChecks(WeaponItemData weapon)
+    {
+        // check if the player has a weapon equipped
         if (weapon == null)
         {
             Debug.Log("No weapon equipped");
-            return;
+            return false;
         }
 
         // check if the weapon has an attack prefab
         if (weapon.AttackPrefab == null)
         {
             Debug.Log("No attack prefab");
-            return;
+            return false;
         }
 
+        return true;
+    }
+
+    /// <summary>
+    ///  Initialize the attack object
+    /// </summary>
+    /// <param name="weapon"> Weapon to initialize the attack object with </param>
+    void InitializeAttackObject(WeaponItemData weapon)
+    {
         // create the attack object
         var attackObject = Instantiate(weapon.AttackPrefab, _attackPoint.position, _attackPoint.rotation).GetComponent<AttackObjectController>();
 
@@ -84,8 +123,6 @@ public class EntityAttackManager : MonoBehaviour
             Debug.Log("Ranged attack");
             attackObject.Initialize(20f, 3f, 0.2f, _entityStatsContainer.PlayerStatsData.Damage + weapon.DamageBonus, weapon, _entityStatsContainer.EntityType);
         }
-
-        // reduce the player's action points
-        _entityStatsContainer.PlayerStatsData.CurrentActionPoints -= weapon.APCost;
     }
+
 }

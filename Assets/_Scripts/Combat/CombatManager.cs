@@ -69,14 +69,14 @@ public class CombatManager : MonoBehaviour
     public void AddEnemy(EnemyBrain enemy)
     {
         _enemies.Add(enemy);
-        enemy.OnEnemyTurnEnded += EnemyTurnEnded;
+        enemy.OnEnemyTurnEnded += EnemyEntityTurnEnded;
 
         combatFSM.ChangeState(combatFSM.PlayerCombatState);
     }
 
     public void RemoveEnemy(EnemyBrain enemy)
     {
-        enemy.OnEnemyTurnEnded -= EnemyTurnEnded;
+        enemy.OnEnemyTurnEnded -= EnemyEntityTurnEnded;
         _enemies.Remove(enemy);
         
         WinCheck();
@@ -92,8 +92,10 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    void EnemyTurnEnded()
+    void EnemyEntityTurnEnded(string enemyName)
     {
+        Debug.Log($"Enemy {enemyName} turn ended");
+
         // if there are no more enemies, switch to player turn
         if (_currentEnemyIndex >= _enemies.Count - 1)
         {
@@ -117,8 +119,10 @@ public class CombatManager : MonoBehaviour
     void WinCheck()
     {
         if (_enemies.Count <= 0)
-        {
-            _currentTurnState = CombatTurnState.Win;
+        {   
+            combatFSM.ChangeState(combatFSM.NonCombatState);
+            _currentTurnState = CombatTurnState.NonCombat;
+
             FireEvent();
         }
     }
@@ -177,7 +181,6 @@ public class CombatManager : MonoBehaviour
     {
         _currentTurnState = CombatTurnState.Win;
         FireEvent();
-
     }
 
     public void NonCombat()

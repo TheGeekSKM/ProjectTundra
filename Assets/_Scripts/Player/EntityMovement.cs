@@ -10,7 +10,6 @@ public class EntityMovement : MonoBehaviour
     public int MovementCost => _movementCost;
 
     PlayerStatsData _playerStatsData;
-    CombatManager _combatManager;
     Rigidbody2D _rb;
 
 
@@ -31,35 +30,40 @@ public class EntityMovement : MonoBehaviour
 
         direction.Normalize();
         _rb.MovePosition(_rb.position + direction);
-
-        // Subtract the movement cost from the player's action points
-        _playerStatsData.CurrentActionPoints -= _movementCost;
 		// Debug.Log("Subtracted " + _movementCost + " movement point from total action points, resulting in " + _playerStatsData.CurrentActionPoints + " total points!");
     }
 
-
+    void SubtractAP()
+    {
+        // Subtract the movement cost from the player's action points
+        _playerStatsData.CurrentActionPoints -= _movementCost;
+    }
 
     [ContextMenu("Move Up")]
-    public void MoveUp()
+    public void MoveUp(bool subtractAP)
     {
         Move(Vector2.up);
+        if (subtractAP) SubtractAP();
     }
 
     [ContextMenu("Move Down")]
-    public void MoveDown()
+    public void MoveDown(bool subtractAP)
     {
         Move(Vector2.down);
+        if (subtractAP) SubtractAP();
     }
 
     [ContextMenu("Move Left")]
-    public void MoveLeft()
+    public void MoveLeft(bool subtractAP)
     {
         Move(Vector2.left);
+        if (subtractAP) SubtractAP();
     }
 
     [ContextMenu("Move Right")]
-    public void MoveRight()
+    public void MoveRight(bool subtractAP)
     {
         Move(Vector2.right);
+        if (subtractAP) SubtractAP();
     }
 }
