@@ -16,11 +16,13 @@ public class PlayerCombatState : BaseState
     public override void Enter()
     {
         _combatManager.PlayerTurnIntro();
-        Debug.Log("PlayerCombatState Enter");
+        _combatManager.AnimatePlayerControlsIntro();
     }
 
     public override void Exit()
     {
-        Debug.Log("PlayerCombatState Exit");
+        _combatManager.AnimatePlayerControlsOutro();
+        _combatManager.AnimatePlayerMovementControlsOutro();
+        // Debug.Log("PlayerCombatState Exit");
     }
 }

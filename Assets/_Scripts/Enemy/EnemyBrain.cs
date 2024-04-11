@@ -48,7 +48,7 @@ public class EnemyBrain : MonoBehaviour
     // Check if the enemy has enough action points to take a turn
     void HandleAPCheck()
     {
-        Debug.Log($"Enemy Current AP: {_entityStatsContainer.PlayerStatsData.CurrentActionPoints}");
+        // Debug.Log($"Enemy Current AP: {_entityStatsContainer.PlayerStatsData.CurrentActionPoints}");
         if (_entityStatsContainer.PlayerStatsData.CurrentActionPoints <= 0)
         {
             _isMyTurn = false;
@@ -84,7 +84,7 @@ public class EnemyBrain : MonoBehaviour
 
     void HandleTurnLogic()
     {
-		Debug.Log("Starting Turn Logic");
+		// Debug.Log("Starting Turn Logic");
 
         // check if the enemy has enough action points to take a turn and if they are still alive
         HandleAPCheck();
@@ -98,7 +98,7 @@ public class EnemyBrain : MonoBehaviour
 
         // get the distance between the enemy and the player
         var dist = Vector3.Distance(transform.position, Player.Instance.transform.position);
-		Debug.Log("Distance between enemy and player is: " + dist);
+		// Debug.Log("Distance between enemy and player is: " + dist);
 
         // the attack point should always look at the player
         _entityAttackManager.AttackPoint.LookAt(Player.Instance.transform);
@@ -134,12 +134,12 @@ public class EnemyBrain : MonoBehaviour
             // move in the x direction
             if (direction.x > 0)
             {
-				Debug.Log("Enemy Moving Right!");
+				// Debug.Log("Enemy Moving Right!");
                 _entityMovement.MoveRight();
             }
             else
             {
-				Debug.Log("Enemy Moving Left!");
+				// Debug.Log("Enemy Moving Left!");
 				_entityMovement.MoveLeft();
             }
         }
@@ -148,12 +148,12 @@ public class EnemyBrain : MonoBehaviour
             // move in the y direction
             if (direction.y > 0)
             {
-				Debug.Log("Enemy Moving Up!");
+				// Debug.Log("Enemy Moving Up!");
 				_entityMovement.MoveUp();
             }
             else
             {
-				Debug.Log("Enemy Moving Down!");
+				// Debug.Log("Enemy Moving Down!");
 				_entityMovement.MoveDown();
             }
         }

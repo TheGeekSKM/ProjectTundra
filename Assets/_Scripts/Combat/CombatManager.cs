@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public enum CombatTurnState
 {
@@ -23,6 +24,11 @@ public class CombatManager : MonoBehaviour
     [SerializeField] CombatTurnState _currentTurnState;
     public event System.Action<CombatTurnState> OnTurnChanged;
     [SerializeField] private PlayerStatsData _playerStatsData;
+
+    [SerializeField] RectTransform _playerControlsPanel;
+    float _playerControlsPanelYPos;
+    [SerializeField] RectTransform _movementControlsPanel;
+    float _movementControlsPanelYPos;
 
     int _currentEnemyIndex = 0;
 
@@ -125,8 +131,31 @@ public class CombatManager : MonoBehaviour
         FireEvent();
     }
 
+    public void AnimatePlayerControlsIntro()
+    {
+        _playerControlsPanelYPos = _playerControlsPanel.anchoredPosition.y;
+        _playerControlsPanel.DOAnchorPosY(0, 0.5f);
+    }
+
+    public void AnimatePlayerControlsOutro()
+    {
+        _playerControlsPanel.DOAnchorPosY(_playerControlsPanelYPos, 0.5f);
+    }
+
+    public void AnimatePlayerMovementControlsIntro()
+    {
+        _movementControlsPanelYPos = _movementControlsPanel.anchoredPosition.y;
+        _movementControlsPanel.DOAnchorPosY(65, 0.5f);
+    }
+
+    public void AnimatePlayerMovementControlsOutro()
+    {
+        _movementControlsPanel.DOAnchorPosY(_movementControlsPanelYPos, 0.5f);
+    }
+
     public void EnemyTurnIntro()
     {
+        
         StartEnemiesTurn();
         _currentTurnState = CombatTurnState.Enemy;
         FireEvent();

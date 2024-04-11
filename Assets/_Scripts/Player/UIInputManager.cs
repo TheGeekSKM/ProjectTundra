@@ -28,6 +28,8 @@ public class UIInputManager : MonoBehaviour
 
     // this is static so we can subscribe to it from anywhere
     public static event System.Action<MoveDirection> OnMoveInput;
+    public static event System.Action OnAttackInput;
+    public static event System.Action OnHealInput;
 
     public void MoveUp()
     {
@@ -47,5 +49,20 @@ public class UIInputManager : MonoBehaviour
     public void MoveRight()
     {
         OnMoveInput?.Invoke(MoveDirection.Right);
+    }
+
+    public void Attack()
+    {
+        OnAttackInput?.Invoke();
+    }
+
+    public void Heal()
+    {
+        OnHealInput?.Invoke();
+    }
+
+    public void Move()
+    {
+        Debug.Log("Move");
     }
 }

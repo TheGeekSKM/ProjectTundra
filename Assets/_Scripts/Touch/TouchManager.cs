@@ -98,7 +98,7 @@ public class TouchManager : MonoBehaviour
 	//Taps
     private void TapStarted(InputAction.CallbackContext ctx)
 	{
-		Debug.Log("Tap Started.");
+		// Debug.Log("Tap Started.");
     }
 
     private void TapPerformed(InputAction.CallbackContext ctx)
@@ -109,17 +109,17 @@ public class TouchManager : MonoBehaviour
 
 		//Get tap position
 		var touchPosition = touchAction.Gameplay.TouchPosition.ReadValue<Vector2>();
-		Debug.Log("Tap Position: " + touchPosition);
+		// Debug.Log("Tap Position: " + touchPosition);
 
 		//Call out for tap event
 		OnTap?.Invoke(touchPosition);
 
-		Debug.Log("Tap Performed.");
+		// Debug.Log("Tap Performed.");
 	}
 
     private void TapEnd(InputAction.CallbackContext ctx)
     {
-		Debug.Log("Tap Canceled.");
+		// Debug.Log("Tap Canceled.");
 	}
 
 

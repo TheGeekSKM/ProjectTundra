@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerInputBrain : MonoBehaviour
 {
     [SerializeField] private EntityMovement _entityMovement;
+    [SerializeField] private EntityAttackManager _entityAttackManager;
 
     bool _ignoreInput = false;
 
@@ -19,6 +20,8 @@ public class PlayerInputBrain : MonoBehaviour
     {
         // Subscribe to the UI Move event
         UIInputManager.OnMoveInput += Move;
+        UIInputManager.OnAttackInput += Attack;
+        UIInputManager.OnHealInput += Heal;
 
         CombatManager.Instance.OnTurnChanged += HandleTurns;
     }
@@ -27,8 +30,21 @@ public class PlayerInputBrain : MonoBehaviour
     {
         // Unsubscribe from the UI Move event
         UIInputManager.OnMoveInput -= Move;
+        UIInputManager.OnAttackInput -= Attack;
+        UIInputManager.OnHealInput -= Heal;
 
         CombatManager.Instance.OnTurnChanged -= HandleTurns;
+    }
+
+    void Attack()
+    {
+        _entityAttackManager.Attack();
+    }
+
+    void Heal()
+    {
+        Debug.Log("Heal");
+        // TODO: Implement heal
     }
 
     void HandleTurns(CombatTurnState turnState)

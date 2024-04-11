@@ -16,11 +16,12 @@ public class NonCombatState : BaseState
     public override void Enter()
     {
         _combatManager.NonCombat();
-        Debug.Log("NonCombatState Enter");
+        _combatManager.AnimatePlayerControlsOutro();
+        // Debug.Log("NonCombatState Enter");
     }
 
     public override void Exit()
     {
-        Debug.Log("NonCombatState Exit");
+        // Debug.Log("NonCombatState Exit");
     }
 }
