@@ -9,21 +9,15 @@ public class BackgroundScaler : MonoBehaviour
 	[SerializeField] private CanvasScaler scaler;
 	[SerializeField] private PixelPerfectCamera ppCamera;
 
-	private void OnValidate()
+	private void Update()
 	{
 		if (ppCamera != null)
 		{
 			if (scaler.scaleFactor != ppCamera.pixelRatio)
+			{
 				scaler.scaleFactor = ppCamera.pixelRatio;
-		}
-	}
-
-	private void Awake()
-	{
-		if (ppCamera != null)
-		{
-			if (scaler.scaleFactor != ppCamera.pixelRatio)
-				scaler.scaleFactor = ppCamera.pixelRatio;
+				//this.enabled = false;
+			}
 		}
 	}
 }

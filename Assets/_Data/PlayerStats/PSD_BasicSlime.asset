@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _totalActionPoints: 3
   _currentActionPoints: 3
-  _health: 0
+  _health: 6
   _damage: 1
   _aOERange: 1
   _armor: 0
