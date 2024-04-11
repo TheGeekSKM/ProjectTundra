@@ -19,7 +19,12 @@ public class ChestViewFSM : BaseStateMachine
 
     void Awake()
     {
-        OpenState = new ChestViewOpenState(this, _chestViewManager);
+		if (_chestViewManager == null)
+		{
+			_chestViewManager = GetComponent<ChestViewManager>();
+		}
+
+		OpenState = new ChestViewOpenState(this, _chestViewManager);
         ClosedState = new ChestViewClosedState(this, _chestViewManager);
     }
 

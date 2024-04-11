@@ -19,12 +19,18 @@ public class EntityMovement : MonoBehaviour
         _playerStatsData = GetComponent<EntityStatsContainer>().PlayerStatsData;
     }
 
+	void Awake()
+	{
+		_rb = GetComponent<Rigidbody2D>();
+		_playerStatsData = GetComponent<EntityStatsContainer>().PlayerStatsData;
+	}
 
-    /// <summary>
-    ///  Move the entity in the specified direction
-    /// </summary>
-    /// <param name="direction">Input a Vector2 Direction that you want the entity to move</param>
-    public void Move(Vector2 direction)
+
+	/// <summary>
+	///  Move the entity in the specified direction
+	/// </summary>
+	/// <param name="direction">Input a Vector2 Direction that you want the entity to move</param>
+	public void Move(Vector2 direction)
     {
         if (_playerStatsData.CurrentActionPoints <= 0) return;
 

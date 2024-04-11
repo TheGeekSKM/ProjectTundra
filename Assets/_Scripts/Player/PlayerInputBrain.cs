@@ -16,15 +16,19 @@ public class PlayerInputBrain : MonoBehaviour
 	[SerializeField] private AudioClip _audioHeal;
 	[SerializeField] private AudioClip _audioAttack;
 
-    void OnValidate()
-    {
-        if (_entityMovement == null)
-        {
-            _entityMovement = GetComponent<EntityMovement>();
-        }
-    }
+	void OnValidate()
+	{
+		if (_entityMovement == null)
+			_entityMovement = GetComponent<EntityMovement>();
+	}
 
-    void OnEnable()
+	void Awake()
+	{
+		if (_entityMovement == null)
+			_entityMovement = GetComponent<EntityMovement>();
+	}
+
+	void OnEnable()
     {
         // Subscribe to the UI Move event
         UIInputManager.OnMoveInput += Move;

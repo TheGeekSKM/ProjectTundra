@@ -69,7 +69,10 @@ public class CombatManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
+		if (combatFSM == null) combatFSM = GetComponent<CombatFSM>();
+		if (combatFSM == null) combatFSM = gameObject.AddComponent<CombatFSM>();
+
+		if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
 
@@ -171,10 +174,10 @@ public class CombatManager : MonoBehaviour
 
     public void EnemyTurnIntro()
 	{
-        _currentTurnState = CombatTurnState.Enemy;
-        FireEvent();
-
 		StartEnemiesTurn();
+
+		_currentTurnState = CombatTurnState.Enemy;
+        FireEvent();
 	}
 
     public void RoomTurnIntro()

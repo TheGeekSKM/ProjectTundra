@@ -15,7 +15,12 @@ public class EntityAttackManager : MonoBehaviour
         _entityStatsContainer = GetComponent<EntityStatsContainer>();
     }
 
-    void OnEnable()
+	void Awake()
+	{
+		_entityStatsContainer = GetComponent<EntityStatsContainer>();
+	}
+
+	void OnEnable()
     {
         CombatManager.Instance.OnTurnChanged += HandleTurnChange;
     }
