@@ -613,6 +613,7 @@ GameObject:
   - component: {fileID: 1205874689}
   - component: {fileID: 1205874688}
   - component: {fileID: 1205874687}
+  - component: {fileID: 1205874691}
   m_Layer: 5
   m_Name: BackgroundCanvas
   m_TagString: Untagged
@@ -651,7 +652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 16
-  m_ScaleFactor: 5
+  m_ScaleFactor: 7
   m_ReferenceResolution: {x: 192, y: 160}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.5
@@ -702,6 +703,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1205874691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205874686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3721d6ab87f3c0446a3c207f9cf157a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaler: {fileID: 1205874688}
+  ppCamera: {fileID: 277268708}
 --- !u!1 &1562833454
 GameObject:
   m_ObjectHideFlags: 0
