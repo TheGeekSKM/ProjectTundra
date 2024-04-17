@@ -104,6 +104,8 @@ public class CombatManager : MonoBehaviour
         }
         else // if there are more enemies, start the next enemy's turn
         {
+            if (WinCheck()) return;
+
             _currentEnemyIndex++;
             _enemies[_currentEnemyIndex].StartEnemyTurn();
         }
@@ -116,7 +118,7 @@ public class CombatManager : MonoBehaviour
         OnTurnChanged?.Invoke(_currentTurnState);
     }
 
-    void WinCheck()
+    bool WinCheck()
     {
         if (_enemies.Count <= 0)
         {   
@@ -124,7 +126,9 @@ public class CombatManager : MonoBehaviour
             _currentTurnState = CombatTurnState.NonCombat;
 
             FireEvent();
+            return true;
         }
+        return false;
     }
 
     public void PlayerTurnIntro()
