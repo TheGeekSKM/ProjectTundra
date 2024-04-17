@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3305838626960862055}
   - component: {fileID: 3305838626960862054}
   - component: {fileID: 3305838626960862052}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RoomTemplateHookSE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
