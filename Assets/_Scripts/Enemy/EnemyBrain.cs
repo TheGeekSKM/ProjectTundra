@@ -6,6 +6,7 @@ public class EnemyBrain : MonoBehaviour
     [SerializeField] EntityStatsContainer _entityStatsContainer;
     [SerializeField] EntityAttackManager _entityAttackManager;
     [SerializeField] EntityMovement _entityMovement;
+    [SerializeField] EntityHealth _entityHealth;
 
     [SerializeField] float _timeBetweenActions = 1f;
     Coroutine _currentAction;
@@ -21,16 +22,18 @@ public class EnemyBrain : MonoBehaviour
         if (_entityStatsContainer == null) _entityStatsContainer = GetComponent<EntityStatsContainer>();
         if (_entityAttackManager == null) _entityAttackManager = GetComponent<EntityAttackManager>();
         if (_entityMovement == null) _entityMovement = GetComponent<EntityMovement>();
+        if (_entityHealth == null) _entityHealth = GetComponent<EntityHealth>();
         
     }
 
     void Start()
     {
         _entityStatsContainer.PlayerStatsData.ResetActionPoints();
-
         _attackRange = _entityStatsContainer.ItemContainer.GetWeapon().AttackRange;
-
         CombatManager.Instance.AddEnemy(this);
+
+        _entityStatsContainer.PlayerStatsData.OnCurrentActionPointsChanged += HandleAPCheck;
+        _entityHealth.OnHealthChanged += HandleDeathCheck;
     }
 
     #region CheckingMethods
@@ -49,9 +52,9 @@ public class EnemyBrain : MonoBehaviour
     }
 
     // Check if the enemy has died
-    void HandleDeathCheck()
+    void HandleDeathCheck(int damage)
     {
-        if (_entityStatsContainer.PlayerStatsData.Health <= 0)
+        if (_entityHealth.CurrentHealth <= 0)
         {
             EndTurn();
 
@@ -84,7 +87,7 @@ public class EnemyBrain : MonoBehaviour
 
         // check if the enemy has enough action points to take a turn and if they are still alive
         HandleAPCheck();
-        HandleDeathCheck();
+        HandleDeathCheck(0);
 
         // if it's not the enemy's turn, return
         if (!_isMyTurn) return;
@@ -177,8 +180,8 @@ public class EnemyBrain : MonoBehaviour
     [ContextMenu("Kill Enemy")]
     void KillEnemy()
     {
-        _entityStatsContainer.PlayerStatsData.Health = 0;
-        HandleDeathCheck();
+        _entityHealth.Die(); 
+        HandleDeathCheck(0);
     }
 
     #endregion

@@ -59,10 +59,10 @@ public class AttackObjectController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        var entityStatsContainer = other.GetComponent<EntityStatsContainer>();
-        if (entityStatsContainer != null && entityStatsContainer.EntityType != _spawnerType)
+        var health = other.GetComponent<EntityHealth>();
+        if (health != null && health.EntityType != _spawnerType)
         {
-            entityStatsContainer.PlayerStatsData.Health -= _damage;
+            health.TakeDamage(_damage);
             
             if (_weaponItemData.HitEffectPrefab != null)
                 Instantiate(_weaponItemData.HitEffectPrefab, transform.position, Quaternion.identity);

@@ -31,17 +31,17 @@ public class PlayerStatsData : ScriptableObject
     public event Action OnCurrentActionPointsChanged;
     
     
-    [SerializeField] private int _health;
-    public int Health
+    [SerializeField] private int _maxHealth;
+    public int MaxHealth
     {
-        get => _health;
+        get => _maxHealth;
         set
         {
-            _health = value;
-            OnHealthChanged?.Invoke();
+            _maxHealth = value;
+            OnMaxHealthChanged?.Invoke();
         }
     }
-    public event Action OnHealthChanged;
+    public event Action OnMaxHealthChanged;
     
     
     [SerializeField] private int _damage;
