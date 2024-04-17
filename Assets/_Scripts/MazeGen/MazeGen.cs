@@ -76,6 +76,8 @@ public class MazeGen : MonoBehaviour
 			 "3 = West")]
 	[SerializeField] private Vector3[] extraExits;
 
+	public System.Action OnGenerationComplete;
+
 	private void Start()
 	{
 		//ensure maze has generation dimensions
@@ -405,6 +407,8 @@ public class MazeGen : MonoBehaviour
 			
 			Destroy(tile.gameObject);
 		}
+
+		OnGenerationComplete?.Invoke();
 	}
 
 	private GameObject RandomRoom(Rooms[] rooms)
