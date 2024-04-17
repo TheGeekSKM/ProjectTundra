@@ -115,8 +115,18 @@ public class EnemyBrain : MonoBehaviour
 
     void HandleMovement()
     {
-        // find the direction to the player
-        var direction = Player.Instance.transform.position - transform.position;
+        GridManager.Instance.GetTileAtPosition(transform.position, out Tile currentTile);
+        var path = GridManager.Instance.FindPath(currentTile, Player.Instance.PlayerMovement.CurrentTile);
+
+        // if the path is null, return
+        if (path == null) return;
+
+        // get the next tile in the path
+        var nextTile = path[path.Count - 2];
+
+        // get the direction to move in
+        var direction = nextTile.transform.position - transform.position;
+        
 
         // start the movement coroutine
         _currentAction = StartCoroutine(MoveAction(direction));

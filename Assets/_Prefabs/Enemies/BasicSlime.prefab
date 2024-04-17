@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 9200236155138192275}
   - component: {fileID: 9200236155138192276}
   - component: {fileID: 9200236155138192277}
+  - component: {fileID: 6342080891463874590}
   - component: {fileID: 9200236155138192278}
   - component: {fileID: 9200236155138192272}
   m_Layer: 6
@@ -170,6 +171,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementCost: 1
+--- !u!114 &6342080891463874590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9200236155138192281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b332a783b41a69b448f5ba0ef1edc99f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statsContainer: {fileID: 9200236155138192276}
+  currentHealth: 0
 --- !u!114 &9200236155138192278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,6 +213,7 @@ MonoBehaviour:
   _entityStatsContainer: {fileID: 9200236155138192276}
   _entityAttackManager: {fileID: 9200236155138192278}
   _entityMovement: {fileID: 9200236155138192277}
+  _entityHealth: {fileID: 6342080891463874590}
   _timeBetweenActions: 1
 --- !u!1 &9200236155454963708
 GameObject:

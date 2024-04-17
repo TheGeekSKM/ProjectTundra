@@ -9,6 +9,8 @@ public class EntityMovement : MonoBehaviour
     [SerializeField] int _movementCost;
     public int MovementCost => _movementCost;
 
+    Tile _currentTile;
+    public Tile CurrentTile => _currentTile;
     PlayerStatsData _playerStatsData;
     Rigidbody2D _rb;
 
@@ -31,6 +33,14 @@ public class EntityMovement : MonoBehaviour
         direction.Normalize();
         _rb.MovePosition(_rb.position + direction);
 		// Debug.Log("Subtracted " + _movementCost + " movement point from total action points, resulting in " + _playerStatsData.CurrentActionPoints + " total points!");
+
+        GridManager.Instance.GetTileAtPosition(transform.position, out Tile currentTile);
+        if (currentTile == null) return;
+
+        if (currentTile.IsWalkable)
+        {
+            _currentTile = currentTile;
+        }
     }
 
     void SubtractAP()
