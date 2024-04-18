@@ -29,5 +29,13 @@ public class MovementButtonManager : MonoBehaviour
         _downButton?.onClick.AddListener(() => _uiInputManager.MoveDown());
         _leftButton?.onClick.AddListener(() => _uiInputManager.MoveLeft());
         _rightButton?.onClick.AddListener(() => _uiInputManager.MoveRight());
+
+        // Subscribe to the button click feedback events
+        _upButton?.onClick.AddListener(ButtonClickFeedback);
+        _downButton?.onClick.AddListener(ButtonClickFeedback);
+        _leftButton?.onClick.AddListener(ButtonClickFeedback);
+        _rightButton?.onClick.AddListener(ButtonClickFeedback);
     }
+
+    void ButtonClickFeedback() => AudioManager.Instance.PlayAudio2D(EAudioEvent.ButtonClick);
 }

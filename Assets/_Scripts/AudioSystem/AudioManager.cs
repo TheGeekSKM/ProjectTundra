@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
+    public static AudioManager Instance;
 
     public AudioEventSO[] audioEvents;
     [SerializeField] AudioPrefabController audioPrefab;
 
     void Awake()
     {
-        if (instance == null) instance = this;
+        if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
 
@@ -19,23 +19,28 @@ public class AudioManager : MonoBehaviour
     {
         foreach (AudioEventSO audioEventSO in audioEvents)
         {
-            if (audioEventSO.audioEvent == audioEvent)
+            if (audioEventSO.audioEvent == audioEvent && audioEventSO.audioClip != null)
             {
                 Instantiate(audioPrefab).Init(audioEventSO.audioClip);
                 return;
             }
         }
+
+        Debug.LogError("AudioEvent not found");
     }
 
     public void PlayAudio3D(EAudioEvent audioEvent, Vector3 position)
     {
         foreach (AudioEventSO audioEventSO in audioEvents)
         {
-            if (audioEventSO.audioEvent == audioEvent)
+            if (audioEventSO.audioEvent == audioEvent && audioEventSO.audioClip != null)
             {
                 Instantiate(audioPrefab).Init(audioEventSO.audioClip, position);
                 return;
             }
         }
+
+        Debug.LogError("AudioEvent not found");
+
     }
 }
