@@ -4,19 +4,27 @@ using DG.Tweening;
 
 public class SceneController : MonoBehaviour
 {
+    public static SceneController Instance;
+
     [SerializeField] SceneFSM _sceneFSM;
+    public SceneFSM SceneFSM => _sceneFSM;
     [SerializeField] RectTransform TransitionPanel;
-    float _transitionPanelYPos = -611f;
+    float _transitionPanelYPos = -1940f;
 
     [Header("Main Menu")]
     [SerializeField] Object _mainMenuScene;
+    [SerializeField] Object _characterSelectMenu;
 
-    void OnValidate()
+
+    void Awake()
     {
         if (_sceneFSM == null)
         {
             _sceneFSM = GetComponent<SceneFSM>();
         }
+
+        if (Instance != null) Destroy(gameObject);
+        else Instance = this;
     }
 
     public void TransitionPanelOn()
@@ -40,5 +48,17 @@ public class SceneController : MonoBehaviour
         TransitionPanelOn();
         Debug.Log("MainMenuStateOutroFunctions");
         SceneManager.UnloadSceneAsync(_mainMenuScene.name);
+    }
+
+    public void CharacterSelectStateIntro()
+    {
+        Debug.Log("CharacterSelectStateIntroFunction");
+        SceneManager.LoadSceneAsync(_characterSelectMenu.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => TransitionPanelOff();
+    }
+
+    public void CharacterSelectStateOutro()
+    {
+        TransitionPanelOn();
+        SceneManager.UnloadSceneAsync(_characterSelectMenu.name);
     }
 }

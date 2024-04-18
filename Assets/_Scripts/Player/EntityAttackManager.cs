@@ -15,33 +15,7 @@ public class EntityAttackManager : MonoBehaviour
         _entityStatsContainer = GetComponent<EntityStatsContainer>();
         _entityStamina = GetComponent<EntityStamina>();
     }
-    // void OnEnable()
-    // {
-    //     CombatManager.Instance.OnTurnChanged += HandleTurnChange;
-    // }
-
-    // void OnDisable()
-    // {
-    //     CombatManager.Instance.OnTurnChanged -= HandleTurnChange;
-    // }
-
-    // void HandleTurnChange(CombatTurnState turnState)
-    // {
-    //     Debug.Log("Turn changed to " + turnState);
-    //     switch (turnState)
-    //     {
-    //         case CombatTurnState.Player:
-    //             _ignoreInput = false;
-    //             break;
-    //         case CombatTurnState.Enemy:
-    //             //_entityStatsContainer.PlayerStatsData.CurrentActionPoints = 0;
-    //             _ignoreInput = true;
-    //             break;
-    //         case CombatTurnState.NonCombat:
-    //             _ignoreInput = true;
-    //             break;
-    //     }
-    // }
+    
 
     [ContextMenu("Attack")]
     public void Attack()

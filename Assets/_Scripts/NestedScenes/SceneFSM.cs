@@ -7,6 +7,7 @@ public class SceneFSM : BaseStateMachine
     [SerializeField] SceneController _sceneController;
 
     public MainMenuState MainMenuState { get; private set; }
+    public CharacterSelectState CharacterSelectState { get; private set; }
 
     void OnValidate()
     {
@@ -19,6 +20,7 @@ public class SceneFSM : BaseStateMachine
     void Awake()
     {
         MainMenuState = new MainMenuState(_sceneController, this);
+        CharacterSelectState = new CharacterSelectState(_sceneController, this);
     }
 
     void Start()

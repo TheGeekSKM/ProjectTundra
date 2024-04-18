@@ -84,4 +84,7 @@ public class PlayerStatsData : ScriptableObject
         }
     }
     public event Action OnMovementCostChanged;
+
+    [SerializeField] private AttackType _entityAttackType;
+    public AttackType EntityAttackType => _entityAttackType;
 }
