@@ -47,6 +47,8 @@ GameObject:
   - component: {fileID: 4833069642188488506}
   - component: {fileID: 4833069642188488505}
   - component: {fileID: 4833069642188488504}
+  - component: {fileID: 4065260593297218459}
+  - component: {fileID: 6724540596322094236}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -182,6 +184,33 @@ MonoBehaviour:
   _playerMovement: {fileID: 4833069642188488509}
   _playerAttackManager: {fileID: 4833069642188488506}
   _playerInputBrain: {fileID: 4833069642188488505}
+--- !u!114 &4065260593297218459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4833069642188488512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b332a783b41a69b448f5ba0ef1edc99f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statsContainer: {fileID: 0}
+  currentHealth: 0
+--- !u!114 &6724540596322094236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4833069642188488512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88a72cd1c6b4924bbc265b918388db8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entityStatsContainer: {fileID: 0}
 --- !u!1 &4833069642775468872
 GameObject:
   m_ObjectHideFlags: 0

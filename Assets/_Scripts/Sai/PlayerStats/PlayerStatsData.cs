@@ -14,22 +14,10 @@ public class PlayerStatsData : ScriptableObject
         set
         {
             _totalActionPoints = value;
+            OnTotalActionPointsChanged?.Invoke();
         }
     }
-
-
-    [SerializeField] private int _currentActionPoints;
-    public int CurrentActionPoints
-    {
-        get => _currentActionPoints;
-        set
-        {
-            _currentActionPoints = value;
-            OnCurrentActionPointsChanged?.Invoke();
-        }
-    }
-    public event Action OnCurrentActionPointsChanged;
-    
+    public event Action OnTotalActionPointsChanged;
     
     [SerializeField] private int _maxHealth;
     public int MaxHealth
@@ -84,10 +72,5 @@ public class PlayerStatsData : ScriptableObject
     }
     public event Action OnArmorChanged;
 
-
-    public void ResetActionPoints()
-    {
-        CurrentActionPoints = TotalActionPoints;
-    }
 
 }

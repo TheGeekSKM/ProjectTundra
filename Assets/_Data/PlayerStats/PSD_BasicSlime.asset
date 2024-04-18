@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: PSD_BasicSlime
   m_EditorClassIdentifier: 
   _totalActionPoints: 3
-  _currentActionPoints: 3
-  _health: 5
+  _maxHealth: 5
   _damage: 1
   _aOERange: 1
   _armor: 0

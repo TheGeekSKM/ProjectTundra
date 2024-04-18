@@ -190,6 +190,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5635809347442557312, guid: a5f6bd088a112e14682f249d81a28e1d, type: 3}
   m_PrefabInstance: {fileID: 5635809347675240086}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &259998625 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6724540596322094236, guid: da77ec76514007c489fa0995cfa89563, type: 3}
+  m_PrefabInstance: {fileID: 4833069643053891199}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88a72cd1c6b4924bbc265b918388db8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &277268704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1248,6 +1259,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 963748986}
     m_Modifications:
     - target: {fileID: 6242517644896605381, guid: 9c86662cd5c70134c82d36320f293b96, type: 3}
+      propertyPath: _playerStamina
+      value: 
+      objectReference: {fileID: 259998625}
+    - target: {fileID: 6242517644896605381, guid: 9c86662cd5c70134c82d36320f293b96, type: 3}
       propertyPath: _playerControlsPanel
       value: 
       objectReference: {fileID: 3570229}
@@ -1675,6 +1690,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9200236155138192272, guid: 2708befe05ee57d4180d9012268306ec, type: 3}
+      propertyPath: _raycastDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9200236155138192272, guid: 2708befe05ee57d4180d9012268306ec, type: 3}
+      propertyPath: _obstacleLayerMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 9200236155138192273, guid: 2708befe05ee57d4180d9012268306ec, type: 3}
       propertyPath: m_RootOrder
       value: 5
