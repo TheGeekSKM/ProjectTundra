@@ -23,7 +23,7 @@ public class CombatManager : MonoBehaviour
 
     [SerializeField] CombatTurnState _currentTurnState;
     public event System.Action<CombatTurnState> OnTurnChanged;
-    [SerializeField] private PlayerStatsData _playerStatsData;
+    [SerializeField] private EntityStamina _playerStamina;
 
     [SerializeField] RectTransform _playerControlsPanel;
     float _playerControlsPanelYPos;
@@ -43,12 +43,12 @@ public class CombatManager : MonoBehaviour
 
     void OnEnable()
     {
-        _playerStatsData.OnCurrentActionPointsChanged += HandlePlayerStatsChange;
+        _playerStamina.OnActionPointsChanged += HandlePlayerStatsChange;
     }
 
     void OnDisable()
     {
-        _playerStatsData.OnCurrentActionPointsChanged -= HandlePlayerStatsChange;
+        _playerStamina.OnActionPointsChanged -= HandlePlayerStatsChange;
     }
 
     void Start()
@@ -59,7 +59,7 @@ public class CombatManager : MonoBehaviour
     // Check if player has enough action points, and if they don't, switch to enemy turn
     void HandlePlayerStatsChange()
     {
-        if (_playerStatsData.CurrentActionPoints <= 0)
+        if (_playerStamina.CurrentActionPoints <= 0)
         {
             combatFSM.ChangeState(combatFSM.EnemyCombatState);
         }
@@ -79,7 +79,7 @@ public class CombatManager : MonoBehaviour
         enemy.OnEnemyTurnEnded -= EnemyEntityTurnEnded;
         _enemies.Remove(enemy);
         
-        WinCheck();
+        if (WinCheck()) return;
     }
 
 
@@ -100,6 +100,7 @@ public class CombatManager : MonoBehaviour
         if (_currentEnemyIndex >= _enemies.Count - 1)
         {
             _currentEnemyIndex = 0;
+            Debug.Log("All enemies have taken their turn");
             combatFSM.ChangeState(combatFSM.PlayerCombatState);
         }
         else // if there are more enemies, start the next enemy's turn

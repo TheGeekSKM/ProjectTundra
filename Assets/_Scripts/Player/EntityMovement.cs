@@ -9,6 +9,8 @@ public class EntityMovement : MonoBehaviour
     [SerializeField] int _movementCost;
     public int MovementCost => _movementCost;
 
+    private EntityStamina _entityStamina;
+
     PlayerStatsData _playerStatsData;
     Rigidbody2D _rb;
 
@@ -17,6 +19,7 @@ public class EntityMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _playerStatsData = GetComponent<EntityStatsContainer>().PlayerStatsData;
+        _entityStamina = GetComponent<EntityStamina>();
     }
 
 
@@ -26,7 +29,7 @@ public class EntityMovement : MonoBehaviour
     /// <param name="direction">Input a Vector2 Direction that you want the entity to move</param>
     public void Move(Vector2 direction)
     {
-        if (_playerStatsData.CurrentActionPoints <= 0) return;
+        if (_entityStamina.CurrentActionPoints <= 0) return;
 
         direction.Normalize();
         _rb.MovePosition(_rb.position + direction);
@@ -35,8 +38,7 @@ public class EntityMovement : MonoBehaviour
 
     void SubtractAP()
     {
-        // Subtract the movement cost from the player's action points
-        _playerStatsData.CurrentActionPoints -= _movementCost;
+        _entityStamina.SubtractAP(_movementCost);
     }
 
     [ContextMenu("Move Up")]

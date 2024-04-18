@@ -3,12 +3,17 @@ using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
+    [Header("Enemy Components")]
     [SerializeField] EntityStatsContainer _entityStatsContainer;
     [SerializeField] EntityAttackManager _entityAttackManager;
     [SerializeField] EntityMovement _entityMovement;
     [SerializeField] EntityHealth _entityHealth;
+    [SerializeField] EntityStamina _entityStamina;
 
+    [Header("Enemy Settings")]
     [SerializeField] float _timeBetweenActions = 1f;
+    [SerializeField] float _raycastDistance = 1f;
+    [SerializeField] LayerMask _obstacleLayerMask;
     Coroutine _currentAction;
 
     public System.Action<string> OnEnemyTurnEnded;
@@ -23,16 +28,15 @@ public class EnemyBrain : MonoBehaviour
         if (_entityAttackManager == null) _entityAttackManager = GetComponent<EntityAttackManager>();
         if (_entityMovement == null) _entityMovement = GetComponent<EntityMovement>();
         if (_entityHealth == null) _entityHealth = GetComponent<EntityHealth>();
+        if (_entityStamina == null) _entityStamina = GetComponent<EntityStamina>();
         
     }
 
     void Start()
     {
-        _entityStatsContainer.PlayerStatsData.ResetActionPoints();
+        _entityStamina.ResetAP();
         _attackRange = _entityStatsContainer.ItemContainer.GetWeapon().AttackRange;
         CombatManager.Instance.AddEnemy(this);
-
-        _entityStatsContainer.PlayerStatsData.OnCurrentActionPointsChanged += HandleAPCheck;
         _entityHealth.OnHealthChanged += HandleDeathCheck;
     }
 
@@ -40,8 +44,9 @@ public class EnemyBrain : MonoBehaviour
     // Check if the enemy has enough action points to take a turn
     void HandleAPCheck()
     {
+        Debug.Log($"Enemy Current AP: {_entityStamina.CurrentActionPoints}");
         // Debug.Log($"Enemy Current AP: {_entityStatsContainer.PlayerStatsData.CurrentActionPoints}");
-        if (_entityStatsContainer.PlayerStatsData.CurrentActionPoints <= 0)
+        if (_entityStamina.CurrentActionPoints <= 0)
         {
             EndTurn();
         }
@@ -68,8 +73,9 @@ public class EnemyBrain : MonoBehaviour
     // Start the enemy's turn -> THIS IS MEANT TO BE CALLED BY THE COMBAT MANAGER
     public void StartEnemyTurn()
     {
+        Debug.Log("Starting Enemy Turn was called by Combat Manager");
         _isMyTurn = true;
-        _entityStatsContainer.PlayerStatsData.ResetActionPoints();
+        _entityStamina.ResetAP();
         if (_currentAction != null) StopCoroutine(_currentAction);
         HandleTurnLogic();
     }
@@ -127,19 +133,33 @@ public class EnemyBrain : MonoBehaviour
     {
 		Debug.Log("Enemy Moving!");
 
+        // normalize the direction
+        direction.Normalize();
+        
         // check if the direction's x or y is greater
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         {
-            // move in the x direction
+            //attempt to move in the x direction
             if (direction.x > 0)
             {
-				// Debug.Log("Enemy Moving Right!");
-                _entityMovement.MoveRight(true);
+                // check if there is a wall in the way
+                if (Physics2D.Raycast(transform.position, Vector2.right, _raycastDistance, _obstacleLayerMask))
+                {
+                    Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
+                    ChooseYDirection(direction);
+                }
+                else _entityMovement.MoveRight(true); // otherwise move right
+                
             }
             else
             {
-				// Debug.Log("Enemy Moving Left!");
-				_entityMovement.MoveLeft(true);
+                // check if there is a wall in the way
+                if (Physics2D.Raycast(transform.position, Vector2.left, _raycastDistance, _obstacleLayerMask))
+                {
+                    Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
+                    ChooseYDirection(direction);
+                }
+                else _entityMovement.MoveLeft(true); // otherwise move left
             }
         }
         else
@@ -147,19 +167,146 @@ public class EnemyBrain : MonoBehaviour
             // move in the y direction
             if (direction.y > 0)
             {
-				// Debug.Log("Enemy Moving Up!");
-				_entityMovement.MoveUp(true);
+                // check if there is a wall in the way
+                if (Physics2D.Raycast(transform.position, Vector2.up, _raycastDistance, _obstacleLayerMask))
+                {
+                    Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
+                    ChooseXDirection(direction);
+                }
+                else _entityMovement.MoveUp(true);
             }
             else
             {
-				// Debug.Log("Enemy Moving Down!");
-				_entityMovement.MoveDown(true);
+                // check if there is a wall in the way
+                if (Physics2D.Raycast(transform.position, Vector2.down, _raycastDistance, _obstacleLayerMask))
+                {
+                    Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
+                    ChooseXDirection(direction);
+                }
+                else _entityMovement.MoveDown(true);
             }
         }
 
+        #region OldMovementLogic
+        // // check if the direction's x or y is greater
+        // if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        // {
+        //     // move in the x direction
+        //     if (direction.x > 0)
+        //     {
+        //         // if a wall is in the way, move in the y direction -> Right
+        //         if (Physics2D.Raycast(transform.position, Vector2.right, _raycastDistance, _obstacleLayerMask))
+        //         {
+        //             Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
+
+                    
+        //         }
+        //         else _entityMovement.MoveRight(true); // otherwise move right
+        //     }
+        //     else
+        //     {
+        //         // if a wall is in the way, move in the y direction -> Left
+		// 		if (Physics2D.Raycast(transform.position, Vector2.left, _raycastDistance, _obstacleLayerMask))
+        //         {
+        //             Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
+        //             // randomly pick the y direction
+        //             if (Random.Range(0, 2) == 0) _entityMovement.MoveUp(true);
+        //             else _entityMovement.MoveDown(true);
+        //         }
+        //         else _entityMovement.MoveLeft(true); // otherwise move left
+        //     }
+        // }
+        // else
+        // {
+        //     // move in the y direction
+        //     if (direction.y > 0)
+        //     {
+        //         // if a wall is in the way, move in the x direction -> Up
+		// 		if (Physics2D.Raycast(transform.position, Vector2.up, _raycastDistance, _obstacleLayerMask))
+        //         {
+        //             Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
+        //             // randomly pick the x direction
+        //             if (Random.Range(0, 2) == 0) _entityMovement.MoveRight(true);
+        //             else _entityMovement.MoveLeft(true);
+        //         }
+        //         else _entityMovement.MoveUp(true);
+        //     }
+        //     else
+        //     {
+        //         // if a wall is in the way, move in the x direction -> Down
+		// 		if (Physics2D.Raycast(transform.position, Vector2.down, _raycastDistance, _obstacleLayerMask))
+        //         {
+        //             Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
+        //             // randomly pick the x direction
+        //             if (Random.Range(0, 2) == 0) _entityMovement.MoveRight(true);
+        //             else _entityMovement.MoveLeft(true);
+        //         }
+        //         else _entityMovement.MoveDown(true);
+        //     }
+        // }
+        #endregion
         // once movement is done, wait for the time between actions
         yield return new WaitForSeconds(_timeBetweenActions);
         HandleTurnLogic();
+    }
+
+
+    /// <summary>
+    ///  Choose the y direction to move in
+    /// </summary>
+    void ChooseYDirection(Vector2 direction)
+    {
+        if (direction.y > 0)
+        {
+            // if a wall is in the way, move in the x direction -> Up
+            if (Physics2D.Raycast(transform.position, Vector2.up, _raycastDistance, _obstacleLayerMask))
+            {
+                Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
+                // randomly pick the x direction
+                if (Random.Range(0, 2) == 0) _entityMovement.MoveRight(true);
+                else _entityMovement.MoveLeft(true);
+            }
+            else _entityMovement.MoveUp(true);
+        }
+        else
+        {
+            // if a wall is in the way, move in the x direction -> Down
+            if (Physics2D.Raycast(transform.position, Vector2.down, _raycastDistance, _obstacleLayerMask))
+            {
+                Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
+                // randomly pick the x direction
+                if (Random.Range(0, 2) == 0) _entityMovement.MoveRight(true);
+                else _entityMovement.MoveLeft(true);
+            }
+            else _entityMovement.MoveDown(true);
+        }
+    }
+
+    /// <summary>
+    ///  Choose the x direction to move in
+    /// </summary> 
+    void ChooseXDirection(Vector2 direction)
+    {
+        if (direction.x > 0)
+        {
+            // if a wall is in the way, move in the y direction -> Right
+            if (Physics2D.Raycast(transform.position, Vector2.right, _raycastDistance, _obstacleLayerMask))
+            {
+                Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
+                ChooseYDirection(direction);
+            }
+            else _entityMovement.MoveRight(true); // otherwise move right
+        }
+        else
+        {
+            // if a wall is in the way, move in the y direction -> Left
+            if (Physics2D.Raycast(transform.position, Vector2.left, _raycastDistance, _obstacleLayerMask))
+            {
+                Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
+                ChooseYDirection(direction);
+            }
+            else _entityMovement.MoveLeft(true); // otherwise move left
+        }
     }
 
     void HandleAttack()

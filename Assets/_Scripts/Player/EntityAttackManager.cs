@@ -6,54 +6,52 @@ using UnityEngine;
 public class EntityAttackManager : MonoBehaviour
 {
     private EntityStatsContainer _entityStatsContainer;
+    private EntityStamina _entityStamina;
     [SerializeField] Transform _attackPoint;
     public Transform AttackPoint => _attackPoint;
-
-    bool _ignoreInput = false;
 
     void Awake()
     {
         _entityStatsContainer = GetComponent<EntityStatsContainer>();
+        _entityStamina = GetComponent<EntityStamina>();
     }
-    void OnEnable()
-    {
-        CombatManager.Instance.OnTurnChanged += HandleTurnChange;
-    }
+    // void OnEnable()
+    // {
+    //     CombatManager.Instance.OnTurnChanged += HandleTurnChange;
+    // }
 
-    void OnDisable()
-    {
-        CombatManager.Instance.OnTurnChanged -= HandleTurnChange;
-    }
+    // void OnDisable()
+    // {
+    //     CombatManager.Instance.OnTurnChanged -= HandleTurnChange;
+    // }
 
-    void HandleTurnChange(CombatTurnState turnState)
-    {
-        switch (turnState)
-        {
-            case CombatTurnState.Player:
-                _ignoreInput = false;
-                _entityStatsContainer.PlayerStatsData.ResetActionPoints();
-                break;
-            case CombatTurnState.Enemy:
-                //_entityStatsContainer.PlayerStatsData.CurrentActionPoints = 0;
-                _ignoreInput = true;
-                break;
-            case CombatTurnState.NonCombat:
-                _ignoreInput = true;
-                break;
-        }
-    }
+    // void HandleTurnChange(CombatTurnState turnState)
+    // {
+    //     Debug.Log("Turn changed to " + turnState);
+    //     switch (turnState)
+    //     {
+    //         case CombatTurnState.Player:
+    //             _ignoreInput = false;
+    //             break;
+    //         case CombatTurnState.Enemy:
+    //             //_entityStatsContainer.PlayerStatsData.CurrentActionPoints = 0;
+    //             _ignoreInput = true;
+    //             break;
+    //         case CombatTurnState.NonCombat:
+    //             _ignoreInput = true;
+    //             break;
+    //     }
+    // }
 
     [ContextMenu("Attack")]
     public void Attack()
     {
-        // if not in combat state, player cannot attack
-        if (_ignoreInput) return;
 
         // get the weapon from the player's inventory
         var weapon = _entityStatsContainer.ItemContainer.GetWeapon();
 
         // if player has no action points, player cannot attack
-        if (_entityStatsContainer.PlayerStatsData.CurrentActionPoints <= 0) return;
+        if (_entityStamina.CurrentActionPoints <= 0) return;
         
         // if weapon is not equipped, player cannot attack
         if (!HandleWeaponChecks(weapon)) return;
@@ -72,7 +70,7 @@ public class EntityAttackManager : MonoBehaviour
     void SubtractAP(int cost)
     {
         // reduce the player's action points
-        _entityStatsContainer.PlayerStatsData.CurrentActionPoints -= cost;
+        _entityStamina.SubtractAP(cost);
     }
 
     /// <summary>
