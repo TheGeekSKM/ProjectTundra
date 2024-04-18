@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerStatsData", menuName = "PlayerStats/PlayerStatsData")]
 public class PlayerStatsData : ScriptableObject
 {
-    [Header("Visible Stats")]
+    [Header("Basic Entity Stats")]
     [SerializeField] private int _totalActionPoints;
     public int TotalActionPoints
     {
@@ -72,5 +72,16 @@ public class PlayerStatsData : ScriptableObject
     }
     public event Action OnArmorChanged;
 
-
+    [Header("Visible Stats")]
+    [SerializeField] private int _movementCost;
+    public int MovementCost
+    {
+        get => _movementCost;
+        set
+        {
+            _movementCost = value;
+            OnMovementCostChanged?.Invoke();
+        }
+    }
+    public event Action OnMovementCostChanged;
 }
