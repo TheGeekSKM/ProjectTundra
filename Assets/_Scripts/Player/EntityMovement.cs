@@ -14,12 +14,24 @@ public class EntityMovement : MonoBehaviour
     PlayerStatsData _playerStatsData;
     Rigidbody2D _rb;
 
+    private CameraMovement _cameraM;
+    private bool _cameraFinished;
 
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _playerStatsData = GetComponent<EntityStatsContainer>().PlayerStatsData;
         _entityStamina = GetComponent<EntityStamina>();
+        _cameraM = Camera.main.GetComponent<CameraMovement>();
+    }
+
+    void OnEnable()
+    {
+        _cameraM.OnCameraMovementFinish += CameraDone;
+    }
+    void OnDisable()
+    {
+        _cameraM.OnCameraMovementFinish -= CameraDone;
     }
 
 
@@ -31,9 +43,38 @@ public class EntityMovement : MonoBehaviour
     {
         if (_entityStamina.CurrentActionPoints <= 0) return;
 
-        direction.Normalize();
-        _rb.MovePosition(_rb.position + direction);
+        var ray = Physics2D.Raycast(_rb.position, direction, 1, LayerMask.GetMask("Walls"));
+        if (ray.collider != null && !ray.collider.CompareTag("RoomEdges"))
+            return;
+        else
+        {
+            if (ray.collider.CompareTag("RoomEdges"))
+            {
+                direction.Normalize();
+                StartCoroutine(CameraInterupt(direction));
+            }
+            else
+            {
+                direction.Normalize();
+                _rb.MovePosition(_rb.position + direction);
+            }
+        }
+        
 		// Debug.Log("Subtracted " + _movementCost + " movement point from total action points, resulting in " + _playerStatsData.CurrentActionPoints + " total points!");
+    }
+    IEnumerator CameraInterupt(Vector2 direction)
+    {
+        _rb.MovePosition(_rb.position + direction / 2);
+        //_cameraM.Move();
+        yield return new WaitUntil(() => _cameraFinished);
+        _rb.MovePosition(_rb.position + direction / 2);
+        _cameraFinished = false;
+        yield break;
+    }
+
+    void CameraDone()
+    {
+        _cameraFinished = true;
     }
 
     void SubtractAP()
