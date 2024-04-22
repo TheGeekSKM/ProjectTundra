@@ -28,11 +28,22 @@ public class EntityHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        OnHealthChanged?.Invoke(currentHealth);
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
             currentHealth = 0;
             Die();
+        }
+    }
+
+    public void Heal(int amount)
+    {
+        OnHealthChanged?.Invoke(currentHealth);
+        currentHealth += amount;
+        if (currentHealth > playerStatsData.MaxHealth)
+        {
+            currentHealth = playerStatsData.MaxHealth;
         }
     }
 
