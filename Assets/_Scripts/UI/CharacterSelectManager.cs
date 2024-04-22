@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Microsoft.Unity.VisualStudio.Editor;
+using UnityEngine.UI;
 
 public class CharacterSelectManager : MonoBehaviour
 {
@@ -15,6 +17,11 @@ public class CharacterSelectManager : MonoBehaviour
     [SerializeField] CharPanelManager _rangerPanel;
     [SerializeField] CharPanelManager _magePanel;
     [SerializeField] CharPanelManager _scoutPanel;
+
+    [Header("Buttons")]
+    [SerializeField] Button _rangerEmbarkButton;
+    [SerializeField] Button _mageEmbarkButton;
+    [SerializeField] Button _scoutEmbarkButton;
     
     [Header("Debug")]
     [SerializeField] int _currentMenuIndex = 0;
@@ -22,6 +29,10 @@ public class CharacterSelectManager : MonoBehaviour
     private void Start()
     {
         DisplayCharacter();
+        if (GameDataManager.Instance != null)
+        {
+            GameDataManager.Instance.OnGameDataChanged += HideCharactersIfUsed;
+        }
     }
 
     public void NextCharacter()
@@ -71,5 +82,9 @@ public class CharacterSelectManager : MonoBehaviour
         _rangerPanel.CharUsed(GameDataManager.Instance.RangerUsed);
         _magePanel.CharUsed(GameDataManager.Instance.MageUsed);
         _scoutPanel.CharUsed(GameDataManager.Instance.ScoutUsed);
+
+        _rangerEmbarkButton.enabled = !GameDataManager.Instance.RangerUsed;
+        _mageEmbarkButton.enabled = !GameDataManager.Instance.MageUsed;
+        _scoutEmbarkButton.enabled = !GameDataManager.Instance.ScoutUsed;
     }
 }

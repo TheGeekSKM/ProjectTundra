@@ -39,9 +39,33 @@ public class GameDataManager : MonoBehaviour
         }
     }
 
+    [SerializeField] EntityStatsContainer _ranger;
+    public EntityStatsContainer Ranger => _ranger;
+
+    [SerializeField] EntityStatsContainer _mage;
+    public EntityStatsContainer Mage => _mage;
+
+    [SerializeField] EntityStatsContainer _scout;
+    public EntityStatsContainer Scout => _scout;
+
     private void Awake()
     {
         if (Instance != null) Destroy(gameObject);
         else Instance = this;
+    }
+
+    public void SelectRanger()
+    {
+        RangerUsed = true;
+    }
+
+    public void SelectMage()
+    {
+        MageUsed = true;
+    }
+
+    public void SelectScout()
+    {
+        ScoutUsed = true;
     }
 }

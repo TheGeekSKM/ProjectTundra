@@ -203,7 +203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &685166359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +318,9 @@ MonoBehaviour:
   _rangerUsed: 0
   _mageUsed: 0
   _scoutUsed: 0
+  _ranger: {fileID: 4833069642188488507, guid: 65d1e5a7f6ad31944913b87a317b277b, type: 3}
+  _mage: {fileID: 4833069642188488507, guid: 82ff22b78c917cd46bec2324c9dbd333, type: 3}
+  _scout: {fileID: 4833069642188488507, guid: da77ec76514007c489fa0995cfa89563, type: 3}
 --- !u!4 &1080940085
 Transform:
   m_ObjectHideFlags: 0
