@@ -140,7 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a15ef7d0a728347a1614809f7141cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementCost: 1
 --- !u!114 &4833069642188488506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +195,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b332a783b41a69b448f5ba0ef1edc99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statsContainer: {fileID: 0}
+  statsContainer: {fileID: 4833069642188488507}
+  entityStamina: {fileID: 6724540596322094236}
   currentHealth: 0
 --- !u!114 &6724540596322094236
 MonoBehaviour:
@@ -210,7 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c88a72cd1c6b4924bbc265b918388db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entityStatsContainer: {fileID: 0}
+  _entityStatsContainer: {fileID: 4833069642188488507}
+  _currentActionPoints: 0
 --- !u!1 &4833069642775468872
 GameObject:
   m_ObjectHideFlags: 0
