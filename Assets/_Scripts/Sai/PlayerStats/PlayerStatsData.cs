@@ -87,4 +87,7 @@ public class PlayerStatsData : ScriptableObject
 
     [SerializeField] private AttackType _entityAttackType;
     public AttackType EntityAttackType => _entityAttackType;
+
+    [SerializeField] private int _healCost = 1;
+    public int HealCost => _healCost;
 }
