@@ -45,6 +45,15 @@ public class ChestItemViewManager : MonoBehaviour
         // if the take button is clicked,
         itemTakeButton.onClick.AddListener(() =>
         {
+            // checks to see if the player is picking up a weapon and if so checks to see if the weapon is the same attack type as the player
+            if (_itemData is WeaponItemData weaponData)
+            {
+                if (Player.Instance.PlayerStats.PlayerStatsData.EntityAttackType != weaponData.AttackType)
+                {
+                    Debug.LogError("Player CANNOT use this weapon as it is against their attacktype!");
+                }
+            }
+
             // first, let the ChestViewManager add the item to the player inventory
             chestViewInstance.AddItemToPlayerInventory(_itemData);
 

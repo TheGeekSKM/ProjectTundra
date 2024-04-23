@@ -6,9 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(EntityStatsContainer))]
 public class EntityMovement : MonoBehaviour
 {
-    [SerializeField] int _movementCost;
-    public int MovementCost => _movementCost;
-
     private EntityStamina _entityStamina;
 
     PlayerStatsData _playerStatsData;
@@ -79,7 +76,7 @@ public class EntityMovement : MonoBehaviour
 
     void SubtractAP()
     {
-        _entityStamina.SubtractAP(_movementCost);
+        _entityStamina.SubtractAP(_playerStatsData.MovementCost);
     }
 
     [ContextMenu("Move Up")]
