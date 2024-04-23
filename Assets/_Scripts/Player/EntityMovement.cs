@@ -44,7 +44,6 @@ public class EntityMovement : MonoBehaviour
 
 		direction.Normalize();
 
-
 		if (ray.collider != null && !ray.collider.CompareTag("RoomEdges")) return;
         else
         {
@@ -63,7 +62,7 @@ public class EntityMovement : MonoBehaviour
     IEnumerator CameraInterupt(Vector2 direction)
     {
         _rb.MovePosition(_rb.position + direction / 2);
-        //_cameraM.Move();
+        _cameraM.Move(direction);
         yield return new WaitUntil(() => _cameraFinished);
         _rb.MovePosition(_rb.position + direction / 2);
         _cameraFinished = false;
