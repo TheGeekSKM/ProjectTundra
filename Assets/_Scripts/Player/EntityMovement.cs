@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(EntityStatsContainer))]
@@ -12,7 +13,6 @@ public class EntityMovement : MonoBehaviour
     Rigidbody2D _rb;
 
     private CameraMovement _cameraM;
-    private bool _cameraFinished;
 
     void Awake()
     {
@@ -21,15 +21,6 @@ public class EntityMovement : MonoBehaviour
         _entityStamina = GetComponent<EntityStamina>();
         _cameraM = Camera.main.GetComponent<CameraMovement>();
     }
-
-	void OnEnable()
-	{
-		_cameraM.OnCameraMovementFinish += CameraDone;
-	}
-	void OnDisable()
-	{
-		_cameraM.OnCameraMovementFinish -= CameraDone;
-	}
 
 
 	/// <summary>
@@ -50,7 +41,10 @@ public class EntityMovement : MonoBehaviour
 			if (ray.collider != null && ray.collider.CompareTag("RoomEdges"))
 			{
 				if (gameObject.CompareTag("Player"))
-					StartCoroutine(CameraInterupt(direction));
+				{
+					_rb.DOMove(_rb.position + direction, _cameraM.duration);
+					_cameraM.Move(direction);
+				}
 				else return;
 			}
 			else
@@ -58,20 +52,6 @@ public class EntityMovement : MonoBehaviour
         }
         
 		// Debug.Log("Subtracted " + _movementCost + " movement point from total action points, resulting in " + _playerStatsData.CurrentActionPoints + " total points!");
-    }
-    IEnumerator CameraInterupt(Vector2 direction)
-    {
-        _rb.MovePosition(_rb.position + direction / 2);
-        _cameraM.Move(direction);
-        yield return new WaitUntil(() => _cameraFinished);
-        _rb.MovePosition(_rb.position + direction / 2);
-        _cameraFinished = false;
-        yield break;
-    }
-
-    void CameraDone()
-    {
-        _cameraFinished = true;
     }
 
     void SubtractAP()
