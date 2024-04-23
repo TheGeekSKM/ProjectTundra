@@ -38,17 +38,17 @@ public class UIInputManager : MonoBehaviour
 
     public void MoveDown()
     {
-        OnMoveInput?.Invoke(MoveDirection.Down);
+		OnMoveInput?.Invoke(MoveDirection.Down);
     }
 
     public void MoveLeft()
     {
-        OnMoveInput?.Invoke(MoveDirection.Left);
+		OnMoveInput?.Invoke(MoveDirection.Left);
     }
 
     public void MoveRight()
     {
-        OnMoveInput?.Invoke(MoveDirection.Right);
+		OnMoveInput?.Invoke(MoveDirection.Right);
     }
 
     public void Attack()

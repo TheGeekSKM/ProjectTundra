@@ -22,39 +22,40 @@ public class EntityMovement : MonoBehaviour
         _cameraM = Camera.main.GetComponent<CameraMovement>();
     }
 
-    void OnEnable()
-    {
-        _cameraM.OnCameraMovementFinish += CameraDone;
-    }
-    void OnDisable()
-    {
-        _cameraM.OnCameraMovementFinish -= CameraDone;
-    }
+	void OnEnable()
+	{
+		_cameraM.OnCameraMovementFinish += CameraDone;
+	}
+	void OnDisable()
+	{
+		_cameraM.OnCameraMovementFinish -= CameraDone;
+	}
 
 
-    /// <summary>
-    ///  Move the entity in the specified direction
-    /// </summary>
-    /// <param name="direction">Input a Vector2 Direction that you want the entity to move</param>
-    public void Move(Vector2 direction)
+	/// <summary>
+	///  Move the entity in the specified direction
+	/// </summary>
+	/// <param name="direction">Input a Vector2 Direction that you want the entity to move</param>
+	void Move(Vector2 direction)
     {
         if (_entityStamina.CurrentActionPoints <= 0) return;
 
-        var ray = Physics2D.Raycast(_rb.position, direction, 1, LayerMask.GetMask("Walls"));
-        if (ray.collider != null && !ray.collider.CompareTag("RoomEdges"))
-            return;
+		var ray = Physics2D.Raycast(_rb.position, direction, 1, LayerMask.GetMask("Walls"));
+
+		direction.Normalize();
+
+
+		if (ray.collider != null && !ray.collider.CompareTag("RoomEdges")) return;
         else
         {
-            if (ray.collider.CompareTag("RoomEdges"))
-            {
-                direction.Normalize();
-                StartCoroutine(CameraInterupt(direction));
-            }
-            else
-            {
-                direction.Normalize();
-                _rb.MovePosition(_rb.position + direction);
-            }
+			if (ray.collider != null && ray.collider.CompareTag("RoomEdges"))
+			{
+				if (gameObject.CompareTag("Player"))
+					StartCoroutine(CameraInterupt(direction));
+				else return;
+			}
+			else
+				_rb.MovePosition(_rb.position + direction);
         }
         
 		// Debug.Log("Subtracted " + _movementCost + " movement point from total action points, resulting in " + _playerStatsData.CurrentActionPoints + " total points!");
@@ -76,6 +77,7 @@ public class EntityMovement : MonoBehaviour
 
     void SubtractAP()
     {
+		Debug.Log("Subtracting " + _playerStatsData.MovementCost + " AP from entity");
         _entityStamina.SubtractAP(_playerStatsData.MovementCost);
     }
 
@@ -89,21 +91,21 @@ public class EntityMovement : MonoBehaviour
     [ContextMenu("Move Down")]
     public void MoveDown(bool subtractAP)
     {
-        Move(Vector2.down);
+		Move(Vector2.down);
         if (subtractAP) SubtractAP();
     }
 
     [ContextMenu("Move Left")]
     public void MoveLeft(bool subtractAP)
     {
-        Move(Vector2.left);
+		Move(Vector2.left);
         if (subtractAP) SubtractAP();
     }
 
     [ContextMenu("Move Right")]
     public void MoveRight(bool subtractAP)
     {
-        Move(Vector2.right);
+		Move(Vector2.right);
         if (subtractAP) SubtractAP();
     }
 }
