@@ -168,7 +168,7 @@ public class CombatManager : MonoBehaviour
 
     public void AnimatePlayerMovementControlsIntro()
     {
-        _movementControlsPanel.DOAnchorPosY(65, 0.5f);
+        _movementControlsPanel.DOAnchorPosY(0, 0.5f);
     }
 
     public void AnimatePlayerMovementControlsOutro()
