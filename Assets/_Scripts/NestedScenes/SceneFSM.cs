@@ -8,6 +8,7 @@ public class SceneFSM : BaseStateMachine
 
     public MainMenuState MainMenuState { get; private set; }
     public CharacterSelectState CharacterSelectState { get; private set; }
+    public GamePlayState GamePlayState { get; private set; }
 
     void OnValidate()
     {
@@ -21,10 +22,18 @@ public class SceneFSM : BaseStateMachine
     {
         MainMenuState = new MainMenuState(_sceneController, this);
         CharacterSelectState = new CharacterSelectState(_sceneController, this);
+        GamePlayState = new GamePlayState(_sceneController, this);
     }
 
     void Start()
     {
         ChangeState(MainMenuState, 0.5f, 0f);
     }
+}
+
+public enum SceneState
+{
+    MainMenu,
+    CharacterSelect,
+    GamePlay
 }

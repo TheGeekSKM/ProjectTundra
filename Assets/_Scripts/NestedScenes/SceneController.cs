@@ -10,6 +10,9 @@ public class SceneController : MonoBehaviour
     public SceneFSM SceneFSM => _sceneFSM;
     [SerializeField] RectTransform TransitionPanel;
     float _transitionPanelYPos = -1940f;
+    [SerializeField] SceneState _currentSceneState;
+    public SceneState CurrentSceneState => _currentSceneState;
+    public System.Action<SceneState> OnSceneStateChanged;
 
     [Header("Main Menu")]
     [SerializeField] Object _mainMenuScene;
@@ -39,26 +42,50 @@ public class SceneController : MonoBehaviour
 
     public void MainMenuStateIntro()
     {
+        UpdateState(SceneState.MainMenu);
         Debug.Log("MainMenuStateIntroFunctions");
-        SceneManager.LoadSceneAsync(_mainMenuScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => TransitionPanelOff();
+        SceneManager.LoadSceneAsync(_mainMenuScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        {
+            // TransitionPanelOff();
+        };
     }
 
     public void MainMenuStateOutro()
     {
-        TransitionPanelOn();
+        // TransitionPanelOn();
         Debug.Log("MainMenuStateOutroFunctions");
         SceneManager.UnloadSceneAsync(_mainMenuScene.name);
     }
 
     public void CharacterSelectStateIntro()
     {
+        UpdateState(SceneState.CharacterSelect);
         Debug.Log("CharacterSelectStateIntroFunction");
-        SceneManager.LoadSceneAsync(_characterSelectMenu.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => TransitionPanelOff();
+        SceneManager.LoadSceneAsync(_characterSelectMenu.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        {
+            // TransitionPanelOff();
+        };
     }
 
     public void CharacterSelectStateOutro()
     {
-        TransitionPanelOn();
+        // TransitionPanelOn();
         SceneManager.UnloadSceneAsync(_characterSelectMenu.name);
+    }
+
+    public void GamePlayStateIntro()
+    {
+        UpdateState(SceneState.GamePlay);
+    }
+
+    public void GamePlayStateOutro()
+    {
+        Debug.Log("GamePlayStateOutroFunction");
+    }
+
+    void UpdateState(SceneState _state)
+    {
+        _currentSceneState = _state;
+        OnSceneStateChanged?.Invoke(_state);
     }
 }

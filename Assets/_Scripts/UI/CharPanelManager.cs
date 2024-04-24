@@ -19,7 +19,7 @@ public class CharPanelManager : MonoBehaviour
         if (used)
         {
             _disabledPanel.color = new Color(255, 0, 0, 120);
-            _titleText.text += "DISABLED";
+            _titleText.text = "DISABLED";
         }
     }
 }

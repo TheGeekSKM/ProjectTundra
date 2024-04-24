@@ -847,9 +847,7 @@ MonoBehaviour:
   _rangerPanel: {fileID: 1431197374}
   _magePanel: {fileID: 1305715455}
   _scoutPanel: {fileID: 595147177}
-  _rangerEmbarkButton: {fileID: 0}
-  _mageEmbarkButton: {fileID: 0}
-  _scoutEmbarkButton: {fileID: 0}
+  _embarkButton: {fileID: 1929126710}
   _currentMenuIndex: 0
 --- !u!114 &541890335
 MonoBehaviour:
@@ -2974,6 +2972,34 @@ PrefabInstance:
       propertyPath: m_Colors.m_DisabledColor.r
       value: 0.4528302
       objectReference: {fileID: 0}
+    - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 541890334}
+    - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Embark
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CharacterSelectManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5140251384189080563, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
       propertyPath: m_Type
       value: 0
@@ -2996,3 +3022,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+--- !u!114 &1929126710 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+  m_PrefabInstance: {fileID: 1929126709}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

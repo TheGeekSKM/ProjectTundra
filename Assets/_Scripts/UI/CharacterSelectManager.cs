@@ -19,20 +19,22 @@ public class CharacterSelectManager : MonoBehaviour
     [SerializeField] CharPanelManager _scoutPanel;
 
     [Header("Buttons")]
-    [SerializeField] Button _rangerEmbarkButton;
-    [SerializeField] Button _mageEmbarkButton;
-    [SerializeField] Button _scoutEmbarkButton;
+    [SerializeField] Button _embarkButton;
     
     [Header("Debug")]
     [SerializeField] int _currentMenuIndex = 0;
 
     private void Start()
     {
+        _currentMenuIndex = 0;
+
+
         DisplayCharacter();
         if (GameDataManager.Instance != null)
         {
             GameDataManager.Instance.OnGameDataChanged += HideCharactersIfUsed;
         }
+
     }
 
     public void NextCharacter()
@@ -83,8 +85,44 @@ public class CharacterSelectManager : MonoBehaviour
         _magePanel.CharUsed(GameDataManager.Instance.MageUsed);
         _scoutPanel.CharUsed(GameDataManager.Instance.ScoutUsed);
 
-        _rangerEmbarkButton.enabled = !GameDataManager.Instance.RangerUsed;
-        _mageEmbarkButton.enabled = !GameDataManager.Instance.MageUsed;
-        _scoutEmbarkButton.enabled = !GameDataManager.Instance.ScoutUsed;
+        // changes the button interactable state based on the character used
+        switch (_currentMenuIndex)
+        {
+            case 0:
+                _embarkButton.interactable = !GameDataManager.Instance.RangerUsed;
+                break;
+            case 1:
+                _embarkButton.interactable = !GameDataManager.Instance.MageUsed;
+                break;
+            case 2:
+                _embarkButton.interactable = !GameDataManager.Instance.ScoutUsed;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void Embark()
+    {
+        switch (_currentMenuIndex)
+        {
+            case 0:
+                GameDataManager.Instance.SelectRanger();
+                break;
+            case 1:
+                GameDataManager.Instance.SelectMage();
+                break;
+            case 2:
+                GameDataManager.Instance.SelectScout();
+                break;
+            default:
+                break;
+        }
+
+        HideCharactersIfUsed();
+
+        // Transition to the GamePlay Scene once a character is selected
+        var sceneFSM = SceneController.Instance.SceneFSM;
+        sceneFSM.ChangeState(sceneFSM.GamePlayState);
     }
 }
