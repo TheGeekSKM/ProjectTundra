@@ -17,3 +17,6 @@ MonoBehaviour:
   _damage: 1
   _aOERange: 1
   _armor: 0
+  _movementCost: 1
+  _entityAttackType: 0
+  _healCost: 1

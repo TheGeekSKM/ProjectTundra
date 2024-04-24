@@ -74,16 +74,16 @@ public class PlayerInputBrain : MonoBehaviour
         switch (direction)
         {
             case MoveDirection.Up:
-                _entityMovement.MoveUp(!_ignoreAPCost);
+				_entityMovement.MoveUp(!_ignoreAPCost);
                 break;
             case MoveDirection.Down:
-                _entityMovement.MoveDown(!_ignoreAPCost);
+				_entityMovement.MoveDown(!_ignoreAPCost);
                 break;
             case MoveDirection.Left:
-                _entityMovement.MoveLeft(!_ignoreAPCost);
+				_entityMovement.MoveLeft(!_ignoreAPCost);
                 break;
             case MoveDirection.Right:
-                _entityMovement.MoveRight(!_ignoreAPCost);
+				_entityMovement.MoveRight(!_ignoreAPCost);
                 break;
         }
     }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MazeGen : MonoBehaviour
 {
+	public static MazeGen Instance { get; private set; }
+
 	//Room input Structure
 	[System.Serializable]
 	private struct Rooms
@@ -54,9 +56,9 @@ public class MazeGen : MonoBehaviour
 
 	[Space(10)]
 	[Tooltip("Standard width of our room prefabs")]
-	[SerializeField] private int roomWidth;
+	public int roomWidth;
 	[Tooltip("Standard height of our room prefabs")]
-	[SerializeField] private int roomHeight;
+	public int roomHeight;
 
 	[Space(10)]
 	[Tooltip("Offsets center of rooms from the Maze Generator's origin location")]
@@ -81,14 +83,20 @@ public class MazeGen : MonoBehaviour
 	private void Start()
 	{
 		//ensure maze has generation dimensions
-		if (mazeWidth == 0 || mazeHeight == 0)
+		if (mazeWidth == 0 || mazeHeight == 0 || (mazeHeight == 1 && mazeWidth == 1))
 		{
-			Debug.LogError("Set the dimensions, dummy");
+			Debug.LogError("Set the dimensions correctly, dummy. Maze needs to generate at least 2 rooms");
 			Debug.Break();
 		}
 
 		//start generation
 		StartCoroutine(GenerateRooms());
+	}
+
+	private void Awake()
+	{
+		if (Instance == null) Instance = this;
+		else Destroy(gameObject);
 	}
 
 	//Maze generation adapted from u/DavoMyan on Reddit (and also myself from last semester)

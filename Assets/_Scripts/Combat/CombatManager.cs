@@ -9,7 +9,8 @@ public enum CombatTurnState
     Enemy,
     Room,
     Win,
-    Lose
+    Lose,
+	CameraMove
 
 }
 
@@ -22,7 +23,7 @@ public class CombatManager : MonoBehaviour
     public List<EnemyBrain> Enemies => _enemies;
 
     [SerializeField] CombatTurnState _currentTurnState;
-    public event System.Action<CombatTurnState> OnTurnChanged;
+	public event System.Action<CombatTurnState> OnTurnChanged;
     [SerializeField] private EntityStamina _playerStamina;
 
     [SerializeField] RectTransform _playerControlsPanel;
@@ -36,10 +37,15 @@ public class CombatManager : MonoBehaviour
     {
         if (combatFSM == null) combatFSM = GetComponent<CombatFSM>();
         if (combatFSM == null) combatFSM = gameObject.AddComponent<CombatFSM>();
+		if (_playerStamina == null) _playerStamina = GameObject.FindGameObjectWithTag("Player").GetComponent<EntityStamina>();
 
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-    }
+
+		//save starting controls positions
+		_playerControlsPanelYPos = _playerControlsPanel.anchoredPosition.y;
+		_movementControlsPanelYPos = _movementControlsPanel.anchoredPosition.y;
+	}
 
     void OnEnable()
     {
@@ -53,8 +59,9 @@ public class CombatManager : MonoBehaviour
 
     void Start()
     {
-        combatFSM.ChangeState(combatFSM.NonCombatState);
-    }
+		if (_currentTurnState == CombatTurnState.NonCombat)
+			combatFSM.ChangeState(combatFSM.NonCombatState);
+	}
 
     // Check if player has enough action points, and if they don't, switch to enemy turn
     void HandlePlayerStatsChange()
@@ -113,6 +120,17 @@ public class CombatManager : MonoBehaviour
 
     }
 
+	public void CameraMoving(bool toggle)
+	{
+		if (toggle)
+			combatFSM.ChangeState(combatFSM.CameraMoveState);
+		else if (!toggle)
+		{
+			//ENTER ROOM LOGIC MIGHT GO HERE?
+			combatFSM.ChangeState(combatFSM.NonCombatState);
+		}
+	}
+
 
     void FireEvent()
     {
@@ -140,7 +158,6 @@ public class CombatManager : MonoBehaviour
 
     public void AnimatePlayerControlsIntro()
     {
-        _playerControlsPanelYPos = _playerControlsPanel.anchoredPosition.y;
         _playerControlsPanel.DOAnchorPosY(0, 0.5f);
     }
 
@@ -151,8 +168,7 @@ public class CombatManager : MonoBehaviour
 
     public void AnimatePlayerMovementControlsIntro()
     {
-        _movementControlsPanelYPos = _movementControlsPanel.anchoredPosition.y;
-        _movementControlsPanel.DOAnchorPosY(65, 0.5f);
+        _movementControlsPanel.DOAnchorPosY(0, 0.5f);
     }
 
     public void AnimatePlayerMovementControlsOutro()
@@ -194,4 +210,10 @@ public class CombatManager : MonoBehaviour
         FireEvent();
 
     }
+
+	public void CameraMove()
+	{
+		_currentTurnState = CombatTurnState.CameraMove;
+		FireEvent();
+	}
 }
