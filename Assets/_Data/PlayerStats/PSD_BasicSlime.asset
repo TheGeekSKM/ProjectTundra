@@ -18,5 +18,10 @@ MonoBehaviour:
   _aOERange: 1
   _armor: 0
   _movementCost: 1
-  _entityAttackType: 0
   _healCost: 1
+  _entityAttackType: 0
+  _entityType: 1
+  _itemContainer:
+    _containerName: 
+    Items:
+    - {fileID: 11400000, guid: a5c5eccbb446d254ab45624dbc6a4b94, type: 2}

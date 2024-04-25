@@ -18,5 +18,9 @@ MonoBehaviour:
   _aOERange: 1
   _armor: 0
   _movementCost: 1
-  _entityAttackType: 1
   _healCost: 2
+  _entityAttackType: 1
+  _entityType: 0
+  _itemContainer:
+    _containerName: Player Satchel
+    Items: []
