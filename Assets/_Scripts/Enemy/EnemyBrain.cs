@@ -40,6 +40,7 @@ public class EnemyBrain : MonoBehaviour
         //_attackRange = _entityStatsContainer.PlayerStatsData.ItemContainer.GetWeapon().AttackRange;
         //CombatManager.Instance.AddEnemy(this);
         //_entityHealth.OnHealthChanged += HandleDeathCheck;
+        _entityLoot.OnLootDropped += DestoyEntity;
     }
 	IEnumerator Enabler()
 	{
@@ -49,18 +50,21 @@ public class EnemyBrain : MonoBehaviour
 		CombatManager.Instance.AddEnemy(this);
 		_entityHealth.OnHealthChanged += HandleDeathCheck;
 
-        // wait for the loot to be dropped before destroying the enemy
-        _entityLoot.OnLootDropped += () => Destroy(gameObject);
 		yield break;
 	}
 
 	void OnDisable()
 	{
         _entityHealth.OnHealthChanged -= HandleDeathCheck;
-		_entityLoot.OnLootDropped -= () => Destroy(gameObject); // idk if this is necessary
+		_entityLoot.OnLootDropped -= DestoyEntity; // idk if this is necessary
         CombatManager.Instance.RemoveEnemy(this);
 
 	}
+
+    void DestoyEntity()
+    {
+        Destroy(gameObject);
+    }
 
 	#region CheckingMethods
 	// Check if the enemy has enough action points to take a turn

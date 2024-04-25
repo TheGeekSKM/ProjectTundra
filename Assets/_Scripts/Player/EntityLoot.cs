@@ -13,11 +13,12 @@ public class EntityLoot : MonoBehaviour
         if (_entityHealth == null) _entityHealth = GetComponent<EntityHealth>();
     }
 
-    void Start() => _entityHealth.OnDeath += DropLoot;
+    void OnEnable() => _entityHealth.OnDeath += DropLoot;
     void OnDisable() => _entityHealth.OnDeath -= DropLoot;
 
     void DropLoot()
     {
+        Debug.Log($"Loot dropped for {gameObject.name}");
         if (_entityStatsContainer == null) return;
         if (_lootChestPrefab == null) 
         {

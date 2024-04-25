@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
 
     void OnDeath()
     {
+        Debug.LogError("Player Died");
         var sceneFSM = SceneController.Instance.SceneFSM;
         sceneFSM.ChangeState(sceneFSM.LoseMenuState);
     }

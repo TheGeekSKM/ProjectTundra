@@ -170,7 +170,6 @@ public class CombatManager : MonoBehaviour
     {
         _currentTurnState = CombatTurnState.Player;
         FireEvent();
-        MusicManager.Instance.SwapTrack(EAudioEvent.CombatBGM);
     }
 
     public void AnimatePlayerControlsIntro()
@@ -231,6 +230,7 @@ public class CombatManager : MonoBehaviour
     public void NonCombatOutro()
     {   
         _inventoryButton.DOAnchorPosX(_inventoryButtonXPos, 0.5f);
+        MusicManager.Instance.SwapTrack(EAudioEvent.CombatBGM);
     }
 
 	public void CameraMove()

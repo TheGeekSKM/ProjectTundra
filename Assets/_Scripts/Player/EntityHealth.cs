@@ -61,7 +61,7 @@ public class EntityHealth : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("Entity died");
+        Debug.Log($"{gameObject.name} died");
         OnDeath?.Invoke();
     }
 }

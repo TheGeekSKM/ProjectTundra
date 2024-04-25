@@ -15,7 +15,7 @@ public class LoseMenuState : BaseState
 
     public override void Enter()
     {
-       
+        _sceneController.LoseMenuStateIntro();
     }
 
     public override void Exit()
