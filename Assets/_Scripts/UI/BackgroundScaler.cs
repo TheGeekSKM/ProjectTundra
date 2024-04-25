@@ -9,6 +9,11 @@ public class BackgroundScaler : MonoBehaviour
 	[SerializeField] private CanvasScaler scaler;
 	[SerializeField] private PixelPerfectCamera ppCamera;
 
+	private void Start()
+	{
+		if (ppCamera == null) ppCamera = Camera.main.GetComponent<PixelPerfectCamera>();
+	}
+
 	private void Update()
 	{
 		if (ppCamera != null)
