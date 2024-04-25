@@ -123,11 +123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerStatsData: {fileID: 11400000, guid: 9dba5f6da6657b34c9e16c3a1234fd5e, type: 2}
-  _entityType: 0
-  _itemContainer:
-    _containerName: Player Satchel
-    Items:
-    - {fileID: 11400000, guid: a4abc0aaf8f16204e998061977745b8d, type: 2}
 --- !u!114 &4833069642188488509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +177,8 @@ MonoBehaviour:
   _playerStats: {fileID: 4833069642188488507}
   _playerMovement: {fileID: 4833069642188488509}
   _playerAttackManager: {fileID: 4833069642188488506}
+  _playerHealth: {fileID: 4065260593297218459}
+  _playerStamina: {fileID: 6724540596322094236}
   _playerInputBrain: {fileID: 4833069642188488505}
 --- !u!114 &4065260593297218459
 MonoBehaviour:
