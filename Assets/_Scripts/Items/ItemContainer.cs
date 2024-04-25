@@ -6,7 +6,14 @@ using UnityEngine;
 public class ItemContainer
 {
     [SerializeField] private string _containerName;
-    public string ContainerName => _containerName;
+    public string ContainerName 
+    {
+        get
+        {
+            if (_containerName == "") return "Corpse";
+            else return _containerName;
+        }
+    }
     [SerializeField] List<BaseItemData> Items;
 
     /// <summary>

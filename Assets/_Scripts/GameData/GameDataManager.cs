@@ -39,18 +39,19 @@ public class GameDataManager : MonoBehaviour
         }
     }
 
-    [SerializeField] EntityStatsContainer _ranger;
-    public EntityStatsContainer Ranger => _ranger;
+    [SerializeField] GameObject _ranger;
+    public GameObject Ranger => _ranger;
 
-    [SerializeField] EntityStatsContainer _mage;
-    public EntityStatsContainer Mage => _mage;
+    [SerializeField] GameObject _mage;
+    public GameObject Mage => _mage;
 
-    [SerializeField] EntityStatsContainer _scout;
-    public EntityStatsContainer Scout => _scout;
+    [SerializeField] GameObject _scout;
+    public GameObject Scout => _scout;
+    [SerializeField] Vector2Int _spawnPosition;
 
     [SerializeField] SceneController _sceneController;
 
-    EntityStatsContainer _currentStats;
+    GameObject _currentStats;
 
     private void Awake()
     {
@@ -91,8 +92,15 @@ public class GameDataManager : MonoBehaviour
 
     void SpawnPlayer()
     {
-        // TODO: add logic here that will spawn the player when the gameplay scene is loaded
-        // TODO: use _currentStats variable to determine which player to spawn
+        if (Player.Instance)
+        {
+            Player.Instance.transform.position = new Vector3(_spawnPosition.x, _spawnPosition.y, 0);
+
+            var playerStatsContainer = Player.Instance.GetComponent<EntityStatsContainer>();
+            var selectedStatsContainer = _currentStats.GetComponent<EntityStatsContainer>();
+
+            playerStatsContainer.SetPlayerStatsData(selectedStatsContainer.PlayerStatsData);
+        }
     }
 
     public void SelectRanger()
