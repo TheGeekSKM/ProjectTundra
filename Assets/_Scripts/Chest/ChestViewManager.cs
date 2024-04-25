@@ -9,6 +9,7 @@ public class ChestViewManager : MonoBehaviour
 {
     public static ChestViewManager Instance { get; private set; }
     [SerializeField] private ChestItemViewManager _chestItemViewManagerPrefab;
+    [SerializeField] private PlayerItemViewManager _playerItemViewManagerPrefab;
     [SerializeField] TextMeshProUGUI _chestNameText;
     [SerializeField] private Transform _chestItemViewParent;
     [SerializeField] private ChestViewFSM _chestViewFSM;
@@ -16,6 +17,7 @@ public class ChestViewManager : MonoBehaviour
     private float _chestViewInitialXPosition;
     bool _isChestOpen = false;
     public bool IsChestOpen => _isChestOpen;
+    bool _isPlayerInventoryOpen = false;
 
     // this is the inventory of the person who is opening the chest
     private ItemContainer _chestOpeningInventory;
@@ -46,13 +48,23 @@ public class ChestViewManager : MonoBehaviour
         _chestOpeningInventory = playerInventory;
 
         // changes the state
-        _chestViewFSM.ChangeState(Instance._chestViewFSM.OpenState);
+        _chestViewFSM.ChangeState(_chestViewFSM.OpenState);
+    }
+
+    public void OpenPlayerInventory()
+    {
+        _chestInventory = Player.Instance.PlayerStats.PlayerStatsData.ItemContainer;
+        _chestOpeningInventory = Player.Instance.PlayerStats.PlayerStatsData.ItemContainer;
+        _isPlayerInventoryOpen = true;
+
+        _chestViewFSM.ChangeState(_chestViewFSM.OpenState);
     }
 
     public void CloseChest()
     {
         // changes the state
         _chestViewFSM.ChangeState(Instance._chestViewFSM.ClosedState);
+        _isPlayerInventoryOpen = false;
     }
 
     public void SetChestView()
@@ -63,8 +75,16 @@ public class ChestViewManager : MonoBehaviour
         // set the chest items
         foreach (var item in _chestInventory.GetItems())
         {
-            var chestItem = Instantiate(_chestItemViewManagerPrefab, _chestItemViewParent);
-            chestItem.SetItemView(item);
+            if (_isPlayerInventoryOpen)
+            {
+                var chestItem = Instantiate(_playerItemViewManagerPrefab, _chestItemViewParent);
+                chestItem.SetItemView(item);
+            }
+            else
+            {
+                var chestItem = Instantiate(_chestItemViewManagerPrefab, _chestItemViewParent);
+                chestItem.SetItemView(item);
+            }
         }
     }
 
@@ -76,6 +96,13 @@ public class ChestViewManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+    }
+
+    public void UpdatePlayerInventory(BaseItemData item)
+    {
+        // update the player inventory
+        if (item.ItemBroken) _chestOpeningInventory.RemoveItem(item);
+        // CloseChest();
     }
 
     // only does the opening animation, SHOULD NOT set the item view

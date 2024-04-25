@@ -23,7 +23,7 @@ public abstract class BaseItemData : ScriptableObject
     [SerializeField] protected int _apCost;
     public int APCost => _apCost;
 
-    protected readonly List<Action> _useEffects = new List<Action>();
+    protected readonly List<Action<BaseItemData>> _useEffects = new List<Action<BaseItemData>>();
 
     public virtual int Use()
     {
@@ -47,16 +47,16 @@ public abstract class BaseItemData : ScriptableObject
     {
         foreach (var effect in _useEffects)
         {
-            effect?.Invoke();
+            effect?.Invoke(this);
         }
     }
 
-    public void Subscribe(Action effect)
+    public void Subscribe(Action<BaseItemData> effect)
     {
         _useEffects.Add(effect);
     }
 
-    public void Unsubscribe(Action effect)
+    public void Unsubscribe(Action<BaseItemData> effect)
     {
         _useEffects.Remove(effect);
     }

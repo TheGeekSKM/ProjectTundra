@@ -30,6 +30,8 @@ public class CombatManager : MonoBehaviour
     float _playerControlsPanelYPos;
     [SerializeField] RectTransform _movementControlsPanel;
     float _movementControlsPanelYPos;
+    [SerializeField] RectTransform _inventoryButton;
+    float _inventoryButtonXPos;
 
     int _currentEnemyIndex = 0;
 
@@ -63,7 +65,9 @@ public class CombatManager : MonoBehaviour
 
 		if (_currentTurnState == CombatTurnState.NonCombat)
 			combatFSM.ChangeState(combatFSM.NonCombatState);
-	}
+
+        _inventoryButtonXPos = _inventoryButton.anchoredPosition.x;
+    }
 
     // Check if player has enough action points, and if they don't, switch to enemy turn
     void HandlePlayerStatsChange()
@@ -221,6 +225,12 @@ public class CombatManager : MonoBehaviour
         _currentTurnState = CombatTurnState.NonCombat;
         FireEvent();
         MusicManager.Instance.SwapTrack(EAudioEvent.NonCombatBGM);
+        _inventoryButton.DOAnchorPosX(0, 0.5f);
+    }
+
+    public void NonCombatOutro()
+    {   
+        _inventoryButton.DOAnchorPosX(_inventoryButtonXPos, 0.5f);
     }
 
 	public void CameraMove()

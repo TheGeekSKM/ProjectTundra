@@ -24,6 +24,7 @@ public class NonCombatState : BaseState
     public override void Exit()
     {
         _combatManager.AnimatePlayerMovementControlsOutro();
+        _combatManager.NonCombatOutro();
         // Debug.Log("NonCombatState Exit");
     }
 }

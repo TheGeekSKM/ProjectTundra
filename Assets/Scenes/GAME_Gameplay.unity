@@ -278,6 +278,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 506840345}
     m_Modifications:
+    - target: {fileID: 1820429223553019995, guid: aed287df34d9c1445b0faccc1a9866b8, type: 3}
+      propertyPath: _playerItemViewManagerPrefab
+      value: 
+      objectReference: {fileID: 3583530315645974868, guid: 7fadbbda4ace8a64a918609ffd3ba68a, type: 3}
     - target: {fileID: 2740301409740407557, guid: aed287df34d9c1445b0faccc1a9866b8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -448,6 +452,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed287df34d9c1445b0faccc1a9866b8, type: 3}
+--- !u!114 &478418134 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1820429223553019995, guid: aed287df34d9c1445b0faccc1a9866b8, type: 3}
+  m_PrefabInstance: {fileID: 478418133}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c45ce9061a9d18842aada904830f803d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &493596569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1488,6 +1503,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 490857642521193483, guid: 4805433cb9bf6f540a4bd46b3871910a, type: 3}
+      propertyPath: m_text
+      value: Heal
+      objectReference: {fileID: 0}
+    - target: {fileID: 490857642735193142, guid: 4805433cb9bf6f540a4bd46b3871910a, type: 3}
+      propertyPath: m_Name
+      value: BTN_Heal
+      objectReference: {fileID: 0}
     - target: {fileID: 490857642735193143, guid: 4805433cb9bf6f540a4bd46b3871910a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1688,8 +1711,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: PopupGroup
       objectReference: {fileID: 0}
+    - target: {fileID: 6676476096381386211, guid: 4805433cb9bf6f540a4bd46b3871910a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6676476096381386211, guid: 4805433cb9bf6f540a4bd46b3871910a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6676476096381386211, guid: 4805433cb9bf6f540a4bd46b3871910a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 478418134}
+    - target: {fileID: 6676476096381386211, guid: 4805433cb9bf6f540a4bd46b3871910a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6676476096381386211, guid: 4805433cb9bf6f540a4bd46b3871910a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenPlayerInventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 6676476096381386211, guid: 4805433cb9bf6f540a4bd46b3871910a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ChestViewManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6676476096381386211, guid: 4805433cb9bf6f540a4bd46b3871910a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4805433cb9bf6f540a4bd46b3871910a, type: 3}
+--- !u!224 &4727151277137176816 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6676476096381386208, guid: 4805433cb9bf6f540a4bd46b3871910a, type: 3}
+  m_PrefabInstance: {fileID: 4727151277137176815}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6199209083389180607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1767,6 +1823,10 @@ PrefabInstance:
       propertyPath: _playerStamina
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6242517644896605381, guid: 9c86662cd5c70134c82d36320f293b96, type: 3}
+      propertyPath: _inventoryButton
+      value: 
+      objectReference: {fileID: 4727151277137176816}
     - target: {fileID: 6242517644896605381, guid: 9c86662cd5c70134c82d36320f293b96, type: 3}
       propertyPath: _playerControlsPanel
       value: 

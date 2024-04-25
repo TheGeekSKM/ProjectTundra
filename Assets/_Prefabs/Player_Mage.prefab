@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 4833069642188488504}
   - component: {fileID: 4065260593297218459}
   - component: {fileID: 6724540596322094236}
+  - component: {fileID: 4430046868397660743}
   m_Layer: 6
   m_Name: Player_Mage
   m_TagString: Player
@@ -123,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerStatsData: {fileID: 11400000, guid: 9dba5f6da6657b34c9e16c3a1234fd5e, type: 2}
+  _spriteRenderer: {fileID: 0}
 --- !u!114 &4833069642188488509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,6 +214,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entityStatsContainer: {fileID: 4833069642188488507}
   _currentActionPoints: 0
+--- !u!114 &4430046868397660743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4833069642188488512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa5ba92c0952be47a1aaa99e02dc7a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _allPossibleBuffingItems:
+  - {fileID: 11400000, guid: 6707be0a88c9dbd428a67c66b8f8f87b, type: 2}
+  - {fileID: 11400000, guid: 29ea995d626df1c48b5017c7a3c67bbe, type: 2}
+  - {fileID: 11400000, guid: 51a6678a77cd894448a81cb6a8b5b3e2, type: 2}
+  - {fileID: 11400000, guid: ed0044bc81888964e8d8093bb33495c3, type: 2}
+  - {fileID: 11400000, guid: 452b47c01e77c2d42a00276561834694, type: 2}
+  - {fileID: 11400000, guid: f6d9ede640fd6b74a8f1e22b353d038b, type: 2}
+  - {fileID: 11400000, guid: fe335882dc99b9a4883c26da23e4ece6, type: 2}
+  _playerStats: {fileID: 4833069642188488507}
 --- !u!1 &4833069642775468872
 GameObject:
   m_ObjectHideFlags: 0
