@@ -12,12 +12,14 @@ public class EntityStatsContainer : MonoBehaviour
 {
     [SerializeField] private PlayerStatsData _playerStatsData;
     public PlayerStatsData PlayerStatsData => _playerStatsData;
+    [SerializeField] SpriteRenderer _spriteRenderer;
+
     public void SetPlayerStatsData(PlayerStatsData playerStatsData)
     {
         _playerStatsData = playerStatsData;
+        if (_spriteRenderer) _spriteRenderer.sprite = playerStatsData.EntitySprite;
     }
 
-    [SerializeField] SpriteRenderer _spriteRenderer;
 
     void Awake()
     {
@@ -25,16 +27,4 @@ public class EntityStatsContainer : MonoBehaviour
         if (!_spriteRenderer) _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }   
 
-    void Start()
-    {
-        SetSprite();
-    }
-
-    public void SetSprite()
-    {
-        if (_playerStatsData != null && _playerStatsData.EntitySprite != null)
-        {
-            _spriteRenderer.sprite = _playerStatsData.EntitySprite;
-        }
-    }
 }
