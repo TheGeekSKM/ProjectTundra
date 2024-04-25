@@ -740,7 +740,7 @@ MonoBehaviour:
     delayToStart: 0.5
     delayBetweenChars: 0.05
     delayAfterPunctuation: 0.1
-    delayAfterTyping: 1
+    delayAfterTyping: 5
   story: {fileID: 11400000, guid: 744395079f1707f4faf1306aae672b09, type: 2}
   useAudio: 0
   volume: 0.3
