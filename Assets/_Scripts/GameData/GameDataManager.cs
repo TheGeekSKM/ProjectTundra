@@ -108,8 +108,6 @@ public class GameDataManager : MonoBehaviour
             var playerStatsContainer = Player.Instance.GetComponent<EntityStatsContainer>();
             var selectedStatsContainer = _currentStats.GetComponent<EntityStatsContainer>();
 
-            playerStatsContainer.SetSprite();
-
             playerStatsContainer.SetPlayerStatsData(selectedStatsContainer.PlayerStatsData);
         }
     }
