@@ -9,20 +9,32 @@ public class CameraMovement : MonoBehaviour
 
 	//public event System.Action OnCameraMovementFinish;
 
-	public Vector2 roomCoord = new Vector2(0, 0);
+	public Vector2 roomCoord;
 
-    public void Move(Vector2 direction)
+	private Vector2 _prevRoom;
+
+	private void Start()
+	{
+		roomCoord = RoomManager.Instance.startRoom;
+	}
+
+	public void Move(Vector2 direction)
     {
+		RoomManager rm = RoomManager.Instance;
+
+		_prevRoom = roomCoord;
 		roomCoord += direction;
 
+		rm.rooms[(int)roomCoord.x, (int)roomCoord.y].SetActive(true);
+
 		//Set room destination based on direction inputted
-		Vector2 dest = RoomManager.Instance.rooms[(int)roomCoord.x, (int)roomCoord.y].transform.position;
+		Vector2 dest = rm.rooms[(int)roomCoord.x, (int)roomCoord.y].transform.position;
 		Vector3 destination = new Vector3(dest.x, dest.y, transform.position.z);
 
 		//Start movement routine
-        StartCoroutine(Movement(destination));
+        StartCoroutine(Movement(destination, rm));
     }
-	IEnumerator Movement(Vector3 destination)
+	IEnumerator Movement(Vector3 destination, RoomManager rm)
 	{
 		//Set Camera Move state
 		CombatManager.Instance.CameraMoving(true);
@@ -33,6 +45,8 @@ public class CameraMovement : MonoBehaviour
 
 		//Unset Camera Move state
 		CombatManager.Instance.CameraMoving(false);
+
+		rm.rooms[(int)_prevRoom.x, (int)_prevRoom.y].SetActive(false);
 
 		yield break;
 	}

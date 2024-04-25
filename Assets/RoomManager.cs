@@ -8,6 +8,8 @@ public class RoomManager : MonoBehaviour
 
 	public GameObject[,] rooms;
 
+	public Vector2 startRoom;
+
 	private void Awake()
 	{
 		if (Instance == null) Instance = this;
@@ -35,6 +37,9 @@ public class RoomManager : MonoBehaviour
 			{
 				Debug.Log(maze.transform.GetChild(x + (y+x)).gameObject.name);
 				rooms[x, y] = maze.transform.GetChild(x+(y+x)).gameObject;
+
+				if (!(x == (int)startRoom.x && y == (int)startRoom.y))
+					rooms[x, y].SetActive(false);
 			}
 		}
 	}
