@@ -96,4 +96,10 @@ public class PlayerStatsData : ScriptableObject
     [Header("Inventory")]
     [SerializeField] private ItemContainer _itemContainer;
     public ItemContainer ItemContainer => _itemContainer;
+
+    [Header("Art")]
+    [SerializeField] private Sprite _sprite;
+    public Sprite EntitySprite => _sprite;
+    [SerializeField] private Sprite _deathSprite;
+    public Sprite DeathSprite => _deathSprite;    
 }

@@ -9,6 +9,7 @@ public class EnemyBrain : MonoBehaviour
     [SerializeField] EntityMovement _entityMovement;
     [SerializeField] EntityHealth _entityHealth;
     [SerializeField] EntityStamina _entityStamina;
+    [SerializeField] EntityLoot _entityLoot;
 
     [Header("Enemy Settings")]
     [SerializeField] float _timeBetweenActions = 1f;
@@ -29,6 +30,7 @@ public class EnemyBrain : MonoBehaviour
         if (_entityMovement == null) _entityMovement = GetComponent<EntityMovement>();
         if (_entityHealth == null) _entityHealth = GetComponent<EntityHealth>();
         if (_entityStamina == null) _entityStamina = GetComponent<EntityStamina>();
+        if (_entityLoot == null) _entityLoot = GetComponent<EntityLoot>();
     }
 
     void OnEnable()
@@ -46,12 +48,18 @@ public class EnemyBrain : MonoBehaviour
 		_attackRange = _entityStatsContainer.PlayerStatsData.ItemContainer.GetWeapon().AttackRange;
 		CombatManager.Instance.AddEnemy(this);
 		_entityHealth.OnHealthChanged += HandleDeathCheck;
+
+        // wait for the loot to be dropped before destroying the enemy
+        _entityLoot.OnLootDropped += () => Destroy(gameObject);
 		yield break;
 	}
 
 	void OnDisable()
 	{
-		CombatManager.Instance.RemoveEnemy(this);
+        _entityHealth.OnHealthChanged -= HandleDeathCheck;
+		_entityLoot.OnLootDropped -= () => Destroy(gameObject); // idk if this is necessary
+        CombatManager.Instance.RemoveEnemy(this);
+
 	}
 
 	#region CheckingMethods
@@ -60,14 +68,10 @@ public class EnemyBrain : MonoBehaviour
     {
         Debug.Log($"Enemy Current AP: {_entityStamina.CurrentActionPoints}");
         // Debug.Log($"Enemy Current AP: {_entityStatsContainer.PlayerStatsData.CurrentActionPoints}");
-        if (_entityStamina.CurrentActionPoints <= 0)
-        {
-            EndTurn();
-        }
-        else
-        {
-            _isMyTurn = true;
-        }
+
+        // if the enemy has no action points, end their turn otherwise, it's their turn
+        if (_entityStamina.CurrentActionPoints <= 0) EndTurn();
+        else _isMyTurn = true;
     }
 
     // Check if the enemy has died
@@ -76,9 +80,7 @@ public class EnemyBrain : MonoBehaviour
         if (_entityHealth.CurrentHealth <= 0)
         {
             EndTurn();
-
             CombatManager.Instance.RemoveEnemy(this);
-            Destroy(gameObject);
         }
     }
 
