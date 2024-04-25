@@ -169,8 +169,11 @@ MonoBehaviour:
   _sceneFSM: {fileID: 88198475}
   TransitionPanel: {fileID: 1354148665}
   _currentSceneState: 0
+  _mainCamera: {fileID: 1741969174}
+  _eventSystem: {fileID: 1578230400}
   _mainMenuScene: {fileID: 102900000, guid: c3d04a6df77c71f4b9e67d40b924ef3e, type: 3}
   _characterSelectMenu: {fileID: 102900000, guid: 68b5729275f757543a6103b303cdf3b0, type: 3}
+  _gamePlayScene: {fileID: 102900000, guid: de52a39e9ae54a949aeaaa75e493c876, type: 3}
 --- !u!4 &88198477
 Transform:
   m_ObjectHideFlags: 0
@@ -319,9 +322,10 @@ MonoBehaviour:
   _rangerUsed: 0
   _mageUsed: 0
   _scoutUsed: 0
-  _ranger: {fileID: 4833069642188488507, guid: 65d1e5a7f6ad31944913b87a317b277b, type: 3}
-  _mage: {fileID: 4833069642188488507, guid: 82ff22b78c917cd46bec2324c9dbd333, type: 3}
-  _scout: {fileID: 4833069642188488507, guid: da77ec76514007c489fa0995cfa89563, type: 3}
+  _ranger: {fileID: 4833069642188488512, guid: 65d1e5a7f6ad31944913b87a317b277b, type: 3}
+  _mage: {fileID: 4833069642188488512, guid: 82ff22b78c917cd46bec2324c9dbd333, type: 3}
+  _scout: {fileID: 4833069642188488512, guid: da77ec76514007c489fa0995cfa89563, type: 3}
+  _spawnPosition: {x: 5, y: 4}
   _sceneController: {fileID: 88198476}
 --- !u!4 &1080940085
 Transform:

@@ -16,11 +16,13 @@ public class GamePlayState : BaseState
     {
         base.Enter();
         Debug.Log("GamePlayState OnStateEnter");
+        _sceneController.GamePlayStateIntro();
     }
 
     public override void Exit()
     {
         base.Exit();
         Debug.Log("GamePlayState OnStateExit");
+        _sceneController.GamePlayStateOutro();
     }
 }

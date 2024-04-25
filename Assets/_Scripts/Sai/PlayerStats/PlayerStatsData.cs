@@ -84,10 +84,16 @@ public class PlayerStatsData : ScriptableObject
         }
     }
     public event Action OnMovementCostChanged;
-
-    [SerializeField] private AttackType _entityAttackType;
-    public AttackType EntityAttackType => _entityAttackType;
-
     [SerializeField] private int _healCost = 1;
     public int HealCost => _healCost;
+
+    [Header("Entity Types")]
+    [SerializeField] private AttackType _entityAttackType;
+    public AttackType EntityAttackType => _entityAttackType;
+    [SerializeField] private EntityType _entityType;
+    public EntityType EntityType => _entityType;
+
+    [Header("Inventory")]
+    [SerializeField] private ItemContainer _itemContainer;
+    public ItemContainer ItemContainer => _itemContainer;
 }

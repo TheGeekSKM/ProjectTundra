@@ -35,7 +35,7 @@ public class EnemyBrain : MonoBehaviour
     void Start()
     {
         _entityStamina.ResetAP();
-        _attackRange = _entityStatsContainer.ItemContainer.GetWeapon().AttackRange;
+        _attackRange = _entityStatsContainer.PlayerStatsData.ItemContainer.GetWeapon().AttackRange;
         CombatManager.Instance.AddEnemy(this);
         _entityHealth.OnHealthChanged += HandleDeathCheck;
     }

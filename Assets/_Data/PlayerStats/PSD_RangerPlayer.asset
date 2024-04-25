@@ -18,4 +18,10 @@ MonoBehaviour:
   _aOERange: 1
   _armor: 0
   _movementCost: 2
+  _healCost: 1
   _entityAttackType: 1
+  _entityType: 0
+  _itemContainer:
+    _containerName: Player Satchel
+    Items:
+    - {fileID: 11400000, guid: a4abc0aaf8f16204e998061977745b8d, type: 2}

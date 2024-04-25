@@ -25,7 +25,7 @@ public class EntityHealth : MonoBehaviour
     void Start()
     {
         currentHealth = playerStatsData.MaxHealth;
-        entityType = statsContainer.EntityType;
+        entityType = statsContainer.PlayerStatsData.EntityType;
     }
 
     public void TakeDamage(int damage)

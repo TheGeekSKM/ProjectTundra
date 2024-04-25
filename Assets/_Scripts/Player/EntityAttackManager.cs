@@ -22,7 +22,7 @@ public class EntityAttackManager : MonoBehaviour
     {
 
         // get the weapon from the player's inventory
-        var weapon = _entityStatsContainer.ItemContainer.GetWeapon();
+        var weapon = _entityStatsContainer.PlayerStatsData.ItemContainer.GetWeapon();
 
         // if player has no action points, player cannot attack
         if (_entityStamina.CurrentActionPoints <= 0) return;
@@ -88,12 +88,12 @@ public class EntityAttackManager : MonoBehaviour
                 _entityStatsContainer.PlayerStatsData.AOERange, 
                 _entityStatsContainer.PlayerStatsData.Damage + weapon.DamageBonus,
                 weapon, 
-                _entityStatsContainer.EntityType);
+                _entityStatsContainer.PlayerStatsData.EntityType);
         }
         else if (weapon.AttackType == AttackType.Ranged)
         {
             Debug.Log("Ranged attack");
-            attackObject.Initialize(20f, 3f, 0.2f, _entityStatsContainer.PlayerStatsData.Damage + weapon.DamageBonus, weapon, _entityStatsContainer.EntityType);
+            attackObject.Initialize(20f, 3f, 0.2f, _entityStatsContainer.PlayerStatsData.Damage + weapon.DamageBonus, weapon, _entityStatsContainer.PlayerStatsData.EntityType);
         }
     }
 
