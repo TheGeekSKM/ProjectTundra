@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 576
+    m_Bits: 1600
 --- !u!114 &2148506912791187773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
   _raycastDistance: 1
   _obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1536
 --- !u!114 &3288952562686748812
 MonoBehaviour:
   m_ObjectHideFlags: 0

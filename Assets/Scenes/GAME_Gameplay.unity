@@ -183,6 +183,18 @@ PrefabInstance:
       propertyPath: extraExits.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.capEastExit.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.capEastExit.Array.data[2].room
+      value: 
+      objectReference: {fileID: 7319537710489150920, guid: dce6a49f35791084288000328eefd256, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.capEastExit.Array.data[2].weight
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
 --- !u!224 &237106966 stripped
@@ -684,7 +696,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &813970146
 MonoBehaviour:
   m_ObjectHideFlags: 0
