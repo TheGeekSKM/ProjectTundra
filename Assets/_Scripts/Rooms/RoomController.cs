@@ -29,6 +29,7 @@ public class RoomController : MonoBehaviour
 		Debug.Log(this.gameObject.name + " is creating a cloned objects container");
 		objectClones = new GameObject("CloneObjects");
 		objectClones.transform.parent = transform;
+		objectClones.transform.position = Vector2.zero;
 
 		for (int i = 0; i < objectsContainer.transform.childCount; i++)
 		{
@@ -60,6 +61,7 @@ public class RoomController : MonoBehaviour
 		Destroy(objectClones);
 		objectClones = new GameObject("CloneObjects");
 		objectClones.transform.parent = transform;
+		objectClones.transform.position = Vector2.zero;
 
 		for (int i = 0; i < initialObjectList.Count; i++)
 		{

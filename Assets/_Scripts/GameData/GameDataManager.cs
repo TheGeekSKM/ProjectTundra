@@ -103,7 +103,7 @@ public class GameDataManager : MonoBehaviour
     {
         if (Player.Instance)
         {
-            Player.Instance.transform.position = new Vector3(_spawnPosition.x, _spawnPosition.y, 0);
+            Player.Instance.transform.position = new Vector3(_spawnPosition.x+0.5f, _spawnPosition.y+0.5f, 0);
 
             var playerStatsContainer = Player.Instance.GetComponent<EntityStatsContainer>();
             var selectedStatsContainer = _currentStats.GetComponent<EntityStatsContainer>();
