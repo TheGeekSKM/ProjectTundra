@@ -21,8 +21,14 @@ public class ChestManager : Tile
         ChestViewManager.Instance.CloseChest();
     }
 
-    public void SetUseable(bool u)
+    public void SetUseable(bool u) => _useable = u;
+
+    public void Init(ItemContainer itemContainer, bool isOffset, bool useCustomSprite = false, Sprite sprite = null) 
     {
-        _useable = u;
+        base.Init(isOffset, useCustomSprite);
+
+        // Set custom sprite if available
+        if (useCustomSprite && sprite) _renderer.sprite = sprite;
+        _itemContainer = itemContainer;
     }
 }
