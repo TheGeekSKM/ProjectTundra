@@ -14,7 +14,9 @@ public class EntityMovement : MonoBehaviour
 
     private CameraMovement _cameraM;
 
-    void Awake()
+	[SerializeField] LayerMask _obstacleLayerMask;
+
+	void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _playerStatsData = GetComponent<EntityStatsContainer>().PlayerStatsData;
@@ -31,9 +33,9 @@ public class EntityMovement : MonoBehaviour
     {
         if (_entityStamina.CurrentActionPoints <= 0) return;
 
-		var ray = Physics2D.Raycast(_rb.position, direction, 1, LayerMask.GetMask("Walls"));
-
 		direction.Normalize();
+
+		var ray = Physics2D.Raycast(_rb.position+(direction/2), direction, 0.5f, _obstacleLayerMask);
 
 		if (ray.collider != null && !ray.collider.CompareTag("RoomEdges")) return;
         else
@@ -42,7 +44,7 @@ public class EntityMovement : MonoBehaviour
 			{
 				if (gameObject.CompareTag("Player"))
 				{
-					_rb.DOMove(_rb.position + direction, _cameraM.duration);
+					_rb.DOMove(_rb.position + (direction*2), _cameraM.duration);
 					_cameraM.Move(direction);
 				}
 				else return;

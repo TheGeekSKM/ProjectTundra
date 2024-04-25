@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bcfb09d9eb65204ebe60572827dc502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridSize: {x: 12, y: 20}
+  _gridSize: {x: 12, y: 10}
   _cameraOffset: {x: 0, y: 0}
   _moveCamera: 0
   _tilePrefab: {fileID: 2832121763912508846, guid: 67e097f287d184f44a81786d6b794dd9, type: 3}

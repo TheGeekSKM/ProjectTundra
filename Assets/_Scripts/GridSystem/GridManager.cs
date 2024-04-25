@@ -32,19 +32,20 @@ public class GridManager : MonoBehaviour
         UpdateCamera();
     }
 
-    void HandleTurnChange(CombatTurnState state)
-    {
-        if (state != CombatTurnState.NonCombat)
-        {
-            GenerateGrid();
-        }
-        else
-        {
-            ClearAllTiles();
-        }
-    }
- 
-    [ContextMenu("Generate Grid")]
+	void HandleTurnChange(CombatTurnState state)
+	{
+		//if (state != CombatTurnState.NonCombat)
+		//{
+		//	GenerateGrid();
+		//}
+
+		//else
+		//{
+		//	ClearAllTiles();
+		//}
+	}
+
+	[ContextMenu("Generate Grid")]
     void GenerateGrid() {
 
         //check to see if children already exist
@@ -91,12 +92,18 @@ public class GridManager : MonoBehaviour
         var hit = Physics2D.Raycast(worldPosition, Vector2.zero);
         
         if (hit.collider != null) {
+			//Debug.Log("Hit a collider!");
+
             var tile = hit.collider.GetComponent<Tile>();
             if (tile != null) {
-				//HighlightTile(tile.transform.position);
+				//Debug.Log("Hit a tile!");
 				HighlightTile(tile);
             }
         }
+		else if (_previousTile != null)
+		{
+			_previousTile.Deselect();
+		}
     }
 
     [ContextMenu("Clear All Tiles")]
@@ -120,9 +127,7 @@ public class GridManager : MonoBehaviour
     }
 
 
-	//void HighlightTile(Vector2 pos) {
     void HighlightTile(Tile tile) {
-        //var tile = GetTileAtPosition(pos);
         if (tile != null) {
             tile.Highlight();
             if (_previousTile != null && _previousTile != tile) {
@@ -134,10 +139,5 @@ public class GridManager : MonoBehaviour
                 _previousTile = tile;
             }
         }
-    }
- 
-    public Tile GetTileAtPosition(Vector2 pos) {
-        if (_tiles.TryGetValue(pos, out var tile)) return tile;
-        return null;
     }
 }

@@ -43,10 +43,10 @@ public class CameraMovement : MonoBehaviour
 		transform.DOMove(destination, duration);
 		yield return new WaitForSeconds(duration);
 
+		rm.rooms[(int)_prevRoom.x, (int)_prevRoom.y].SetActive(false);
+
 		//Unset Camera Move state
 		CombatManager.Instance.CameraMoving(false);
-
-		rm.rooms[(int)_prevRoom.x, (int)_prevRoom.y].SetActive(false);
 
 		yield break;
 	}

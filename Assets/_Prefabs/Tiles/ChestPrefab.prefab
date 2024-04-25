@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6520081490023904861}
   - component: {fileID: 4670078032305447328}
   - component: {fileID: 2026357963}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: UseableRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,9 +198,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.2784314}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: -2102616668, guid: 8689aa0bfd9165d41a186ee59214b87c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -373,8 +373,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.26415092, g: 0.17598566, b: 0, a: 1}
+  m_Sprite: {fileID: -1985408862, guid: 8689aa0bfd9165d41a186ee59214b87c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

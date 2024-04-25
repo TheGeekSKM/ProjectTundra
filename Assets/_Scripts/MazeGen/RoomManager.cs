@@ -37,8 +37,8 @@ public class RoomManager : MonoBehaviour
 		{
 			for (int y = 0; y < maze.mazeHeight; y++)
 			{
-				Debug.Log(maze.transform.GetChild(x + (y+x)).gameObject.name);
-				rooms[x, y] = maze.transform.GetChild(x+(y+x)).gameObject;
+				Debug.Log(maze.transform.GetChild((x*maze.mazeHeight)+y).gameObject.name);
+				rooms[x, y] = maze.transform.GetChild((x*maze.mazeHeight)+y).gameObject;
 
 				if (!(x == (int)startRoom.x && y == (int)startRoom.y))
 					rooms[x, y].SetActive(false);

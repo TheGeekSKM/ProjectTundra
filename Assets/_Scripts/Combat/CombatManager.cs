@@ -78,7 +78,7 @@ public class CombatManager : MonoBehaviour
         _enemies.Add(enemy);
         enemy.OnEnemyTurnEnded += EnemyEntityTurnEnded;
 
-        combatFSM.ChangeState(combatFSM.PlayerCombatState);
+        //combatFSM.ChangeState(combatFSM.PlayerCombatState);
     }
 
     public void RemoveEnemy(EnemyBrain enemy)
@@ -86,7 +86,7 @@ public class CombatManager : MonoBehaviour
         enemy.OnEnemyTurnEnded -= EnemyEntityTurnEnded;
         _enemies.Remove(enemy);
         
-        if (WinCheck()) return;
+        //if (WinCheck()) return;
     }
 
 
@@ -126,8 +126,10 @@ public class CombatManager : MonoBehaviour
 			combatFSM.ChangeState(combatFSM.CameraMoveState);
 		else if (!toggle)
 		{
-			//ENTER ROOM LOGIC MIGHT GO HERE?
-			combatFSM.ChangeState(combatFSM.NonCombatState);
+			if (_enemies.Count > 0)
+				combatFSM.ChangeState(combatFSM.PlayerCombatState);
+			else
+				combatFSM.ChangeState(combatFSM.NonCombatState);
 		}
 	}
 
