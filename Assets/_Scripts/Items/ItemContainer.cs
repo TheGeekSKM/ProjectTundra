@@ -1,11 +1,19 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
 public class ItemContainer
 {
     [SerializeField] private string _containerName;
-    public string ContainerName => _containerName;
+    public string ContainerName 
+    {
+        get
+        {
+            if (_containerName == "") return "Corpse";
+            else return _containerName;
+        }
+    }
     [SerializeField] List<BaseItemData> Items;
 
     /// <summary>
@@ -22,14 +30,19 @@ public class ItemContainer
     /// <param name="item">The item to add.</param>
     public void AddItem(BaseItemData item)
     {
-        foreach (var i in Items)
+        // If the item is a weapon, replace the existing weapon.
+        foreach (var i in Items.ToList())
         {
             if (i is WeaponItemData)
             {
                 int indexOfWeapon = Items.IndexOf(i);
                 SetItem(indexOfWeapon, item);
+                OnItemContainerChanged?.Invoke(item);
+                return;
             }
         }
+
+        // If the item is not a weapon, add it to the container.
         Items.Add(item);
         OnItemContainerChanged?.Invoke(item);
     }

@@ -7,7 +7,7 @@ public class ChestManager : Tile
     [SerializeField] private ItemContainer _itemContainer;
     public override void Highlight()
     {
-        ChestViewManager.Instance.OpenChest(_itemContainer, Player.Instance.PlayerStats.ItemContainer);
+        ChestViewManager.Instance.OpenChest(_itemContainer, Player.Instance.PlayerStats.PlayerStatsData.ItemContainer);
     }
 
     public override void Deselect()

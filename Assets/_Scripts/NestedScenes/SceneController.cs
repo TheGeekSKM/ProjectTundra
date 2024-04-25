@@ -13,10 +13,13 @@ public class SceneController : MonoBehaviour
     [SerializeField] SceneState _currentSceneState;
     public SceneState CurrentSceneState => _currentSceneState;
     public System.Action<SceneState> OnSceneStateChanged;
+    [SerializeField] GameObject _mainCamera;
+    [SerializeField] GameObject _eventSystem;
 
-    [Header("Main Menu")]
+    [Header("Scenes")]
     [SerializeField] Object _mainMenuScene;
     [SerializeField] Object _characterSelectMenu;
+    [SerializeField] Object _gamePlayScene;
 
 
     void Awake()
@@ -42,11 +45,11 @@ public class SceneController : MonoBehaviour
 
     public void MainMenuStateIntro()
     {
-        UpdateState(SceneState.MainMenu);
         Debug.Log("MainMenuStateIntroFunctions");
         SceneManager.LoadSceneAsync(_mainMenuScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
             // TransitionPanelOff();
+            UpdateState(SceneState.MainMenu);
         };
     }
 
@@ -59,23 +62,30 @@ public class SceneController : MonoBehaviour
 
     public void CharacterSelectStateIntro()
     {
-        UpdateState(SceneState.CharacterSelect);
         Debug.Log("CharacterSelectStateIntroFunction");
         SceneManager.LoadSceneAsync(_characterSelectMenu.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
             // TransitionPanelOff();
+            UpdateState(SceneState.CharacterSelect);
         };
     }
 
     public void CharacterSelectStateOutro()
     {
-        // TransitionPanelOn();
+        TransitionPanelOn();
         SceneManager.UnloadSceneAsync(_characterSelectMenu.name);
     }
 
     public void GamePlayStateIntro()
     {
-        UpdateState(SceneState.GamePlay);
+
+        _mainCamera.SetActive(false);
+        _eventSystem.SetActive(false);
+        SceneManager.LoadSceneAsync(_gamePlayScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        {
+            TransitionPanelOff();
+            UpdateState(SceneState.GamePlay);
+        };
     }
 
     public void GamePlayStateOutro()
