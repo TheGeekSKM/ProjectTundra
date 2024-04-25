@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -183,8 +183,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Ranger
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
+  m_sharedMaterial: {fileID: 9148996486329759696, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -401,8 +401,8 @@ MonoBehaviour:
 
     4. Movement (1 Action Points per Tile)'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
+  m_sharedMaterial: {fileID: 9148996486329759696, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1068,8 +1068,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Scout
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
+  m_sharedMaterial: {fileID: 9148996486329759696, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2065,8 +2065,8 @@ MonoBehaviour:
 
     4. Movement (1 Action Points per Tile)'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
+  m_sharedMaterial: {fileID: 9148996486329759696, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2432,8 +2432,8 @@ MonoBehaviour:
     4. Movement (2 Action Points
     per Tile)'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
+  m_sharedMaterial: {fileID: 9148996486329759696, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2671,8 +2671,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Mage
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
+  m_sharedMaterial: {fileID: 9148996486329759696, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3094,9 +3094,21 @@ PrefabInstance:
       value: 72.25
       objectReference: {fileID: 0}
     - target: {fileID: 5140251384637715405, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
+    - target: {fileID: 5140251384637715405, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140251384637715405, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
       propertyPath: m_fontSizeBase
       value: 72.25
       objectReference: {fileID: 0}
+    - target: {fileID: 5140251384637715405, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 9148996486329759696, guid: 2a3833dedda46e84d93322a7ad136e5c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
 --- !u!114 &1929126710 stripped
