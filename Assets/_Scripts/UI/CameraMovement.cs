@@ -25,7 +25,7 @@ public class CameraMovement : MonoBehaviour
 		_prevRoom = roomCoord;
 		roomCoord += direction;
 
-		rm.rooms[(int)roomCoord.x, (int)roomCoord.y].SetActive(true);
+		rm.rooms[(int)roomCoord.x, (int)roomCoord.y].gameObject.SetActive(true);
 
 		//Set room destination based on direction inputted
 		Vector2 dest = rm.rooms[(int)roomCoord.x, (int)roomCoord.y].transform.position;
@@ -43,7 +43,7 @@ public class CameraMovement : MonoBehaviour
 		transform.DOMove(destination, duration);
 		yield return new WaitForSeconds(duration);
 
-		rm.rooms[(int)_prevRoom.x, (int)_prevRoom.y].SetActive(false);
+		rm.rooms[(int)_prevRoom.x, (int)_prevRoom.y].gameObject.SetActive(false);
 
 		//Unset Camera Move state
 		CombatManager.Instance.CameraMoving(false);

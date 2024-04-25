@@ -6,7 +6,7 @@ public class RoomManager : MonoBehaviour
 {
 	public static RoomManager Instance { get; private set; }
 
-	public GameObject[,] rooms;
+	public RoomController[,] rooms;
 
 	public Vector2 startRoom;
 
@@ -31,18 +31,27 @@ public class RoomManager : MonoBehaviour
 	void SetRooms()
 	{
 		MazeGen maze = MazeGen.Instance;
-		rooms = new GameObject[maze.mazeWidth, maze.mazeHeight];
+		rooms = new RoomController[maze.mazeWidth, maze.mazeHeight];
 
 		for (int x = 0; x < maze.mazeWidth; x++)
 		{
 			for (int y = 0; y < maze.mazeHeight; y++)
 			{
 				Debug.Log(maze.transform.GetChild((x*maze.mazeHeight)+y).gameObject.name);
-				rooms[x, y] = maze.transform.GetChild((x*maze.mazeHeight)+y).gameObject;
+				rooms[x, y] = maze.transform.GetChild((x*maze.mazeHeight)+y).GetComponent<RoomController>();
 
 				if (!(x == (int)startRoom.x && y == (int)startRoom.y))
-					rooms[x, y].SetActive(false);
+					rooms[x, y].gameObject.SetActive(false);
 			}
+		}
+	}
+
+	[ContextMenu("Reset Rooms")]
+	public void ResetRooms()
+	{
+		foreach (RoomController room in rooms)
+		{
+			room.ResetRoom();
 		}
 	}
 }

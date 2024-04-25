@@ -173,11 +173,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
       propertyPath: mazeWidth
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
       propertyPath: mazeHeight
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
       propertyPath: extraExits.Array.size
@@ -1302,34 +1302,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1970129168768600406, guid: c73d8e6500ea60048a764d5d827fc965, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1970129168768600406, guid: c73d8e6500ea60048a764d5d827fc965, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1970129168768600406, guid: c73d8e6500ea60048a764d5d827fc965, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1970129168768600406, guid: c73d8e6500ea60048a764d5d827fc965, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1970129168768600406, guid: c73d8e6500ea60048a764d5d827fc965, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1970129168768600406, guid: c73d8e6500ea60048a764d5d827fc965, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1970129168768600406, guid: c73d8e6500ea60048a764d5d827fc965, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1970129168768600406, guid: c73d8e6500ea60048a764d5d827fc965, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -1345,6 +1317,10 @@ PrefabInstance:
       propertyPath: _cam
       value: 
       objectReference: {fileID: 277268707}
+    - target: {fileID: 1970129168768600407, guid: c73d8e6500ea60048a764d5d827fc965, type: 3}
+      propertyPath: _followCamera
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c73d8e6500ea60048a764d5d827fc965, type: 3}
 --- !u!4 &1970129167153016196 stripped
