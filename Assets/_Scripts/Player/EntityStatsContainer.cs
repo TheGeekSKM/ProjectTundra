@@ -25,6 +25,14 @@ public class EntityStatsContainer : MonoBehaviour
     {
         if (!_spriteRenderer) _spriteRenderer = GetComponent<SpriteRenderer>();
         if (!_spriteRenderer) _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    }   
+    }
+
+    private void Start()
+    {
+        if (_playerStatsData.EntityType == EntityType.Enemy)
+        {
+            _spriteRenderer.sprite = _playerStatsData.EntitySprite;
+        }
+    }
 
 }
