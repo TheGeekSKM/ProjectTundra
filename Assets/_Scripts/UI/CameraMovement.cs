@@ -7,14 +7,17 @@ public class CameraMovement : MonoBehaviour
 {
     public float duration;
 
-    //public event System.Action OnCameraMovementFinish;
+	//public event System.Action OnCameraMovementFinish;
+
+	public Vector2 roomCoord = new Vector2(0, 0);
 
     public void Move(Vector2 direction)
     {
+		roomCoord += direction;
+
 		//Set room destination based on direction inputted
-		Vector3 destination = transform.position;
-		destination.x += direction.x * MazeGen.Instance.roomWidth;
-		destination.y += direction.y * MazeGen.Instance.roomHeight;
+		Vector2 dest = RoomManager.Instance.rooms[(int)roomCoord.x, (int)roomCoord.y].transform.position;
+		Vector3 destination = new Vector3(dest.x, dest.y, transform.position.z);
 
 		//Start movement routine
         StartCoroutine(Movement(destination));

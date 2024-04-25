@@ -66,9 +66,9 @@ public class MazeGen : MonoBehaviour
 
 	[Space(10)]
 	[Tooltip("Total width of the maze")]
-	[SerializeField] private int mazeWidth = 2;
+	public int mazeWidth = 2;
 	[Tooltip("Total height of the maze")]
-	[SerializeField] private int mazeHeight = 2;
+	public int mazeHeight = 2;
 
 	[Space(10)]
 	[Tooltip("Pick a tile coordinate using x & y, and add an extra exit using z in the specified direction:\n" +
@@ -79,6 +79,12 @@ public class MazeGen : MonoBehaviour
 	[SerializeField] private Vector3[] extraExits;
 
 	public System.Action OnGenerationComplete;
+
+	private void Awake()
+	{
+		if (Instance == null) Instance = this;
+		else Destroy(gameObject);
+	}
 
 	private void Start()
 	{
@@ -91,12 +97,6 @@ public class MazeGen : MonoBehaviour
 
 		//start generation
 		StartCoroutine(GenerateRooms());
-	}
-
-	private void Awake()
-	{
-		if (Instance == null) Instance = this;
-		else Destroy(gameObject);
 	}
 
 	//Maze generation adapted from u/DavoMyan on Reddit (and also myself from last semester)
@@ -412,10 +412,11 @@ public class MazeGen : MonoBehaviour
 
 			GameObject go = (GameObject)Instantiate(roomPrefab, transform.TransformPoint(new Vector3((tile.x*roomWidth)+roomCenterOffset.x, (tile.y*roomHeight)+roomCenterOffset.y, 0)), Quaternion.identity, transform);
 			go.name = string.Format("({0},{1})", tile.x, tile.y);
-			
+
 			Destroy(tile.gameObject);
 		}
 
+		yield return new WaitForEndOfFrame();
 		OnGenerationComplete?.Invoke();
 	}
 
