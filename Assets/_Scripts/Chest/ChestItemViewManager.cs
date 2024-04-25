@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mono.Cecil.Cil;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,7 +51,12 @@ public class ChestItemViewManager : MonoBehaviour
             {
                 if (Player.Instance.PlayerStats.PlayerStatsData.EntityAttackType != weaponData.AttackType)
                 {
-                    Debug.LogError("Player CANNOT use this weapon as it is against their attacktype!");
+                    var message = $"You cannot pick up this weapon.\nIt is a {weaponData.AttackType} weapon and you are a {Player.Instance.PlayerStats.PlayerStatsData.EntityAttackType} creature.";
+                    
+                    NotificationManager.Instance.Notify(
+                        new NotificationData(message, "Hidden Voice", 3f, ENotificationType.Warning)
+                    );
+
                 }
             }
 
