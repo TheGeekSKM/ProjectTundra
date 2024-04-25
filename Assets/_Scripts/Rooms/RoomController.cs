@@ -27,7 +27,8 @@ public class RoomController : MonoBehaviour
 	private void Awake()
 	{
 		Debug.Log(this.gameObject.name + " is creating a cloned objects container");
-		objectClones = Instantiate(new GameObject("Objects"), transform);
+		objectClones = new GameObject("CloneObjects");
+		objectClones.transform.parent = transform;
 
 		for (int i = 0; i < objectsContainer.transform.childCount; i++)
 		{
@@ -57,7 +58,8 @@ public class RoomController : MonoBehaviour
 	public void ResetRoom()
 	{
 		Destroy(objectClones);
-		objectClones = Instantiate(new GameObject("Objects"), transform);
+		objectClones = new GameObject("CloneObjects");
+		objectClones.transform.parent = transform;
 
 		for (int i = 0; i < initialObjectList.Count; i++)
 		{
