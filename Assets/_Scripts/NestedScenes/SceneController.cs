@@ -40,6 +40,7 @@ public class SceneController : MonoBehaviour
         {
             // TransitionPanelOff();
             UpdateState(SceneState.TextBasedCutscene);
+            MusicManager.Instance.SwapTrack(EAudioEvent.ScrollBGM);
         };
     }
 
@@ -59,7 +60,8 @@ public class SceneController : MonoBehaviour
         {
             // TransitionPanelOff();
             UpdateState(SceneState.MainMenu);
-            UnloadGamePlayLevel();            
+            UnloadGamePlayLevel();
+            MusicManager.Instance.SwapTrack(EAudioEvent.MainMenuBGM);            
         };
     }
 
@@ -93,6 +95,8 @@ public class SceneController : MonoBehaviour
     public void GamePlayStateIntro()
     {
         //game play scene should already be loaded in
+        MusicManager.Instance.SwapTrack(EAudioEvent.NonCombatBGM);
+        UpdateState(SceneState.GamePlay);
     }
 
     public void GamePlayStateOutro()
@@ -105,6 +109,7 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadSceneAsync(_loseMenuScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
             // TransitionPanelOff();
+            MusicManager.Instance.SwapTrack(EAudioEvent.MainMenuBGM);
             UpdateState(SceneState.LoseMenu);
         };
     }
@@ -118,6 +123,7 @@ public class SceneController : MonoBehaviour
 
             //unload gameplay level
             UnloadGamePlayLevel();
+            MusicManager.Instance.SwapTrack(EAudioEvent.MainMenuBGM);
         };
     }
 
