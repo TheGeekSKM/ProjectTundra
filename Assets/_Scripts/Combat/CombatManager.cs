@@ -86,7 +86,7 @@ public class CombatManager : MonoBehaviour
         enemy.OnEnemyTurnEnded -= EnemyEntityTurnEnded;
         _enemies.Remove(enemy);
         
-        //if (WinCheck()) return;
+        if (WinCheck()) return;
     }
 
 
@@ -120,14 +120,17 @@ public class CombatManager : MonoBehaviour
 
     }
 
-	public void CameraMoving(bool toggle)
+	public void CameraMoving(bool toggle, RoomController rm)
 	{
 		if (toggle)
 			combatFSM.ChangeState(combatFSM.CameraMoveState);
 		else if (!toggle)
 		{
 			if (_enemies.Count > 0)
+			{
 				combatFSM.ChangeState(combatFSM.PlayerCombatState);
+				rm.LockDoors();
+			}
 			else
 				combatFSM.ChangeState(combatFSM.NonCombatState);
 		}
@@ -180,11 +183,10 @@ public class CombatManager : MonoBehaviour
 
     public void EnemyTurnIntro()
     {
-        
-        StartEnemiesTurn();
         _currentTurnState = CombatTurnState.Enemy;
         FireEvent();
-    }
+		StartEnemiesTurn();
+	}
 
     public void RoomTurnIntro()
     {

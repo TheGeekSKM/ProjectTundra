@@ -15,6 +15,13 @@ public class RoomController : MonoBehaviour
 
 	private GameObject objectClones;
 
+	[Space(10)]
+	[SerializeField]
+	private bool[] exits = new bool[4];
+	[SerializeField]
+	private GameObject exitDoorPrefab;
+	private GameObject[] doors = new GameObject[4];
+
 	private void Start()
 	{
 		objectClones = Instantiate(new GameObject("Objects"), transform);
@@ -33,6 +40,16 @@ public class RoomController : MonoBehaviour
 		}
 	}
 
+	private void OnEnable()
+	{
+		CombatManager.Instance.OnTurnChanged += OnTurnChanged;
+	}
+
+	private void OnDisable()
+	{
+		CombatManager.Instance.OnTurnChanged -= OnTurnChanged;
+	}
+
 	[ContextMenu("Reset")]
 	public void ResetRoom()
 	{
@@ -43,5 +60,52 @@ public class RoomController : MonoBehaviour
 		{
 			Instantiate(initialObjectList[i], objectClones.transform).SetActive(true);
 		}
+	}
+
+	[ContextMenu("Lock Doors")]
+	public void LockDoors()
+	{
+		MazeGen maze = MazeGen.Instance;
+
+		if (exits[0])
+		{
+			doors[0] = Instantiate(exitDoorPrefab, transform);
+			doors[0].transform.localPosition = new Vector2(0, (maze.roomHeight/2)-0.5f);
+		}
+
+		if (exits[1])
+		{
+			doors[1] = Instantiate(exitDoorPrefab, transform);
+			doors[1].transform.localPosition = new Vector2((maze.roomWidth/2)-0.5f, 0);
+			doors[1].transform.rotation = Quaternion.Euler(0, 0, 90);
+		}
+
+		if (exits[2])
+		{
+			doors[2] = Instantiate(exitDoorPrefab, transform);
+			doors[2].transform.localPosition = new Vector2(0, (-maze.roomHeight/2)+0.5f);
+		}
+
+		if (exits[3])
+		{
+			doors[3] = Instantiate(exitDoorPrefab, transform);
+			doors[3].transform.localPosition = new Vector2((-maze.roomWidth/2)+0.5f, 0);
+			doors[3].transform.rotation = Quaternion.Euler(0, 0, 90);
+		}
+	}
+
+	[ContextMenu("Unlock Doors")]
+	public void UnlockDoors()
+	{
+		for (int i = 0; i < doors.Length; i++)
+		{
+			Destroy(doors[i]);
+		}
+	}
+
+	void OnTurnChanged(CombatTurnState turn)
+	{
+		if (turn == CombatTurnState.NonCombat)
+			UnlockDoors();
 	}
 }

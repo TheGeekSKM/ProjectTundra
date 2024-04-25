@@ -37,7 +37,7 @@ public class CameraMovement : MonoBehaviour
 	IEnumerator Movement(Vector3 destination, RoomManager rm)
 	{
 		//Set Camera Move state
-		CombatManager.Instance.CameraMoving(true);
+		CombatManager.Instance.CameraMoving(true, rm.rooms[(int)roomCoord.x, (int)roomCoord.y]);
 
 		//Do the tween and wait for duration to elapse
 		transform.DOMove(destination, duration);
@@ -46,7 +46,7 @@ public class CameraMovement : MonoBehaviour
 		rm.rooms[(int)_prevRoom.x, (int)_prevRoom.y].gameObject.SetActive(false);
 
 		//Unset Camera Move state
-		CombatManager.Instance.CameraMoving(false);
+		CombatManager.Instance.CameraMoving(false, rm.rooms[(int)roomCoord.x, (int)roomCoord.y]);
 
 		yield break;
 	}

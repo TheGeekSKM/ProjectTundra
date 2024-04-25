@@ -3,7 +3,9 @@ guid: 2ec73026ff03a8c48af74a301a7439bb
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - objectsContainer: {instanceID: 0}
+  - exitDoorPrefab: {fileID: 4354319882880262306, guid: 2ad7aa5427cd89d41870a970b78e68e7, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

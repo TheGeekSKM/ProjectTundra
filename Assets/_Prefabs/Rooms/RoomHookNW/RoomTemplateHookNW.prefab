@@ -1397,7 +1397,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectsContainer: {fileID: 4082993253492964382}
-  objectList: []
+  initialObjectList: []
+  excludeChests: 0
+  exits: 01000001
+  exitDoorPrefab: {fileID: 4354319882880262306, guid: 2ad7aa5427cd89d41870a970b78e68e7, type: 3}
 --- !u!1 &1573738252396714253
 GameObject:
   m_ObjectHideFlags: 0
