@@ -206,7 +206,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 911500964}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1395983247}
+        m_TargetAssemblyTypeName: LoseSceneManager, Assembly-CSharp
+        m_MethodName: MainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &911500964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +269,7 @@ GameObject:
   - component: {fileID: 1395983245}
   - component: {fileID: 1395983244}
   - component: {fileID: 1395983243}
+  - component: {fileID: 1395983247}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -323,7 +336,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &1395983246
 RectTransform:
@@ -348,6 +361,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1395983247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395983242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ad7e8c22acac04caac3bac00a00f1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finalText: {fileID: 0}
+  respawnButton: {fileID: 0}
+  loseTextWithRespawn: 'You have fallen,
+
+    yet your soul has not.'
+  loseTextWithoutRespawn: 'You have fallen,
+
+    and your soul has been lost.'
 --- !u!1 &1474224833
 GameObject:
   m_ObjectHideFlags: 0

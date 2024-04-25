@@ -15,6 +15,8 @@ public class LoseSceneManager : MonoBehaviour
 
     void Start()
     {
+        if (!finalText || !respawnButton) return;
+
         if (GameDataManager.Instance.RangerUsed &&
             GameDataManager.Instance.MageUsed &&
             GameDataManager.Instance.ScoutUsed)
@@ -27,5 +29,17 @@ public class LoseSceneManager : MonoBehaviour
             finalText.text = loseTextWithRespawn;
             respawnButton.interactable = true;
         }
+    }
+
+    public void Reborn()
+    {
+        var sceneFSM = SceneController.Instance.SceneFSM;
+        sceneFSM.ChangeState(sceneFSM.CharacterSelectState);
+    }
+
+    public void MainMenu()
+    {
+        var sceneFSM = SceneController.Instance.SceneFSM;
+        sceneFSM.ChangeState(sceneFSM.MainMenuState);
     }
 }

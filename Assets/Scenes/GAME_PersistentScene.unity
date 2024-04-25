@@ -169,11 +169,11 @@ MonoBehaviour:
   _sceneFSM: {fileID: 88198475}
   TransitionPanel: {fileID: 1354148665}
   _currentSceneState: 0
-  _mainCamera: {fileID: 1741969174}
-  _eventSystem: {fileID: 1578230400}
   _mainMenuScene: {fileID: 102900000, guid: c3d04a6df77c71f4b9e67d40b924ef3e, type: 3}
   _characterSelectMenu: {fileID: 102900000, guid: 68b5729275f757543a6103b303cdf3b0, type: 3}
   _gamePlayScene: {fileID: 102900000, guid: de52a39e9ae54a949aeaaa75e493c876, type: 3}
+  _loseMenuScene: {fileID: 102900000, guid: 735d7213b3a3ac1498d9e4965b8b7cfa, type: 3}
+  _winMenuScene: {fileID: 102900000, guid: 9350321c25324ae42a98d388f7a26647, type: 3}
 --- !u!4 &88198477
 Transform:
   m_ObjectHideFlags: 0
