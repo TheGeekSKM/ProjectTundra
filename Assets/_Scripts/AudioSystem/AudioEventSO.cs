@@ -11,5 +11,9 @@ public enum EAudioEvent
 {
     ButtonClick,
     PlayerHurt,
-    PlayerAttack
+    PlayerAttack,
+    CombatBGM,
+    MainMenuBGM,
+    ScrollBGM,
+    NonCombatBGM
 }

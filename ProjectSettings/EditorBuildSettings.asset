@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GAME_PersistentScene.unity
     guid: c0fef0044e7c1b0438ed19b294e27264
   - enabled: 1
+    path: Assets/Scenes/GAME_TextBasedCutscene.unity
+    guid: 7c2715c9afff71842a25c9ade5fcaabf
+  - enabled: 1
     path: Assets/Scenes/GAME_MainMenu.unity
     guid: c3d04a6df77c71f4b9e67d40b924ef3e
   - enabled: 1

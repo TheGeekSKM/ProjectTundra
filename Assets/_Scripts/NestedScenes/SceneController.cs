@@ -20,6 +20,7 @@ public class SceneController : MonoBehaviour
     [SerializeField] Object _gamePlayScene;
     [SerializeField] Object _loseMenuScene;
     [SerializeField] Object _winMenuScene;
+    [SerializeField] Object _textBasedCutsceneScene;
 
 
     void Awake()
@@ -33,6 +34,25 @@ public class SceneController : MonoBehaviour
     public void TransitionPanelOn() => TransitionPanel.DOAnchorPosY(0f, 0.5f).SetEase(Ease.OutCubic);
     public void TransitionPanelOff() => TransitionPanel.DOAnchorPosY(_transitionPanelYPos, 0.5f).SetEase(Ease.OutCubic);
 
+    public void TextBasedIntro()
+    {
+        SceneManager.LoadSceneAsync(_textBasedCutsceneScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        {
+            // TransitionPanelOff();
+            UpdateState(SceneState.TextBasedCutscene);
+            MusicManager.Instance.SwapTrack(EAudioEvent.ScrollBGM);
+        };
+    }
+
+    public void TextBasedOutro()
+    {
+        TransitionPanelOn();
+        SceneManager.UnloadSceneAsync(_textBasedCutsceneScene.name).completed += (AsyncOperation obj) => 
+        {
+            _sceneFSM.ChangeState(_sceneFSM.MainMenuState);
+        };
+    }
+
     public void MainMenuStateIntro()
     {
         Debug.Log("MainMenuStateIntroFunctions");
@@ -40,7 +60,8 @@ public class SceneController : MonoBehaviour
         {
             // TransitionPanelOff();
             UpdateState(SceneState.MainMenu);
-            UnloadGamePlayLevel();            
+            UnloadGamePlayLevel();
+            MusicManager.Instance.SwapTrack(EAudioEvent.MainMenuBGM);            
         };
     }
 
@@ -74,6 +95,8 @@ public class SceneController : MonoBehaviour
     public void GamePlayStateIntro()
     {
         //game play scene should already be loaded in
+        MusicManager.Instance.SwapTrack(EAudioEvent.NonCombatBGM);
+        UpdateState(SceneState.GamePlay);
     }
 
     public void GamePlayStateOutro()
@@ -86,6 +109,7 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadSceneAsync(_loseMenuScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
             // TransitionPanelOff();
+            MusicManager.Instance.SwapTrack(EAudioEvent.MainMenuBGM);
             UpdateState(SceneState.LoseMenu);
         };
     }
@@ -99,6 +123,7 @@ public class SceneController : MonoBehaviour
 
             //unload gameplay level
             UnloadGamePlayLevel();
+            MusicManager.Instance.SwapTrack(EAudioEvent.MainMenuBGM);
         };
     }
 

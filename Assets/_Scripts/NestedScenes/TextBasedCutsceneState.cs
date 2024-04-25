@@ -1,0 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TextBasedCutsceneState : BaseState
+{
+    SceneController _sceneController;
+    SceneFSM _sceneFSM;
+
+    public TextBasedCutsceneState(SceneController sceneController, SceneFSM sceneFSM)
+    {
+        _sceneController = sceneController;
+        _sceneFSM = sceneFSM;
+    }
+
+    public override void Enter()
+    {
+        _sceneController.TextBasedIntro();
+    }
+
+    public override void Exit()
+    {
+        _sceneController.TextBasedOutro();        
+    }
+}
