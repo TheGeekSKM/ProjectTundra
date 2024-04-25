@@ -95,6 +95,7 @@ public class SceneController : MonoBehaviour
     public void GamePlayStateIntro()
     {
         //game play scene should already be loaded in
+
         MusicManager.Instance.SwapTrack(EAudioEvent.NonCombatBGM);
         UpdateState(SceneState.GamePlay);
     }

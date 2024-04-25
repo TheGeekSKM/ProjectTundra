@@ -8,6 +8,8 @@ public class Tile : MonoBehaviour
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private GameObject _highlight;
     [SerializeField] private bool _useCustomSprite = false;
+
+	public bool walkable = false;
  
     public virtual void Init(bool isOffset) {
         if (_useCustomSprite) return;

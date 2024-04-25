@@ -29,20 +29,34 @@ public class EnemyBrain : MonoBehaviour
         if (_entityMovement == null) _entityMovement = GetComponent<EntityMovement>();
         if (_entityHealth == null) _entityHealth = GetComponent<EntityHealth>();
         if (_entityStamina == null) _entityStamina = GetComponent<EntityStamina>();
-        
     }
 
-    void Start()
+    void OnEnable()
     {
-        _entityStamina.ResetAP();
-        _attackRange = _entityStatsContainer.PlayerStatsData.ItemContainer.GetWeapon().AttackRange;
-        CombatManager.Instance.AddEnemy(this);
-        _entityHealth.OnHealthChanged += HandleDeathCheck;
+		StartCoroutine(Enabler());
+        //_entityStamina.ResetAP();
+        //_attackRange = _entityStatsContainer.PlayerStatsData.ItemContainer.GetWeapon().AttackRange;
+        //CombatManager.Instance.AddEnemy(this);
+        //_entityHealth.OnHealthChanged += HandleDeathCheck;
     }
+	IEnumerator Enabler()
+	{
+		yield return new WaitUntil(() => _entityStamina != null);
+		_entityStamina.ResetAP();
+		_attackRange = _entityStatsContainer.PlayerStatsData.ItemContainer.GetWeapon().AttackRange;
+		CombatManager.Instance.AddEnemy(this);
+		_entityHealth.OnHealthChanged += HandleDeathCheck;
+		yield break;
+	}
 
-    #region CheckingMethods
-    // Check if the enemy has enough action points to take a turn
-    void HandleAPCheck()
+	void OnDisable()
+	{
+		CombatManager.Instance.RemoveEnemy(this);
+	}
+
+	#region CheckingMethods
+	// Check if the enemy has enough action points to take a turn
+	void HandleAPCheck()
     {
         Debug.Log($"Enemy Current AP: {_entityStamina.CurrentActionPoints}");
         // Debug.Log($"Enemy Current AP: {_entityStatsContainer.PlayerStatsData.CurrentActionPoints}");

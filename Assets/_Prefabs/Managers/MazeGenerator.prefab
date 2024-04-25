@@ -133,11 +133,24 @@ MonoBehaviour:
       weight: 0
     - room: {fileID: 8932313775095692372, guid: 65f5ef5038c448c4aaa6e2d4bff6d22c, type: 3}
       weight: 1
+  entranceRoom:
+  - room: {fileID: 0}
+    weight: 0
+  - room: {fileID: 7319537710489150920, guid: 1e6a7a9f96dfea547be79906eb6ec678, type: 3}
+    weight: 1
+  entranceCoords: {x: 3, y: -1}
+  exitRoom:
+  - room: {fileID: 0}
+    weight: 0
+  - room: {fileID: 7319537710489150920, guid: a4cc28ba0779adb4390aaa1f13597cb7, type: 3}
+    weight: 1
+  exitCoords: {x: 1, y: 5}
   tilePrefab: {fileID: 3217849423528365284, guid: da87d352ee1683e43b96eb4ab1a4c465, type: 3}
   roomWidth: 12
   roomHeight: 10
-  roomCenterOffset: {x: 5.5, y: 4.5}
+  roomCenterOffset: {x: 0, y: 0}
   mazeWidth: 5
   mazeHeight: 5
   extraExits:
-  - {x: 2, y: 0, z: 2}
+  - {x: 3, y: 0, z: 2}
+  - {x: 1, y: 4, z: 0}

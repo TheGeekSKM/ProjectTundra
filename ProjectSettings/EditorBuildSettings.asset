@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GAME_CharacterSelection.unity
     guid: 68b5729275f757543a6103b303cdf3b0
   - enabled: 1
-    path: Assets/Scenes/GridTestingScene.unity
+    path: Assets/Scenes/GAME_Gameplay.unity
     guid: de52a39e9ae54a949aeaaa75e493c876
   - enabled: 1
     path: Assets/Scenes/GAME_LoseScene.unity

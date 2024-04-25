@@ -59,6 +59,8 @@ public class CombatManager : MonoBehaviour
 
     void Start()
     {
+		MazeGen.Instance.StartMaze();
+
 		if (_currentTurnState == CombatTurnState.NonCombat)
 			combatFSM.ChangeState(combatFSM.NonCombatState);
 	}
@@ -78,7 +80,7 @@ public class CombatManager : MonoBehaviour
         _enemies.Add(enemy);
         enemy.OnEnemyTurnEnded += EnemyEntityTurnEnded;
 
-        combatFSM.ChangeState(combatFSM.PlayerCombatState);
+        //combatFSM.ChangeState(combatFSM.PlayerCombatState);
     }
 
     public void RemoveEnemy(EnemyBrain enemy)
@@ -120,15 +122,25 @@ public class CombatManager : MonoBehaviour
 
     }
 
-	public void CameraMoving(bool toggle)
+	public void CameraMoving(bool toggle, RoomController rm)
 	{
 		if (toggle)
 			combatFSM.ChangeState(combatFSM.CameraMoveState);
 		else if (!toggle)
 		{
-			//ENTER ROOM LOGIC MIGHT GO HERE?
-			combatFSM.ChangeState(combatFSM.NonCombatState);
+			if (_enemies.Count > 0)
+			{
+				combatFSM.ChangeState(combatFSM.PlayerCombatState);
+				rm.LockDoors();
+			}
+			else
+				combatFSM.ChangeState(combatFSM.NonCombatState);
 		}
+	}
+
+	public void WinMovement()
+	{
+		combatFSM.ChangeState(combatFSM.WinCombatState);
 	}
 
 
@@ -178,11 +190,10 @@ public class CombatManager : MonoBehaviour
 
     public void EnemyTurnIntro()
     {
-        
-        StartEnemiesTurn();
         _currentTurnState = CombatTurnState.Enemy;
         FireEvent();
-    }
+		StartEnemiesTurn();
+	}
 
     public void RoomTurnIntro()
     {

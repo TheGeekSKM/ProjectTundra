@@ -9,11 +9,15 @@ public class ChestManager : Tile
     public override void Highlight()
     {
         if (!_useable) return;
-        ChestViewManager.Instance.OpenChest(_itemContainer, Player.Instance.PlayerStats.PlayerStatsData.ItemContainer);
+
+		base.Highlight();
+		ChestViewManager.Instance.OpenChest(_itemContainer, Player.Instance.PlayerStats.PlayerStatsData.ItemContainer);
     }
 
     public override void Deselect()
     {
+
+		base.Deselect();
         ChestViewManager.Instance.CloseChest();
     }
 

@@ -48,6 +48,10 @@ public class MazeGen : MonoBehaviour
 	[Tooltip("Here's a bunch of nested arrays to place designed room prefabs into, as well as select weighting for each room. Don't use element 0 in the arrays (due to graphical bugs in editor)\n\n" +
 			 "Rooms of weight 0 will never appear (unless they're the only one), and higher numbers should, in theory, mean higher chances of appearing.")]
 	[SerializeField] private RoomInputs roomPrefabs;
+	[SerializeField] private Rooms[] entranceRoom;
+	public Vector2 entranceCoords;
+	[SerializeField] private Rooms[] exitRoom;
+	public Vector2 exitCoords;
 
 	//Generation Variables
 	[Header("Generation Variables")]
@@ -62,13 +66,13 @@ public class MazeGen : MonoBehaviour
 
 	[Space(10)]
 	[Tooltip("Offsets center of rooms from the Maze Generator's origin location")]
-	[SerializeField] private Vector2 roomCenterOffset;
+	public Vector2 roomCenterOffset;
 
 	[Space(10)]
 	[Tooltip("Total width of the maze")]
-	[SerializeField] private int mazeWidth = 2;
+	public int mazeWidth = 2;
 	[Tooltip("Total height of the maze")]
-	[SerializeField] private int mazeHeight = 2;
+	public int mazeHeight = 2;
 
 	[Space(10)]
 	[Tooltip("Pick a tile coordinate using x & y, and add an extra exit using z in the specified direction:\n" +
@@ -80,7 +84,13 @@ public class MazeGen : MonoBehaviour
 
 	public System.Action OnGenerationComplete;
 
-	private void Start()
+	private void Awake()
+	{
+		if (Instance == null) Instance = this;
+		else Destroy(gameObject);
+	}
+
+	public void StartMaze()
 	{
 		//ensure maze has generation dimensions
 		if (mazeWidth == 0 || mazeHeight == 0 || (mazeHeight == 1 && mazeWidth == 1))
@@ -91,12 +101,6 @@ public class MazeGen : MonoBehaviour
 
 		//start generation
 		StartCoroutine(GenerateRooms());
-	}
-
-	private void Awake()
-	{
-		if (Instance == null) Instance = this;
-		else Destroy(gameObject);
 	}
 
 	//Maze generation adapted from u/DavoMyan on Reddit (and also myself from last semester)
@@ -412,10 +416,20 @@ public class MazeGen : MonoBehaviour
 
 			GameObject go = (GameObject)Instantiate(roomPrefab, transform.TransformPoint(new Vector3((tile.x*roomWidth)+roomCenterOffset.x, (tile.y*roomHeight)+roomCenterOffset.y, 0)), Quaternion.identity, transform);
 			go.name = string.Format("({0},{1})", tile.x, tile.y);
-			
+
 			Destroy(tile.gameObject);
 		}
 
+		//Generate entrance and exit
+		GameObject entrancePrefab = RandomRoom(entranceRoom);
+		GameObject enr = (GameObject)Instantiate(entrancePrefab, transform.TransformPoint(new Vector3(((int)entranceCoords.x * roomWidth) + roomCenterOffset.x, ((int)entranceCoords.y * roomHeight) + roomCenterOffset.y, 0)), Quaternion.identity, transform);
+		enr.name = "Entrance";
+
+		GameObject exitPrefab = RandomRoom(exitRoom);
+		GameObject exr = (GameObject)Instantiate(exitPrefab, transform.TransformPoint(new Vector3(((int)exitCoords.x * roomWidth) + roomCenterOffset.x, ((int)exitCoords.y * roomHeight) + roomCenterOffset.y, 0)), Quaternion.identity, transform);
+		exr.name = "Exit";
+
+		yield return new WaitForEndOfFrame();
 		OnGenerationComplete?.Invoke();
 	}
 

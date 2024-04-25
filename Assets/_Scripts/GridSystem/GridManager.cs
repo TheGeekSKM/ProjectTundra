@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
     [Header("Grid Settings")]
     [SerializeField] private Vector2Int _gridSize;
     [SerializeField] private Vector2 _cameraOffset;
-    [SerializeField] bool _moveCamera = false;
+    [SerializeField] bool _followCamera = false;
     
     [Header("References")]
     [SerializeField] private Tile _tilePrefab;
@@ -29,33 +30,31 @@ public class GridManager : MonoBehaviour
     }
  
     void Start() {
-        UpdateCamera();
+		_cameraOffset = Camera.main.transform.position - transform.position;
     }
 
-    void HandleTurnChange(CombatTurnState state)
-    {
-        if (state != CombatTurnState.NonCombat)
-        {
-            GenerateGrid();
-        }
-        else
-        {
-            ClearAllTiles();
-        }
-    }
- 
-    [ContextMenu("Generate Grid")]
+	void HandleTurnChange(CombatTurnState state)
+	{
+		//if (state != CombatTurnState.NonCombat && state != CombatTurnState.CameraMove)
+		//	GenerateGrid();
+		//else
+		//	ClearAllTiles();
+	}
+
+	[ContextMenu("Generate Grid")]
     void GenerateGrid() {
 
-        //check to see if children already exist
-        if (transform.childCount > 0) {
+		FollowCamera();
+
+		//check to see if children already exist
+		if (transform.childCount > 0) {
             return;
         }
 
         _tiles = new Dictionary<Vector2, Tile>();
         for (int x = 0; x < _gridSize.x; x++) {
             for (int y = 0; y < _gridSize.y; y++) {
-                var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, y), Quaternion.identity);
+                var spawnedTile = Instantiate(_tilePrefab, new Vector3(transform.position.x+x, transform.position.y+y), Quaternion.identity);
                 spawnedTile.name = $"Tile {x} {y}";
  
                 var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
@@ -65,22 +64,28 @@ public class GridManager : MonoBehaviour
  
  
                 _tiles[new Vector2(x, y)] = spawnedTile;
-            }
-        }
-        
 
-        UpdateCamera();
+				//var hit = Physics2D.OverlapCircle(spawnedTile.transform.position, 0.49f);
+				//Debug.Log(hit.gameObject.name);
+				//if (hit.GetComponent<TilemapCollider2D>())
+				//	spawnedTile.walkable = false;
+				//else if (hit.GetComponent<ChestManager>())
+				//	spawnedTile.gameObject.SetActive(false);
+				//else
+				//	spawnedTile.walkable = true;
+			}
+        }
     }
 
 
     // move the camera to the center of the grid
-    void UpdateCamera()
+    void FollowCamera()
     {
-        if (!_moveCamera) return;
-        float _x = (float)(_gridSize.x + _cameraOffset.x) / 2 - 0.5f;
-        float _y = (float)(_gridSize.y + _cameraOffset.y) / 2 - 0.5f;
-        _cam.transform.position = new Vector3(_x, _y, -10);
-    }
+        if (!_followCamera) return;
+		float _x = Camera.main.transform.position.x - _cameraOffset.x;
+		float _y = Camera.main.transform.position.y - _cameraOffset.y;
+		transform.position = new Vector3(_x,_y,transform.position.z);
+	}
 
     // run this function when a touch is performed
     void TouchPerformed(Vector2 touchPosition) {
@@ -91,12 +96,18 @@ public class GridManager : MonoBehaviour
         var hit = Physics2D.Raycast(worldPosition, Vector2.zero);
         
         if (hit.collider != null) {
+			//Debug.Log("Hit a collider!");
+
             var tile = hit.collider.GetComponent<Tile>();
             if (tile != null) {
-				//HighlightTile(tile.transform.position);
+				//Debug.Log("Hit a tile!");
 				HighlightTile(tile);
             }
         }
+		else if (_previousTile != null)
+		{
+			_previousTile.Deselect();
+		}
     }
 
     [ContextMenu("Clear All Tiles")]
@@ -120,9 +131,7 @@ public class GridManager : MonoBehaviour
     }
 
 
-	//void HighlightTile(Vector2 pos) {
     void HighlightTile(Tile tile) {
-        //var tile = GetTileAtPosition(pos);
         if (tile != null) {
             tile.Highlight();
             if (_previousTile != null && _previousTile != tile) {
@@ -134,10 +143,5 @@ public class GridManager : MonoBehaviour
                 _previousTile = tile;
             }
         }
-    }
- 
-    public Tile GetTileAtPosition(Vector2 pos) {
-        if (_tiles.TryGetValue(pos, out var tile)) return tile;
-        return null;
     }
 }
