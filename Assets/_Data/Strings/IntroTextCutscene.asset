@@ -12,4 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09500d44fc122354c88e5d12bd5c38fd, type: 3}
   m_Name: IntroTextCutscene
   m_EditorClassIdentifier: 
-  value: You awake on an island and die I guess idk man...
+  value: 'You''ve been here before...
+
+
+    Hundre-no...Thousands of times before...
+
+
+    Each
+    time, you had a new body to work with. But...something is wrong now...
+
+    Now,
+    you only have 3...
+
+
+    Survive...'

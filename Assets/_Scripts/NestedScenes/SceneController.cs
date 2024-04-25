@@ -20,6 +20,7 @@ public class SceneController : MonoBehaviour
     [SerializeField] Object _gamePlayScene;
     [SerializeField] Object _loseMenuScene;
     [SerializeField] Object _winMenuScene;
+    [SerializeField] Object _textBasedCutsceneScene;
 
 
     void Awake()
@@ -32,6 +33,24 @@ public class SceneController : MonoBehaviour
 
     public void TransitionPanelOn() => TransitionPanel.DOAnchorPosY(0f, 0.5f).SetEase(Ease.OutCubic);
     public void TransitionPanelOff() => TransitionPanel.DOAnchorPosY(_transitionPanelYPos, 0.5f).SetEase(Ease.OutCubic);
+
+    public void TextBasedIntro()
+    {
+        SceneManager.LoadSceneAsync(_textBasedCutsceneScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        {
+            // TransitionPanelOff();
+            UpdateState(SceneState.TextBasedCutscene);
+        };
+    }
+
+    public void TextBasedOutro()
+    {
+        TransitionPanelOn();
+        SceneManager.UnloadSceneAsync(_textBasedCutsceneScene.name).completed += (AsyncOperation obj) => 
+        {
+            _sceneFSM.ChangeState(_sceneFSM.MainMenuState);
+        };
+    }
 
     public void MainMenuStateIntro()
     {

@@ -70,7 +70,7 @@ public class TextCutsceneController : MonoBehaviour
         if (useAudio) TypingFX.Stop();
         _textComponent.text = story.value;
 
-        OnTypingFinished.Invoke();
+        Finished();
     }
 
     private System.Collections.IEnumerator TypeText()
@@ -103,10 +103,18 @@ public class TextCutsceneController : MonoBehaviour
         yield return new WaitForSeconds(settings.delayAfterTyping);
         if (_clearOnFinish) _textComponent.text = "";
 
-        OnTypingFinished.Invoke();
+        Finished();
+    }
+
+    void Finished()
+    {
+        OnTypingFinished?.Invoke();
+        var sceneFSM = SceneController.Instance.SceneFSM;
+        sceneFSM.ChangeState(sceneFSM.MainMenuState);
     }
 
 }
+
 
 [Serializable]
 public class TypewriterSettings

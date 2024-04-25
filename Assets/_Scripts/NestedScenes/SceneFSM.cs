@@ -11,6 +11,7 @@ public class SceneFSM : BaseStateMachine
     public GamePlayState GamePlayState { get; private set; }
     public LoseMenuState LoseMenuState { get; private set; }
     public WinMenuState WinMenuState { get; private set; }
+    public TextBasedCutsceneState TextBasedCutsceneState { get; private set; }
 
     void OnValidate()
     {
@@ -27,16 +28,18 @@ public class SceneFSM : BaseStateMachine
         GamePlayState = new GamePlayState(_sceneController, this);
         LoseMenuState = new LoseMenuState(_sceneController, this);
         WinMenuState = new WinMenuState(_sceneController, this);
+        TextBasedCutsceneState = new TextBasedCutsceneState(_sceneController, this);
     }
 
     void Start()
     {
-        ChangeState(MainMenuState, 0.5f, 0f);
+        ChangeState(TextBasedCutsceneState, 0.5f, 0f);
     }
 }
 
 public enum SceneState
 {
+    TextBasedCutscene,
     MainMenu,
     CharacterSelect,
     GamePlay,
