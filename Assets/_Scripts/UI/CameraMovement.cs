@@ -15,20 +15,35 @@ public class CameraMovement : MonoBehaviour
 
 	public void SetRoomCoord()
 	{
+		MazeGen maze = MazeGen.Instance;
+
 		roomCoord = RoomManager.Instance.startRoom;
+		transform.position = new Vector3((roomCoord.x * maze.roomWidth) + maze.roomCenterOffset.x, 
+										 (roomCoord.y * maze.roomHeight)+ maze.roomCenterOffset.y, 
+										 transform.position.z);
 	}
 
 	public void Move(Vector2 direction)
     {
+		MazeGen maze = MazeGen.Instance;
 		RoomManager rm = RoomManager.Instance;
 
 		_prevRoom = roomCoord;
 		roomCoord += direction;
 
-		rm.rooms[(int)roomCoord.x, (int)roomCoord.y].gameObject.SetActive(true);
+		RoomController room;
+		if (roomCoord == maze.entranceCoords)
+			room = rm.entrance;
+		else if (roomCoord == maze.exitCoords)
+			room = rm.exit;
+		else
+		{
+			room = rm.rooms[(int)roomCoord.x, (int)roomCoord.y];
+			room.gameObject.SetActive(true);
+		}
 
 		//Set room destination based on direction inputted
-		Vector2 dest = rm.rooms[(int)roomCoord.x, (int)roomCoord.y].transform.position;
+		Vector2 dest = room.transform.position;
 		Vector3 destination = new Vector3(dest.x, dest.y, transform.position.z);
 
 		//Start movement routine
@@ -36,17 +51,29 @@ public class CameraMovement : MonoBehaviour
     }
 	IEnumerator Movement(Vector3 destination, RoomManager rm)
 	{
+		MazeGen maze = MazeGen.Instance;
+
+		RoomController room;
+		if (roomCoord == maze.entranceCoords)
+			room = rm.entrance;
+		else if (roomCoord == maze.exitCoords)
+			room = rm.exit;
+		else
+			room = rm.rooms[(int)roomCoord.x, (int)roomCoord.y];
+
 		//Set Camera Move state
-		CombatManager.Instance.CameraMoving(true, rm.rooms[(int)roomCoord.x, (int)roomCoord.y]);
+		CombatManager.Instance.CameraMoving(true, room);
 
 		//Do the tween and wait for duration to elapse
 		transform.DOMove(destination, duration);
 		yield return new WaitForSeconds(duration);
 
-		rm.rooms[(int)_prevRoom.x, (int)_prevRoom.y].gameObject.SetActive(false);
+		if (_prevRoom.x >= 0 && _prevRoom.x < maze.mazeWidth &&
+			_prevRoom.y >= 0 && _prevRoom.y < maze.mazeHeight)
+			rm.rooms[(int)_prevRoom.x, (int)_prevRoom.y].gameObject.SetActive(false);
 
 		//Unset Camera Move state
-		CombatManager.Instance.CameraMoving(false, rm.rooms[(int)roomCoord.x, (int)roomCoord.y]);
+		CombatManager.Instance.CameraMoving(false, room);
 
 		yield break;
 	}

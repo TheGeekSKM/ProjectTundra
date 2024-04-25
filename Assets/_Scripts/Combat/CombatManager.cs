@@ -59,6 +59,8 @@ public class CombatManager : MonoBehaviour
 
     void Start()
     {
+		MazeGen.Instance.StartMaze();
+
 		if (_currentTurnState == CombatTurnState.NonCombat)
 			combatFSM.ChangeState(combatFSM.NonCombatState);
 	}
@@ -134,6 +136,11 @@ public class CombatManager : MonoBehaviour
 			else
 				combatFSM.ChangeState(combatFSM.NonCombatState);
 		}
+	}
+
+	public void WinMovement()
+	{
+		combatFSM.ChangeState(combatFSM.WinCombatState);
 	}
 
 

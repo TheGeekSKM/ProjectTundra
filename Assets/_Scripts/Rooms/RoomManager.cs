@@ -10,6 +10,9 @@ public class RoomManager : MonoBehaviour
 
 	public Vector2 startRoom;
 
+	[HideInInspector]
+	public RoomController entrance, exit;
+
 	private void Awake()
 	{
 		if (Instance == null) Instance = this;
@@ -44,6 +47,9 @@ public class RoomManager : MonoBehaviour
 					rooms[x, y].gameObject.SetActive(false);
 			}
 		}
+
+		entrance = maze.transform.GetChild(maze.transform.childCount - 2).GetComponent<RoomController>();
+		exit = maze.transform.GetChild(maze.transform.childCount - 1).GetComponent<RoomController>();
 	}
 
 	[ContextMenu("Reset Rooms")]

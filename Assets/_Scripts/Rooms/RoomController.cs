@@ -21,9 +21,12 @@ public class RoomController : MonoBehaviour
 	[SerializeField]
 	private GameObject exitDoorPrefab;
 	private GameObject[] doors = new GameObject[4];
+	[SerializeField]
+	private bool neverOpen;
 
-	private void Start()
+	private void Awake()
 	{
+		Debug.Log(this.gameObject.name + " is creating a cloned objects container");
 		objectClones = Instantiate(new GameObject("Objects"), transform);
 
 		for (int i = 0; i < objectsContainer.transform.childCount; i++)
@@ -97,6 +100,8 @@ public class RoomController : MonoBehaviour
 	[ContextMenu("Unlock Doors")]
 	public void UnlockDoors()
 	{
+		if (neverOpen) return;
+
 		for (int i = 0; i < doors.Length; i++)
 		{
 			Destroy(doors[i]);

@@ -74,6 +74,7 @@ public class SceneController : MonoBehaviour
     public void GamePlayStateIntro()
     {
         //game play scene should already be loaded in
+
     }
 
     public void GamePlayStateOutro()
