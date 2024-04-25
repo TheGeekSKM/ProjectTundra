@@ -13,7 +13,7 @@ public class CameraMovement : MonoBehaviour
 
 	private Vector2 _prevRoom;
 
-	private void Start()
+	public void SetRoomCoord()
 	{
 		roomCoord = RoomManager.Instance.startRoom;
 	}

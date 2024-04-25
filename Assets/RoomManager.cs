@@ -14,6 +14,8 @@ public class RoomManager : MonoBehaviour
 	{
 		if (Instance == null) Instance = this;
 		else Destroy(gameObject);
+
+		Camera.main.GetComponent<CameraMovement>().SetRoomCoord();
 	}
 
 	private void OnEnable()
