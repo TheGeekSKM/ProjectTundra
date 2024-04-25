@@ -25,3 +25,5 @@ MonoBehaviour:
     _containerName: Player Satchel
     Items:
     - {fileID: 11400000, guid: a4abc0aaf8f16204e998061977745b8d, type: 2}
+  _sprite: {fileID: -518283795, guid: 09be1a272bf9d33488345958aac61686, type: 3}
+  _deathSprite: {fileID: 0}

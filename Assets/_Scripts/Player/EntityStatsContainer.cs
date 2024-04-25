@@ -27,6 +27,11 @@ public class EntityStatsContainer : MonoBehaviour
 
     void Start()
     {
+        SetSprite();
+    }
+
+    public void SetSprite()
+    {
         if (_playerStatsData != null && _playerStatsData.EntitySprite != null)
         {
             _spriteRenderer.sprite = _playerStatsData.EntitySprite;

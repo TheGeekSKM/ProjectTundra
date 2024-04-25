@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerStatsData: {fileID: 11400000, guid: 671fa029ec2bb914bb6cd135ccbdabde, type: 2}
-  _spriteRenderer: {fileID: 0}
+  _spriteRenderer: {fileID: 4833069643400282007}
 --- !u!114 &4833069642188488509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,8 +340,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 667448907, guid: 81ea73c95b6f3884f972a0dadbf217b9, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
