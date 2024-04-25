@@ -81,6 +81,7 @@ public class EnemyBrain : MonoBehaviour
         {
             EndTurn();
             CombatManager.Instance.RemoveEnemy(this);
+            GameDataManager.Instance.PlayerKillCount++;
         }
     }
 

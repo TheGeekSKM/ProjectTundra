@@ -51,6 +51,15 @@ public class GameDataManager : MonoBehaviour
 
     [SerializeField] SceneController _sceneController;
 
+    [SerializeField] int _playerKillCount;
+    public int PlayerKillCount
+    {
+        get => _playerKillCount;
+        set => _playerKillCount = value;
+    }
+    // enemy difficulty increases every 3 kills
+    public int EnemyDifficulty => Mathf.FloorToInt(_playerKillCount / 3);
+
     GameObject _currentStats;
 
     private void Awake()

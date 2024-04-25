@@ -10,7 +10,14 @@ public class PlayerStatsData : ScriptableObject
     [SerializeField] private int _totalActionPoints;
     public int TotalActionPoints
     {
-        get => _totalActionPoints;
+        get
+        {
+            if (_entityType == EntityType.Enemy)
+            {
+                return _totalActionPoints + GameDataManager.Instance.EnemyDifficulty;
+            }
+            return _totalActionPoints;
+        }
         set
         {
             _totalActionPoints = value;
@@ -22,7 +29,14 @@ public class PlayerStatsData : ScriptableObject
     [SerializeField] private int _maxHealth;
     public int MaxHealth
     {
-        get => _maxHealth;
+        get
+        {
+            if (_entityType == EntityType.Enemy)
+            {
+                return _maxHealth + GameDataManager.Instance.EnemyDifficulty;
+            }
+            return _maxHealth;
+        }
         set
         {
             _maxHealth = value;
@@ -35,7 +49,14 @@ public class PlayerStatsData : ScriptableObject
     [SerializeField] private int _damage;
     public int Damage
     {
-        get => _damage;
+        get
+        {
+            if (_entityType == EntityType.Enemy)
+            {
+                return _damage + GameDataManager.Instance.EnemyDifficulty;
+            }
+            return _damage;
+        }
         set
         {
             _damage = value;
@@ -48,7 +69,14 @@ public class PlayerStatsData : ScriptableObject
     [SerializeField] private int _aOERange;
     public int AOERange
     {
-        get => _aOERange;
+        get
+        {
+            if (_entityType == EntityType.Enemy)
+            {
+                return _aOERange + GameDataManager.Instance.EnemyDifficulty;
+            }
+            return _aOERange;
+        }
         set
         {
             _aOERange = value;

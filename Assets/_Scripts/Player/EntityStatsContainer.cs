@@ -16,4 +16,20 @@ public class EntityStatsContainer : MonoBehaviour
     {
         _playerStatsData = playerStatsData;
     }
+
+    [SerializeField] SpriteRenderer _spriteRenderer;
+
+    void Awake()
+    {
+        if (!_spriteRenderer) _spriteRenderer = GetComponent<SpriteRenderer>();
+        if (!_spriteRenderer) _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }   
+
+    void Start()
+    {
+        if (_playerStatsData != null && _playerStatsData.EntitySprite != null)
+        {
+            _spriteRenderer.sprite = _playerStatsData.EntitySprite;
+        }
+    }
 }
