@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AE_ButtonClick
   m_EditorClassIdentifier: 
   audioEvent: 0
-  audioClip: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: 46f79c3afc220d941a6a06b67a307b34, type: 3}

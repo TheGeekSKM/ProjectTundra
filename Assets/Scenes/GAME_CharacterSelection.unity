@@ -1832,6 +1832,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 541890334}
@@ -1840,11 +1844,19 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: NextCharacter
       objectReference: {fileID: 0}
     - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CharacterSelectManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: CharacterSelectManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5140251384189080562, guid: 890686840c955b44ea42ddc73ba23768, type: 3}
