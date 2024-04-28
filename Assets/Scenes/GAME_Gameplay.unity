@@ -184,16 +184,192 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
-      propertyPath: roomPrefabs.capEastExit.Array.size
+      propertyPath: roomPrefabs.plus.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.tWest.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.capEastExit.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.capNorthExit.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hallVertical.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.plus.Array.data[1].room
+      value: 
+      objectReference: {fileID: 8932313775095692372, guid: 22eea8d44c2c0124a8c3b7c973a9baa6, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.plus.Array.data[2].room
+      value: 
+      objectReference: {fileID: 8932313775095692372, guid: 1d91c5e6b8054f64b995809c7671a8dc, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookNorthEast.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookNorthWest.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookSouthEast.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.tEast.Array.data[1].room
+      value: 
+      objectReference: {fileID: 3087053941880917819, guid: 5c59e751cc3b9d54894d8cee282443bc, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.tWest.Array.data[1].room
+      value: 
+      objectReference: {fileID: 1299751113225832228, guid: a92dda63636bc984984e3581c07b0c18, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.tWest.Array.data[2].room
+      value: 
+      objectReference: {fileID: 1299751113225832228, guid: 547821e5e7e31d84ea60d645d0e121df, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hallHorizontal.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.plus.Array.data[2].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.tNorth.Array.data[1].room
+      value: 
+      objectReference: {fileID: 1434013507641878147, guid: 230b809704fa0ad4da3d29d291d10cd9, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.tSouth.Array.data[1].room
+      value: 
+      objectReference: {fileID: 418999978313872242, guid: fe03b638b1147cd46b1cd1c8b8d40d06, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.tWest.Array.data[2].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.capEastExit.Array.data[1].room
+      value: 
+      objectReference: {fileID: 7319537710489150920, guid: dce6a49f35791084288000328eefd256, type: 3}
     - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
       propertyPath: roomPrefabs.capEastExit.Array.data[2].room
       value: 
       objectReference: {fileID: 7319537710489150920, guid: dce6a49f35791084288000328eefd256, type: 3}
     - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.capWestExit.Array.data[1].room
+      value: 
+      objectReference: {fileID: 1111902910821715107, guid: f75a62050b103184687467e2428fba8b, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.capNorthExit.Array.data[1].room
+      value: 
+      objectReference: {fileID: 2304966349008715828, guid: d5e1fa932a6b89a4a885acd18fac6002, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.capNorthExit.Array.data[2].room
+      value: 
+      objectReference: {fileID: 2304966349008715828, guid: d5e1fa932a6b89a4a885acd18fac6002, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.capSouthExit.Array.data[1].room
+      value: 
+      objectReference: {fileID: 4383833804388330662, guid: ad270ee6c3d737341a3f3478e621b35e, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hallVertical.Array.data[1].room
+      value: 
+      objectReference: {fileID: 3314052345259133097, guid: 7ab3bf063425c8344a9885a61b30d306, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hallVertical.Array.data[2].room
+      value: 
+      objectReference: {fileID: 3314052345259133097, guid: 0890b59bd3a1cb34988e2f8acc80595a, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
       propertyPath: roomPrefabs.capEastExit.Array.data[2].weight
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookNorthEast.Array.data[1].room
+      value: 
+      objectReference: {fileID: 6398236983750512716, guid: 52ce8f961ce451d40a8cb6a9f65aab68, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookNorthEast.Array.data[2].room
+      value: 
+      objectReference: {fileID: 6398236983750512716, guid: 52ce8f961ce451d40a8cb6a9f65aab68, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookNorthWest.Array.data[1].room
+      value: 
+      objectReference: {fileID: 1266190679285794900, guid: 81326eb36849bcc47997451c055b86d8, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookNorthWest.Array.data[2].room
+      value: 
+      objectReference: {fileID: 1266190679285794900, guid: 3017aee8353a9d94da2a6b3f4b4b1287, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookNorthWest.Array.data[3].room
+      value: 
+      objectReference: {fileID: 1266190679285794900, guid: 3017aee8353a9d94da2a6b3f4b4b1287, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookSouthEast.Array.data[1].room
+      value: 
+      objectReference: {fileID: 1266190679285794900, guid: 81326eb36849bcc47997451c055b86d8, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookSouthEast.Array.data[2].room
+      value: 
+      objectReference: {fileID: 1266190679285794900, guid: 3017aee8353a9d94da2a6b3f4b4b1287, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookSouthWest.Array.data[1].room
+      value: 
+      objectReference: {fileID: 6598685367963959901, guid: b32140799347a7848a830a62a136153d, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.capNorthExit.Array.data[2].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hallHorizontal.Array.data[1].room
+      value: 
+      objectReference: {fileID: 8033390016668757809, guid: 4979b6282a254434795b079de602e819, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hallHorizontal.Array.data[2].room
+      value: 
+      objectReference: {fileID: 8033390016668757809, guid: 1d1e4425f3082244695ab6b2a8413f03, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hallHorizontal.Array.data[3].room
+      value: 
+      objectReference: {fileID: 8033390016668757809, guid: 2fb23cfda86370142b34803696c5567a, type: 3}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hallVertical.Array.data[2].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookNorthEast.Array.data[2].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookNorthWest.Array.data[1].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookNorthWest.Array.data[2].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookNorthWest.Array.data[3].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hookSouthEast.Array.data[2].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hallHorizontal.Array.data[2].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7928105392335377496, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
+      propertyPath: roomPrefabs.hallHorizontal.Array.data[3].weight
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ccc9411ff8635143849fa2d61937de7, type: 3}
