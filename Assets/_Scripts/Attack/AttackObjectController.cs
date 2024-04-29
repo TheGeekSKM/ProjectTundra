@@ -66,7 +66,7 @@ public class AttackObjectController : MonoBehaviour
         var health = other.GetComponent<EntityHealth>();
         if (health != null && health.EntityType != _spawnerType)
         {
-            health.TakeDamage(_damage);
+            health.TakeDamage(_damage, transform);
             
             if (_weaponItemData.HitEffectPrefab != null)
                 Instantiate(_weaponItemData.HitEffectPrefab, transform.position, Quaternion.identity);

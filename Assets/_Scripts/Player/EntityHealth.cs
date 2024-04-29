@@ -28,7 +28,7 @@ public class EntityHealth : MonoBehaviour
         entityType = statsContainer.PlayerStatsData.EntityType;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Transform attacker)
     {
         OnHealthChanged?.Invoke(currentHealth);
         currentHealth -= damage;
@@ -39,6 +39,7 @@ public class EntityHealth : MonoBehaviour
         }
 
         DamagePopupManager.Instance.DisplayDamage(damage, transform.position);
+        VFXAtlas.Instance.PlayVFX(VFXEvent.BloodSplatter, attacker ? attacker : transform);
     }
 
     public void Heal(int amount)
