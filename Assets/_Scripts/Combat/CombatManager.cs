@@ -70,9 +70,9 @@ public class CombatManager : MonoBehaviour
     }
 
     // Check if player has enough action points, and if they don't, switch to enemy turn
-    void HandlePlayerStatsChange()
+    void HandlePlayerStatsChange(int currentStamina)
     {
-        if (_playerStamina.CurrentActionPoints <= 0)
+        if (currentStamina <= 0)
         {
             combatFSM.ChangeState(combatFSM.EnemyCombatState);
         }
