@@ -20,14 +20,16 @@ public class Player : MonoBehaviour
         HandleReferences();
     }
 
-    void Start()
+    void OnEnable()
     {
         _playerHealth.OnDeath += OnDeath;
+        _playerAttackManager.OnAttackWithoutWeapon += NoWeaponNotify;
     }
-
+     
     void OnDisable()
     {
         _playerHealth.OnDeath -= OnDeath;
+        _playerAttackManager.OnAttackWithoutWeapon -= NoWeaponNotify;
     }
 
     void HandleReferences()
@@ -59,6 +61,14 @@ public class Player : MonoBehaviour
         Debug.LogError("Player Died");
         var sceneFSM = SceneController.Instance.SceneFSM;
         sceneFSM.ChangeState(sceneFSM.LoseMenuState);
+    }
+
+    void NoWeaponNotify()
+    {
+        // let the player know that there isn't a weapon in their inventory...
+        NotificationManager.Instance.Notify(
+            new NotificationData("You don't have a weapon in your inventory...", "NO WEAPON FOUND", 2.5f, ENotificationType.Warning)
+        );
     }
 
 
