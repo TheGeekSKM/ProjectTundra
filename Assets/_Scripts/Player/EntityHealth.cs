@@ -37,6 +37,8 @@ public class EntityHealth : MonoBehaviour
             currentHealth = 0;
             Die();
         }
+
+        DamagePopupManager.Instance.DisplayDamage(damage, transform.position);
     }
 
     public void Heal(int amount)
