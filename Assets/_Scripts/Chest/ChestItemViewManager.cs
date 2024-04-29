@@ -56,7 +56,10 @@ public class ChestItemViewManager : MonoBehaviour
                     NotificationManager.Instance.Notify(
                         new NotificationData(message, "Hidden Voice", 3f, ENotificationType.Warning)
                     );
+                    
 
+                    // return out of the function so the player cannot pick up the weapon
+                    return;
                 }
             }
 
