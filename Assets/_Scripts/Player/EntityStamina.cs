@@ -8,7 +8,7 @@ public class EntityStamina : MonoBehaviour
     PlayerStatsData _playerStatsData;
     [SerializeField] int _currentActionPoints;
     public int CurrentActionPoints => _currentActionPoints;
-    public System.Action OnActionPointsChanged;
+    public System.Action<int> OnActionPointsChanged;
 
     void Awake()
     {
@@ -28,7 +28,7 @@ public class EntityStamina : MonoBehaviour
     {
         
         _currentActionPoints -= amount;
-        OnActionPointsChanged?.Invoke();
+        OnActionPointsChanged?.Invoke(_currentActionPoints);
     }
 
     void HandleTurnChange(CombatTurnState turnState)
@@ -39,5 +39,6 @@ public class EntityStamina : MonoBehaviour
     public void ResetAP()
     {
         _currentActionPoints = _playerStatsData.TotalActionPoints;
+        OnActionPointsChanged?.Invoke(CurrentActionPoints);
     }
 }

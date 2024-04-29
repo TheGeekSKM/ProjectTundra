@@ -9,6 +9,7 @@ public class EntityAttackManager : MonoBehaviour
     private EntityStamina _entityStamina;
     [SerializeField] Transform _attackPoint;
     public Transform AttackPoint => _attackPoint;
+    public System.Action OnAttackWithoutWeapon;
 
     void Awake()
     {
@@ -58,6 +59,7 @@ public class EntityAttackManager : MonoBehaviour
         if (weapon == null)
         {
             Debug.Log("No weapon equipped");
+            OnAttackWithoutWeapon?.Invoke();
             return false;
         }
 

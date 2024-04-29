@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class ChestManager : Tile
 {
+    [Header("Chest Inventory")]
     [SerializeField] private ItemContainer _itemContainer;
+
+    [Header("Random Items")]
+    [SerializeField] private bool _useRandomItems = true;
+    [SerializeField] private Vector2Int _additionalRandomItemsRange = new Vector2Int(1, 2);
+    [SerializeField] private List<BaseItemData> _randomItems;
+
+    [Header("Debug")]
     [SerializeField] bool _useable = false;
     public override void Highlight()
     {
@@ -30,5 +38,29 @@ public class ChestManager : Tile
         // Set custom sprite if available
         if (useCustomSprite && sprite) _renderer.sprite = sprite;
         _itemContainer = itemContainer;
+
+        HandleRandomItems();
+    }
+
+    void HandleRandomItems()
+    {
+        if (!_useRandomItems) return;
+        if (_randomItems.Count == 0)
+        { 
+            Debug.LogError($"{_itemContainer.ContainerName} has no random items available!!");
+            return;
+        }
+
+        var tempArray = _randomItems;
+
+        var numOfItemsToUse = Random.Range(_additionalRandomItemsRange.x, _additionalRandomItemsRange.y);
+
+        for (int i = 0; i < numOfItemsToUse; i++)
+        {
+            var itemToAdd = tempArray[Random.Range(0, tempArray.Count - 1)];
+
+            _itemContainer.AddItem(itemToAdd);
+            tempArray.Remove(itemToAdd);
+        }
     }
 }

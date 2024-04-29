@@ -46,7 +46,6 @@ public class SceneController : MonoBehaviour
 
     public void TextBasedOutro()
     {
-        TransitionPanelOn();
         SceneManager.UnloadSceneAsync(_textBasedCutsceneScene.name).completed += (AsyncOperation obj) => 
         {
             _sceneFSM.ChangeState(_sceneFSM.MainMenuState);
@@ -67,9 +66,10 @@ public class SceneController : MonoBehaviour
 
     public void MainMenuStateOutro()
     {
-        TransitionPanelOn();
+        TransitionPanel.DOAnchorPosY(0f, 0.5f).SetEase(Ease.OutCubic).OnComplete(() => { 
+            SceneManager.UnloadSceneAsync(_mainMenuScene.name);
+        });
         Debug.Log("MainMenuStateOutroFunctions");
-        SceneManager.UnloadSceneAsync(_mainMenuScene.name);
     }
 
     public void CharacterSelectStateIntro()
@@ -81,14 +81,14 @@ public class SceneController : MonoBehaviour
         };
         SceneManager.LoadSceneAsync(_characterSelectMenu.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
-            // TransitionPanelOff();
+            TransitionPanelOff();
             UpdateState(SceneState.CharacterSelect);
         };
     }
 
     public void CharacterSelectStateOutro()
     {
-        TransitionPanelOn();
+        
         SceneManager.UnloadSceneAsync(_characterSelectMenu.name);
     }
 
