@@ -17,6 +17,9 @@ public class AttackObjectController : MonoBehaviour
     [Header("Attack Object Components")]
     [SerializeField] private Rigidbody2D _rigidbody2D;
 
+    [Header("Debug")]
+    [SerializeField] bool _destroyable = true;
+
     bool _isInitialized = false;
 
     private void Start()
@@ -41,7 +44,8 @@ public class AttackObjectController : MonoBehaviour
         _spawnerType = spawnerType;
         _weaponItemData = weaponItemData;
 
-        transform.localScale = new Vector3(_scale, _scale, _scale);
+        var _currentScaleMultiplier = transform.localScale.x;
+        transform.localScale = new Vector3(_scale * _currentScaleMultiplier, _scale * _currentScaleMultiplier, _scale * _currentScaleMultiplier);
         _isInitialized = true;
     }
 
@@ -54,7 +58,7 @@ public class AttackObjectController : MonoBehaviour
     IEnumerator DestroyAfterLifetime()
     {
         yield return new WaitForSeconds(_lifetime);
-        Destroy(gameObject);
+        if (_destroyable) Destroy(gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -67,7 +71,7 @@ public class AttackObjectController : MonoBehaviour
             if (_weaponItemData.HitEffectPrefab != null)
                 Instantiate(_weaponItemData.HitEffectPrefab, transform.position, Quaternion.identity);
 
-            Destroy(gameObject);
+            if (_destroyable) Destroy(gameObject);
         }
     }
 }
