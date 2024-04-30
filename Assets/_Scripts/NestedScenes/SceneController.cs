@@ -115,6 +115,11 @@ public class SceneController : MonoBehaviour
         };
     }
 
+    public void LoseMenuStateOutro()
+    {
+        SceneManager.UnloadSceneAsync(_loseMenuScene.name);
+    }
+
     public void WinMenuStateIntro()
     {
         SceneManager.LoadSceneAsync(_winMenuScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
@@ -126,6 +131,11 @@ public class SceneController : MonoBehaviour
             UnloadGamePlayLevel();
             MusicManager.Instance.SwapTrack(EAudioEvent.MainMenuBGM);
         };
+    }
+
+    public void WinMenuStateOutro()
+    {
+        SceneManager.UnloadSceneAsync(_winMenuScene.name);
     }
 
     void UpdateState(SceneState _state)

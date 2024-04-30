@@ -20,6 +20,6 @@ public class LoseMenuState : BaseState
 
     public override void Exit()
     {
-        
+        _sceneController.LoseMenuStateOutro();
     }
 }

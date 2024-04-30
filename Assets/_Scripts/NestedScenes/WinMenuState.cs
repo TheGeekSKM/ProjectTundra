@@ -15,12 +15,12 @@ public class WinMenuState : BaseState
 
     public override void Enter()
     {
-        
+        _sceneController.WinMenuStateIntro();
     }
 
     public override void Exit()
     {
-        
+        _sceneController.WinMenuStateOutro();        
     }
 }
 
