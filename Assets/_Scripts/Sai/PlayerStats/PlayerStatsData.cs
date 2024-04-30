@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerStatsData", menuName = "PlayerStats/PlayerStatsData")]
@@ -100,6 +101,30 @@ public class PlayerStatsData : ScriptableObject
     }
     public event Action OnArmorChanged;
 
+    [SerializeField] private PlayerClass _playerClass;
+    public PlayerClass PlayerClass
+    {
+        get => _playerClass;
+        set
+        {
+            _playerClass = value;
+            OnPlayerClassChanged?.Invoke();
+        }
+    }
+    public event Action OnPlayerClassChanged;
+
+    [SerializeField] private EnemyClass _enemyClass;
+    public EnemyClass EnemyClass
+    {
+        get => _enemyClass;
+        set
+        {
+            _enemyClass = value;
+            OnEnemyClassChanged?.Invoke();
+        }
+    }
+    public event Action OnEnemyClassChanged;
+
     [Header("Visible Stats")]
     [SerializeField] private int _movementCost;
     public int MovementCost
@@ -129,5 +154,20 @@ public class PlayerStatsData : ScriptableObject
     [SerializeField] private Sprite _sprite;
     public Sprite EntitySprite => _sprite;
     [SerializeField] private Sprite _deathSprite;
-    public Sprite DeathSprite => _deathSprite;    
+    public Sprite DeathSprite => _deathSprite;
+    [SerializeField] private AnimatorController _animatorController;
+    public AnimatorController AnimatorController => _animatorController;    
+}
+
+public enum PlayerClass
+{
+    Ranger,
+    Scout,
+    Mage
+}
+
+public enum EnemyClass
+{
+    Slime,
+    Skeleton
 }

@@ -214,6 +214,7 @@ MonoBehaviour:
   _playerHealth: {fileID: 4065260593297218459}
   _playerStamina: {fileID: 6724540596322094236}
   _playerInputBrain: {fileID: 4833069642188488505}
+  _playerAnimationController: {fileID: 0}
 --- !u!114 &7544841905784830366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +278,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4833069643400282008}
   - component: {fileID: 4833069643400282007}
+  - component: {fileID: 3444592375983688213}
+  - component: {fileID: 4128491723944908643}
   m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
@@ -351,3 +354,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &3444592375983688213
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4833069643400282009}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4128491723944908643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4833069643400282009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc4b7cc0d43864149b926213369f3cff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _entityStatsContainer: {fileID: 0}

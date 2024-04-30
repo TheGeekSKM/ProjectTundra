@@ -17,6 +17,8 @@ MonoBehaviour:
   _damage: 1
   _aOERange: 1
   _armor: 0
+  _playerClass: 2
+  _enemyClass: 0
   _movementCost: 1
   _healCost: 2
   _entityAttackType: 1
@@ -26,3 +28,4 @@ MonoBehaviour:
     Items: []
   _sprite: {fileID: 252926624, guid: bf2e8b3f9abdc8441a667c2684d730e4, type: 3}
   _deathSprite: {fileID: 0}
+  _animatorController: {fileID: 0}

@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
         if (_playerInputBrain == null) _playerInputBrain = GetComponent<PlayerInputBrain>();
         if (_playerHealth == null) _playerHealth = GetComponent<EntityHealth>();
         if (_playerStamina == null) _playerStamina = GetComponent<EntityStamina>();
+        if (_playerAnimationController == null) _playerAnimationController = GetComponentInChildren<EntityAnimationController>();
     }
 
     [SerializeField] EntityStatsContainer _playerStats;
@@ -54,6 +55,8 @@ public class Player : MonoBehaviour
     public EntityStamina PlayerStamina => _playerStamina;
     [SerializeField] PlayerInputBrain _playerInputBrain;
     public PlayerInputBrain PlayerInputBrain => _playerInputBrain;
+    [SerializeField] EntityAnimationController _playerAnimationController;
+    public EntityAnimationController PlayerAnimationController => _playerAnimationController;
 
 
     void OnDeath()
@@ -69,6 +72,11 @@ public class Player : MonoBehaviour
         NotificationManager.Instance.Notify(
             new NotificationData("You don't have a weapon in your inventory...", "NO WEAPON FOUND", 2.5f, ENotificationType.Warning)
         );
+    }
+
+    public void Initialize()
+    {
+        _playerAnimationController.Initialize();
     }
 
 
