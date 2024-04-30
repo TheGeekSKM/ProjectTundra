@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47c88c06374f724489f0ddc4b19b650, type: 3}
   m_Name: AE_GamePlayCombatBGM
   m_EditorClassIdentifier: 
-  audioEvent: 3
+  audioEvent: 8
   audioClip: {fileID: 8300000, guid: aece29314a5bbb641b788f54651992fe, type: 3}

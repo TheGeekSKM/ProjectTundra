@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47c88c06374f724489f0ddc4b19b650, type: 3}
   m_Name: AE_GamePlayNonCombatBGM
   m_EditorClassIdentifier: 
-  audioEvent: 6
+  audioEvent: 11
   audioClip: {fileID: 8300000, guid: a599bf53a866f2a438e3183040dd5189, type: 3}

@@ -31,16 +31,21 @@ public class MusicManager : MonoBehaviour
         //find the requested AUdioEventSO in the tracks array
         foreach (AudioEventSO track in tracks)
         {
-            if (track.audioEvent == newClip)
+            if (track.audioEvent == newClip && track.audioClip != null)
             {
                 _currentTrack = track;
                 Debug.Log("Swapping to " + _currentTrack.audioEvent.ToString());
-                break;
+                
+                if (_crossfadeCoroutine != null) StopCoroutine(_crossfadeCoroutine);
+
+                _crossfadeCoroutine = StartCoroutine(Crossfade(_currentTrack.audioClip, 0.25f));
+                _isPlaying1 = !_isPlaying1;
+                
+                return;
             }
         }
 
-        if (_crossfadeCoroutine != null) StopCoroutine(_crossfadeCoroutine);
-        _crossfadeCoroutine = StartCoroutine(Crossfade(_currentTrack.audioClip, 0.25f));
+        Debug.LogWarning("Track not found");        
     }
 
     IEnumerator Crossfade(AudioClip newClip, float duration)

@@ -37,5 +37,5 @@ public class MovementButtonManager : MonoBehaviour
         _rightButton?.onClick.AddListener(ButtonClickFeedback);
     }
 
-    void ButtonClickFeedback() => AudioManager.Instance.PlayAudio2D(EAudioEvent.ButtonClick);
+    void ButtonClickFeedback() => AudioManager.Instance.PlayAudio2D(EAudioEvent.ButtonClick, true);
 }

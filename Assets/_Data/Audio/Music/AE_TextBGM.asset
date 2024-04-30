@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47c88c06374f724489f0ddc4b19b650, type: 3}
   m_Name: AE_TextBGM
   m_EditorClassIdentifier: 
-  audioEvent: 5
+  audioEvent: 10
   audioClip: {fileID: 8300000, guid: 589d48274ebf6ab4aa9b2aa9a1d53f5e, type: 3}

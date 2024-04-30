@@ -49,10 +49,10 @@ public class EntityHealth : MonoBehaviour
         switch (entityType)
         {
             case EntityType.Player:
-                AudioManager.Instance.PlayAudio2D(EAudioEvent.PlayerHurt);
+                AudioManager.Instance.PlayAudio3D(EAudioEvent.PlayerHurt, transform.position);
                 break;
             case EntityType.Enemy:
-                AudioManager.Instance.PlayAudio2D(EAudioEvent.EnemyHurt);
+                AudioManager.Instance.PlayAudio3D(EAudioEvent.EnemyHurt, transform.position);
                 break;
         }
     }

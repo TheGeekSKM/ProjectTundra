@@ -66,7 +66,7 @@ public class EntityMovement : MonoBehaviour
 
     void HandleSound()
     {
-        AudioManager.Instance.PlayAudio2D(EAudioEvent.PlayerMove);
+        AudioManager.Instance.PlayAudio3D(EAudioEvent.PlayerMove, transform.position);
     }
 
     [ContextMenu("Move Up")]

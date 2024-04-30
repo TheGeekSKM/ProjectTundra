@@ -14,6 +14,6 @@ public class ButtonSound : MonoBehaviour
     void Start()
     {
         if (AudioManager.Instance == null) return;
-        _button.onClick.AddListener(() => AudioManager.Instance.PlayAudio2D(EAudioEvent.ButtonClick));
+        _button.onClick.AddListener(() => AudioManager.Instance.PlayAudio2D(EAudioEvent.ButtonClick, true));
     } 
 }

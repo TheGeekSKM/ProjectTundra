@@ -36,7 +36,7 @@ public class ChestViewManager : MonoBehaviour
     public void OpenChest(ItemContainer chestInventory, ItemContainer playerInventory)
     {
         // play the loot sound
-        AudioManager.Instance.PlayAudio2D(EAudioEvent.Loot);
+        AudioManager.Instance.PlayAudio3D(EAudioEvent.Loot, transform.position);
 
         Debug.Log($"Opening chest {chestInventory.ContainerName}");
 

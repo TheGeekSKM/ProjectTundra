@@ -46,4 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioEvents:
   - {fileID: 11400000, guid: fa40dc39289074f4e830a68d79d1ac67, type: 2}
-  audioPrefab: {fileID: 1591427398526406085, guid: 0bce4db1a9de87241bfd2310429bf7ea, type: 3}
+  - {fileID: 11400000, guid: 2032014a3769ad64080517de9f354a14, type: 2}
+  - {fileID: 11400000, guid: 1681d607874d850418f761f644093114, type: 2}
+  - {fileID: 11400000, guid: 0299fa05e89bbdd4a868626f518d3275, type: 2}
+  - {fileID: 11400000, guid: b72d283bee9f97043a673677f2f35861, type: 2}
+  - {fileID: 11400000, guid: a005c47610ae36c499937c433ab048e7, type: 2}
+  - {fileID: 11400000, guid: 66c9d4ef8b7eec940a510faf04ea0a89, type: 2}
+  - {fileID: 11400000, guid: f7378a6543f6c7743b88cc26c1a1d495, type: 2}
+  - {fileID: 11400000, guid: 5ea5be43696f4f7418db039d4a6b7197, type: 2}
+  _audioUIPrefab: {fileID: 1591427398526406085, guid: 0bce4db1a9de87241bfd2310429bf7ea, type: 3}
+  _audioSFXPrefab: {fileID: 1591427398526406085, guid: a8ff12008a6f3e44fb5752693019271b, type: 3}

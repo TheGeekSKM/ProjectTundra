@@ -7,7 +7,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
 
     public AudioEventSO[] audioEvents;
-    [SerializeField] AudioPrefabController audioPrefab;
+    [SerializeField] AudioPrefabController _audioUIPrefab;
+    [SerializeField] AudioPrefabController _audioSFXPrefab;
 
     void Awake()
     {
@@ -15,13 +16,20 @@ public class AudioManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void PlayAudio2D(EAudioEvent audioEvent)
+    public void PlayAudio2D(EAudioEvent audioEvent, bool isUI = false)
     {
         foreach (AudioEventSO audioEventSO in audioEvents)
         {
             if (audioEventSO.audioEvent == audioEvent && audioEventSO.audioClip != null)
             {
-                Instantiate(audioPrefab).Init(audioEventSO.audioClip);
+                if (isUI)
+                {
+                    Instantiate(_audioUIPrefab).Init(audioEventSO.audioClip);
+                }
+                else
+                {
+                    Instantiate(_audioSFXPrefab).Init(audioEventSO.audioClip);
+                }
                 return;
             }
         }
@@ -29,18 +37,25 @@ public class AudioManager : MonoBehaviour
         Debug.LogError("AudioEvent not found");
     }
 
-    public void PlayAudio3D(EAudioEvent audioEvent, Vector3 position)
+    public void PlayAudio3D(EAudioEvent audioEvent, Vector3 position, bool isUI = false)
     {
         foreach (AudioEventSO audioEventSO in audioEvents)
         {
             if (audioEventSO.audioEvent == audioEvent && audioEventSO.audioClip != null)
             {
-                Instantiate(audioPrefab).Init(audioEventSO.audioClip, position);
+                if (isUI)
+                {
+                    Instantiate(_audioUIPrefab).Init(audioEventSO.audioClip, position);
+                }
+                else
+                {
+                    Instantiate(_audioSFXPrefab).Init(audioEventSO.audioClip, position);
+                }
                 return;
             }
         }
 
         Debug.LogError("AudioEvent not found");
-
     }
+    
 }

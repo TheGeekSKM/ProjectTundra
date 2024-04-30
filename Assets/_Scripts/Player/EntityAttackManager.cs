@@ -46,10 +46,10 @@ public class EntityAttackManager : MonoBehaviour
         switch (_entityStatsContainer.PlayerStatsData.EntityType)
         {
             case EntityType.Player:
-                AudioManager.Instance.PlayAudio2D(EAudioEvent.PlayerAttack);
+                AudioManager.Instance.PlayAudio3D(EAudioEvent.PlayerAttack, transform.position);
                 break;
             case EntityType.Enemy:
-                AudioManager.Instance.PlayAudio2D(EAudioEvent.EnemyAttack);
+                AudioManager.Instance.PlayAudio3D(EAudioEvent.EnemyAttack, transform.position);
                 break;
         }
     }
