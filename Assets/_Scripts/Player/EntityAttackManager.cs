@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 [RequireComponent(typeof(EntityStatsContainer))]
 public class EntityAttackManager : MonoBehaviour
@@ -21,6 +22,7 @@ public class EntityAttackManager : MonoBehaviour
     [ContextMenu("Attack")]
     public void Attack()
     {
+        HandleSound();
 
         // get the weapon from the player's inventory
         var weapon = _entityStatsContainer.PlayerStatsData.ItemContainer.GetWeapon();
@@ -36,6 +38,20 @@ public class EntityAttackManager : MonoBehaviour
 
         // initialize the attack object
         InitializeAttackObject(weapon);
+    }
+
+    void HandleSound()
+    {
+        // play attack sound
+        switch (_entityStatsContainer.PlayerStatsData.EntityType)
+        {
+            case EntityType.Player:
+                AudioManager.Instance.PlayAudio2D(EAudioEvent.PlayerAttack);
+                break;
+            case EntityType.Enemy:
+                AudioManager.Instance.PlayAudio2D(EAudioEvent.EnemyAttack);
+                break;
+        }
     }
 
     /// <summary>

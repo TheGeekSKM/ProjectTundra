@@ -31,6 +31,8 @@ public class EntityMovement : MonoBehaviour
 	/// <param name="direction">Input a Vector2 Direction that you want the entity to move</param>
 	void Move(Vector2 direction)
     {
+        HandleSound();
+
         if (_entityStamina.CurrentActionPoints <= 0) return;
 
 		direction.Normalize();
@@ -60,6 +62,11 @@ public class EntityMovement : MonoBehaviour
     {
 		Debug.Log("Subtracting " + _playerStatsData.MovementCost + " AP from entity");
         _entityStamina.SubtractAP(_playerStatsData.MovementCost);
+    }
+
+    void HandleSound()
+    {
+        AudioManager.Instance.PlayAudio2D(EAudioEvent.PlayerMove);
     }
 
     [ContextMenu("Move Up")]

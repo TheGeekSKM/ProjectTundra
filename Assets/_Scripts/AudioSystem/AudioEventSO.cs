@@ -10,6 +10,11 @@ public class AudioEventSO : ScriptableObject
 public enum EAudioEvent
 {
     ButtonClick,
+    EnemyAttack,
+    EnemyHurt,
+    Loot,
+    PlayerMove,
+    PlayerSpecial,
     PlayerHurt,
     PlayerAttack,
     CombatBGM,

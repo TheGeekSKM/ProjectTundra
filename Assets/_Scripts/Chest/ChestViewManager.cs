@@ -28,19 +28,16 @@ public class ChestViewManager : MonoBehaviour
     #region Singleton
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
+        if (Instance == null) Instance = this;
+        else if (Instance != this) Destroy(gameObject);
     }
     #endregion
 
     public void OpenChest(ItemContainer chestInventory, ItemContainer playerInventory)
     {
+        // play the loot sound
+        AudioManager.Instance.PlayAudio2D(EAudioEvent.Loot);
+
         Debug.Log($"Opening chest {chestInventory.ContainerName}");
 
         // set the chest inventory and the player inventory

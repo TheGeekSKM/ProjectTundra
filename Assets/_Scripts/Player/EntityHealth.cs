@@ -30,6 +30,8 @@ public class EntityHealth : MonoBehaviour
 
     public void TakeDamage(int damage, Transform attacker)
     {
+        HandleSound();
+
         OnHealthChanged?.Invoke(currentHealth);
         currentHealth -= damage;
         if (currentHealth <= 0)
@@ -40,6 +42,19 @@ public class EntityHealth : MonoBehaviour
 
         DamagePopupManager.Instance.DisplayDamage(damage, transform.position);
         VFXAtlas.Instance.PlayVFX(VFXEvent.BloodSplatter, attacker ? attacker : transform);
+    }
+
+    void HandleSound()
+    {
+        switch (entityType)
+        {
+            case EntityType.Player:
+                AudioManager.Instance.PlayAudio2D(EAudioEvent.PlayerHurt);
+                break;
+            case EntityType.Enemy:
+                AudioManager.Instance.PlayAudio2D(EAudioEvent.EnemyHurt);
+                break;
+        }
     }
 
     public void Heal(int amount)

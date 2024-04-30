@@ -392,6 +392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 118212274}
   - component: {fileID: 118212273}
+  - component: {fileID: 118212275}
   m_Layer: 0
   m_Name: VFXManager
   m_TagString: Untagged
@@ -427,6 +428,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &118212275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118212272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc7fd799041ae84ba421935cfc3ced1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bloodSplatter: {fileID: 5597647334193956686, guid: 91bc9ef259cf72141bd177a7ac0d66f7, type: 3}
 --- !u!1 &367782736
 GameObject:
   m_ObjectHideFlags: 0
