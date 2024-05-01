@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -204,9 +205,15 @@ public class CombatManager : MonoBehaviour
 
     public void EnemyTurnIntro()
     {
-        _currentTurnState = CombatTurnState.Enemy;
-        FireEvent();
-		StartEnemiesTurn();
+
+		StartCoroutine(EnemyDelay());
+		IEnumerator EnemyDelay()
+		{
+			yield return new WaitForSeconds(0.5f);
+			_currentTurnState = CombatTurnState.Enemy;
+			FireEvent();
+			StartEnemiesTurn();
+		}
 	}
 
     public void RoomTurnIntro()
