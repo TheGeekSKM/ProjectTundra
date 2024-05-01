@@ -9,7 +9,7 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private AudioSource _audioSource1;
     [SerializeField] private AudioSource _audioSource2;
     bool _isPlaying1 = false;
-    AudioEventSO _currentTrack;
+    public AudioEventSO currentTrack;
     Coroutine _crossfadeCoroutine;
 
     void Awake()
@@ -33,12 +33,12 @@ public class MusicManager : MonoBehaviour
         {
             if (track.audioEvent == newClip && track.audioClip != null)
             {
-                _currentTrack = track;
-                Debug.Log("Swapping to " + _currentTrack.audioEvent.ToString());
+                currentTrack = track;
+                Debug.Log("Swapping to " + currentTrack.audioEvent.ToString());
                 
                 if (_crossfadeCoroutine != null) StopCoroutine(_crossfadeCoroutine);
 
-                _crossfadeCoroutine = StartCoroutine(Crossfade(_currentTrack.audioClip, 0.25f));
+                _crossfadeCoroutine = StartCoroutine(Crossfade(currentTrack.audioClip, 0.25f));
                 _isPlaying1 = !_isPlaying1;
                 
                 return;

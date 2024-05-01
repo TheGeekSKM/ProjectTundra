@@ -224,7 +224,8 @@ public class CombatManager : MonoBehaviour
     {
         _currentTurnState = CombatTurnState.NonCombat;
         FireEvent();
-        MusicManager.Instance.SwapTrack(EAudioEvent.NonCombatBGM);
+		if (MusicManager.Instance.currentTrack.audioEvent != EAudioEvent.NonCombatBGM)
+			MusicManager.Instance.SwapTrack(EAudioEvent.NonCombatBGM);
         _inventoryButton.DOAnchorPosX(0, 0.5f);
     }
 
