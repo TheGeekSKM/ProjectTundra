@@ -28,4 +28,4 @@ MonoBehaviour:
     Items: []
   _sprite: {fileID: 252926624, guid: bf2e8b3f9abdc8441a667c2684d730e4, type: 3}
   _deathSprite: {fileID: 0}
-  _animatorController: {fileID: 0}
+  _animatorController: {fileID: 9100000, guid: 5d5defdde68fb2847ae5f0bc449c9782, type: 2}

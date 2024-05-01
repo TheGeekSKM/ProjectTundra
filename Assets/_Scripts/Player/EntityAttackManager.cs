@@ -9,7 +9,8 @@ public class EntityAttackManager : MonoBehaviour
     private EntityStatsContainer _entityStatsContainer;
     private EntityStamina _entityStamina;
     [SerializeField] Transform _attackPoint;
-    public Transform AttackPoint => _attackPoint;
+    [SerializeField] Transform _attackOrigin;
+    public Transform AttackOrigin => _attackOrigin ? _attackOrigin : _attackPoint;
     public System.Action OnAttackWithoutWeapon;
 
     void Awake()

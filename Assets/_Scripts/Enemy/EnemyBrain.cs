@@ -10,6 +10,7 @@ public class EnemyBrain : MonoBehaviour
     [SerializeField] EntityHealth _entityHealth;
     [SerializeField] EntityStamina _entityStamina;
     [SerializeField] EntityLoot _entityLoot;
+    [SerializeField] EntityAnimationController _entityAnimationController;
 
     [Header("Enemy Settings")]
     [SerializeField] float _timeBetweenActions = 1f;
@@ -31,6 +32,7 @@ public class EnemyBrain : MonoBehaviour
         if (_entityHealth == null) _entityHealth = GetComponent<EntityHealth>();
         if (_entityStamina == null) _entityStamina = GetComponent<EntityStamina>();
         if (_entityLoot == null) _entityLoot = GetComponent<EntityLoot>();
+        if (_entityAnimationController == null) _entityAnimationController = GetComponent<EntityAnimationController>();
     }
 
     void OnEnable()
@@ -40,7 +42,8 @@ public class EnemyBrain : MonoBehaviour
         //_attackRange = _entityStatsContainer.PlayerStatsData.ItemContainer.GetWeapon().AttackRange;
         //CombatManager.Instance.AddEnemy(this);
         //_entityHealth.OnHealthChanged += HandleDeathCheck;
-        _entityLoot.OnLootDropped += DestoyEntity;
+        _entityLoot.OnLootDropped += DestroyEntity;
+        _entityAnimationController.Initialize();
     }
 	IEnumerator Enabler()
 	{
@@ -56,12 +59,12 @@ public class EnemyBrain : MonoBehaviour
 	void OnDisable()
 	{
         _entityHealth.OnHealthChanged -= HandleDeathCheck;
-		_entityLoot.OnLootDropped -= DestoyEntity; // idk if this is necessary
+		_entityLoot.OnLootDropped -= DestroyEntity; // idk if this is necessary
         CombatManager.Instance.RemoveEnemy(this);
 
 	}
 
-    void DestoyEntity()
+    void DestroyEntity()
     {
         Destroy(gameObject);
     }
@@ -127,7 +130,7 @@ public class EnemyBrain : MonoBehaviour
 		// Debug.Log("Distance between enemy and player is: " + dist);
 
         // the attack point should always look at the player
-        _entityAttackManager.AttackPoint.LookAt(Player.Instance.transform);
+        _entityAttackManager.AttackOrigin.LookAt(Player.Instance.transform);
         
         // if the player is within attack range, attack, otherwise move
         if (dist <= _attackRange)

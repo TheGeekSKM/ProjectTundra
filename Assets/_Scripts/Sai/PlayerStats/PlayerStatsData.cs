@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -169,5 +170,6 @@ public enum PlayerClass
 public enum EnemyClass
 {
     Slime,
-    Skeleton
+    Skeleton,
+    Bat
 }
