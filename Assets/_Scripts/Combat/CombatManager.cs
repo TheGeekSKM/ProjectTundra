@@ -23,6 +23,7 @@ public class CombatManager : MonoBehaviour
     public List<EnemyBrain> Enemies => _enemies;
 
     [SerializeField] CombatTurnState _currentTurnState;
+    public CombatTurnState CurrentTurnState => _currentTurnState;
 	public event System.Action<CombatTurnState> OnTurnChanged;
     [SerializeField] private EntityStamina _playerStamina;
 

@@ -44,6 +44,8 @@ public class EnemyBrain : MonoBehaviour
         //_entityHealth.OnHealthChanged += HandleDeathCheck;
         _entityLoot.OnLootDropped += DestroyEntity;
         _entityAnimationController.Initialize();
+        _entityHealth.Initialize();
+        _entityStamina.Initialize();
     }
 	IEnumerator Enabler()
 	{
@@ -92,6 +94,15 @@ public class EnemyBrain : MonoBehaviour
         }
     }
 
+    bool HandleTurnCheck()
+    {
+        if (CombatManager.Instance.CurrentTurnState != CombatTurnState.Enemy) {
+            EndTurn();
+            return true;
+        }
+        return false;
+    }
+
     #endregion
 
     // Start the enemy's turn -> THIS IS MEANT TO BE CALLED BY THE COMBAT MANAGER
@@ -114,7 +125,11 @@ public class EnemyBrain : MonoBehaviour
     void HandleTurnLogic()
     {
 		// Debug.Log("Starting Turn Logic");
-
+        if (HandleTurnCheck()) 
+        {
+            StopAllCoroutines();
+            return;
+        }
         // check if the enemy has enough action points to take a turn and if they are still alive
         HandleAPCheck();
         HandleDeathCheck(0);

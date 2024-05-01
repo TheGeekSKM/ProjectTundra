@@ -81,6 +81,11 @@ public class SceneController : MonoBehaviour
 
     public void MainMenuStateOutro()
     {
+        SceneManager.LoadSceneAsync(_gamePlayScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        {
+            Debug.Log("GamePlaySceneLoaded");
+        };
+        
         TransitionPanel.DOAnchorPosY(0f, 0.5f).SetEase(Ease.OutCubic).OnComplete(() => { 
             SceneManager.UnloadSceneAsync(_mainMenuScene.name);
         });
@@ -90,10 +95,7 @@ public class SceneController : MonoBehaviour
     public void CharacterSelectStateIntro()
     {
         Debug.Log("CharacterSelectStateIntroFunction");
-        SceneManager.LoadSceneAsync(_gamePlayScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
-        {
-            Debug.Log("GamePlaySceneLoaded");
-        };
+        
         SceneManager.LoadSceneAsync(_characterSelectMenu.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
             TransitionPanelOff();

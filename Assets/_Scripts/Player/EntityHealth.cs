@@ -19,11 +19,11 @@ public class EntityHealth : MonoBehaviour
     {
         if (statsContainer == null) statsContainer = GetComponent<EntityStatsContainer>();
         if (entityStamina == null) entityStamina = GetComponent<EntityStamina>();
-        playerStatsData = statsContainer.PlayerStatsData;
     }
 
-    void Start()
+    public void Initialize()
     {
+        playerStatsData = statsContainer.PlayerStatsData;
         currentHealth = playerStatsData.MaxHealth;
         entityType = statsContainer.PlayerStatsData.EntityType;
     }

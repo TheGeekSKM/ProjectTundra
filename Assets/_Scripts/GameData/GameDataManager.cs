@@ -92,7 +92,6 @@ public class GameDataManager : MonoBehaviour
             case SceneState.CharacterSelect:
                 break;
             case SceneState.GamePlay:
-                SpawnPlayer();
                 break;
             default:
                 break;
@@ -118,17 +117,20 @@ public class GameDataManager : MonoBehaviour
     {
         RangerUsed = true;
         _currentStats = Ranger;
+        SpawnPlayer();
     }
 
     public void SelectMage()
     {
         MageUsed = true;
         _currentStats = Mage;
+        SpawnPlayer();
     }
 
     public void SelectScout()
     {
         ScoutUsed = true;
         _currentStats = Scout;
+        SpawnPlayer();
     }
 }

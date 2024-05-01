@@ -106,7 +106,7 @@ MonoBehaviour:
   _spawnerType: 0
   _weaponItemData: {fileID: 0}
   _rigidbody2D: {fileID: 4369071744538415892}
-  _destroyable: 0
+  _destroyable: 1
 --- !u!58 &4369071744538415895
 CircleCollider2D:
   m_ObjectHideFlags: 0

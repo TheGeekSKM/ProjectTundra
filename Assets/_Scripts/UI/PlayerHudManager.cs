@@ -11,23 +11,31 @@ public class PlayerHudManager : MonoBehaviour
     PlayerStatsData _playerStatsData;
     EntityStamina _playerStamina;
 
-    private void Awake()
-    {
-        _playerHealth = Player.Instance.PlayerHealth;
-        _playerStatsData = Player.Instance.PlayerStats.PlayerStatsData;
-        _playerStamina = Player.Instance.PlayerStamina;
-    }
-
     private void OnEnable()
     {
-        _playerHealth.OnHealthChanged += HPChanged;
-        _playerStamina.OnActionPointsChanged += APChanged;
+        Player.Instance.OnPlayerInitialize += PlayerCreated;
+        
     }
 
     private void OnDisable()
     {
+        Player.Instance.OnPlayerInitialize -= PlayerCreated;
         _playerHealth.OnHealthChanged -= HPChanged;
         _playerStamina.OnActionPointsChanged -= APChanged;
+    }
+
+    void PlayerCreated()
+    {
+
+        _playerHealth = Player.Instance.PlayerHealth;
+        _playerStatsData = Player.Instance.PlayerStats.PlayerStatsData;
+        _playerStamina = Player.Instance.PlayerStamina;
+
+        _playerHealth.OnHealthChanged += HPChanged;
+        _playerStamina.OnActionPointsChanged += APChanged;
+        
+        _healthText.text = $"{_playerHealth.CurrentHealth} / {_playerStatsData.MaxHealth}";
+        _staminaText.text = $"{_playerStamina.CurrentActionPoints} / {_playerStatsData.TotalActionPoints}";
     }
 
     private void Start()

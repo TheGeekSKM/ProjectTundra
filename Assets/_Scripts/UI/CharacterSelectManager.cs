@@ -29,11 +29,18 @@ public class CharacterSelectManager : MonoBehaviour
 
 
         DisplayCharacter();
-        if (GameDataManager.Instance != null)
-        {
-            GameDataManager.Instance.OnGameDataChanged += HideCharactersIfUsed;
-        }
+        
 
+    }
+
+    void OnEnable()
+    {
+        GameDataManager.Instance.OnGameDataChanged += HideCharactersIfUsed;
+    }
+
+    void OnDisable()
+    {
+        GameDataManager.Instance.OnGameDataChanged -= HideCharactersIfUsed;
     }
 
     public void NextCharacter()
@@ -117,8 +124,6 @@ public class CharacterSelectManager : MonoBehaviour
             default:
                 break;
         }
-
-        HideCharactersIfUsed();
 
         // Transition to the GamePlay Scene once a character is selected
         var sceneFSM = SceneController.Instance.SceneFSM;

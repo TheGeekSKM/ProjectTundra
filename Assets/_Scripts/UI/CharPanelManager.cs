@@ -18,7 +18,12 @@ public class CharPanelManager : MonoBehaviour
     {
         if (used)
         {
-            _disabledPanel.color = new Color(255, 0, 0, 120);
+            if (_disabledPanel) _disabledPanel.color = new Color(255, 0, 0, 120);
+            else 
+            {
+                _disabledPanel = GetComponent<Image>();
+                _disabledPanel.color = new Color(255, 0, 0, 120);
+            }
             _titleText.text = "DISABLED";
         }
     }
