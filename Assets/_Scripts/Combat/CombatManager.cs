@@ -21,10 +21,13 @@ public class CombatManager : MonoBehaviour
 
     [SerializeField] private List<EnemyBrain> _enemies;
     public List<EnemyBrain> Enemies => _enemies;
+    [SerializeField] private EnemyBrain _targetedEnemy;
+    public EnemyBrain TargetedEnemy => _targetedEnemy;
 
     [SerializeField] CombatTurnState _currentTurnState;
     public CombatTurnState CurrentTurnState => _currentTurnState;
 	public event System.Action<CombatTurnState> OnTurnChanged;
+    public event System.Action OnEnemyTargeted;
     [SerializeField] private EntityStamina _playerStamina;
 
     [SerializeField] RectTransform _playerControlsPanel;
@@ -79,6 +82,11 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+    public void SetTargetedEnemy(EnemyBrain enemy)
+    {
+        _targetedEnemy = enemy;
+        OnEnemyTargeted?.Invoke();
+    }
 
     public void AddEnemy(EnemyBrain enemy)
     {

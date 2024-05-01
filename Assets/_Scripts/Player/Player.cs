@@ -24,12 +24,14 @@ public class Player : MonoBehaviour
     {
         _playerHealth.OnDeath += OnDeath;
         _playerAttackManager.OnAttackWithoutWeapon += NoWeaponNotify;
+        CombatManager.Instance.OnEnemyTargeted += TargetEnemy;
     }
      
     void OnDisable()
     {
         _playerHealth.OnDeath -= OnDeath;
         _playerAttackManager.OnAttackWithoutWeapon -= NoWeaponNotify;
+        CombatManager.Instance.OnEnemyTargeted -= TargetEnemy;
     }
 
     void HandleReferences()
@@ -60,6 +62,11 @@ public class Player : MonoBehaviour
 
     public System.Action OnPlayerInitialize;
 
+    void TargetEnemy()
+    {
+        // point the attack origin at the targeted enemy
+        PlayerAttackManager.AttackOrigin.LookAt(CombatManager.Instance.TargetedEnemy.transform.position);
+    }
 
     void OnDeath()
     {
