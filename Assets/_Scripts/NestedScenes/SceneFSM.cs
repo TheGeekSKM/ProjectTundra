@@ -12,6 +12,7 @@ public class SceneFSM : BaseStateMachine
     public LoseMenuState LoseMenuState { get; private set; }
     public WinMenuState WinMenuState { get; private set; }
     public TextBasedCutsceneState TextBasedCutsceneState { get; private set; }
+    public CreditsState CreditsState { get; private set; }
 
     void OnValidate()
     {
@@ -29,6 +30,7 @@ public class SceneFSM : BaseStateMachine
         LoseMenuState = new LoseMenuState(_sceneController, this);
         WinMenuState = new WinMenuState(_sceneController, this);
         TextBasedCutsceneState = new TextBasedCutsceneState(_sceneController, this);
+        CreditsState = new CreditsState(_sceneController, this);
     }
 
     void Start()
@@ -44,5 +46,6 @@ public enum SceneState
     CharacterSelect,
     GamePlay,
     LoseMenu,
-    WinMenu
+    WinMenu,
+    Credits
 }

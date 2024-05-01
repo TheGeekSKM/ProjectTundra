@@ -9,4 +9,18 @@ public class MainMenuManager : MonoBehaviour
         var sceneFSM = SceneController.Instance.SceneFSM;
         sceneFSM.ChangeState(sceneFSM.CharacterSelectState);
     }
+
+    public void CreditsMenu()
+    {
+        
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
 }

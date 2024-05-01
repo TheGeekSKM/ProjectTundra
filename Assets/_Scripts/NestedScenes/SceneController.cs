@@ -21,6 +21,7 @@ public class SceneController : MonoBehaviour
     [SerializeField] Object _loseMenuScene;
     [SerializeField] Object _winMenuScene;
     [SerializeField] Object _textBasedCutsceneScene;
+    [SerializeField] Object _creditsScene;
 
 
     void Awake()
@@ -50,6 +51,20 @@ public class SceneController : MonoBehaviour
         {
             _sceneFSM.ChangeState(_sceneFSM.MainMenuState);
         };
+    }
+
+    public void CreditsIntro()
+    {
+        SceneManager.LoadSceneAsync(_creditsScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        {
+            // TransitionPanelOff();
+            UpdateState(SceneState.Credits);
+        };
+    }
+
+    public void CreditsOutro()
+    {
+        SceneManager.UnloadSceneAsync(_creditsScene.name);
     }
 
     public void MainMenuStateIntro()

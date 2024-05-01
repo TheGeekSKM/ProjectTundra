@@ -367,6 +367,7 @@ MonoBehaviour:
   _loseMenuScene: {fileID: 102900000, guid: 735d7213b3a3ac1498d9e4965b8b7cfa, type: 3}
   _winMenuScene: {fileID: 102900000, guid: 9350321c25324ae42a98d388f7a26647, type: 3}
   _textBasedCutsceneScene: {fileID: 102900000, guid: 7c2715c9afff71842a25c9ade5fcaabf, type: 3}
+  _creditsScene: {fileID: 102900000, guid: 284d6e24afdcf0d4ca362b6e5d6e0047, type: 3}
 --- !u!4 &88198477
 Transform:
   m_ObjectHideFlags: 0
