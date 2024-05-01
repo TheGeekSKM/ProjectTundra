@@ -23,6 +23,7 @@ public class CombatManager : MonoBehaviour
     public List<EnemyBrain> Enemies => _enemies;
 
     [SerializeField] CombatTurnState _currentTurnState;
+    public CombatTurnState CurrentTurnState => _currentTurnState;
 	public event System.Action<CombatTurnState> OnTurnChanged;
     [SerializeField] private EntityStamina _playerStamina;
 
@@ -223,7 +224,7 @@ public class CombatManager : MonoBehaviour
     {
         _currentTurnState = CombatTurnState.NonCombat;
         FireEvent();
-        MusicManager.Instance.SwapTrack(EAudioEvent.NonCombatBGM);
+        if (MusicManager.Instance) MusicManager.Instance.SwapTrack(EAudioEvent.NonCombatBGM);
         _inventoryButton.DOAnchorPosX(0, 0.5f);
     }
 

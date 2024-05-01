@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd7abb6038cc3e4fb748d8393b2ff3d, type: 3}
   m_Name: PSD_RangerPlayer
   m_EditorClassIdentifier: 
-  _totalActionPoints: 3
-  _maxHealth: 5
+  _totalActionPoints: 4
+  _maxHealth: 4
   _damage: 1
   _aOERange: 1
   _armor: 0

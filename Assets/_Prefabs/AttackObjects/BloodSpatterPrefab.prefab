@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6213074744464463902}
   - component: {fileID: 7593129169828838826}
   - component: {fileID: 7592172535593395247}
+  - component: {fileID: 4009437235065513267}
   m_Layer: 0
   m_Name: BloodSpatterPrefab
   m_TagString: Untagged
@@ -662,13 +663,13 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 11.79
+    angle: 20.9
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 90, y: 0, z: 0}
+    m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -4812,3 +4813,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4009437235065513267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5597647334193956686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8dbb9f1638f5f142a37169cc23c4d15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeBeforeDestruction: 3

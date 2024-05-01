@@ -58,6 +58,8 @@ public class Player : MonoBehaviour
     [SerializeField] EntityAnimationController _playerAnimationController;
     public EntityAnimationController PlayerAnimationController => _playerAnimationController;
 
+    public System.Action OnPlayerInitialize;
+
 
     void OnDeath()
     {
@@ -77,6 +79,9 @@ public class Player : MonoBehaviour
     public void Initialize()
     {
         _playerAnimationController.Initialize();
+        _playerHealth.Initialize();
+        _playerStamina.Initialize();
+        OnPlayerInitialize?.Invoke();
     }
 
 

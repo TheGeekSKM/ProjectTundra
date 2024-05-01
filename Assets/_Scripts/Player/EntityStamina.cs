@@ -15,7 +15,7 @@ public class EntityStamina : MonoBehaviour
         if (_entityStatsContainer == null) _entityStatsContainer = GetComponent<EntityStatsContainer>();
     }
 
-    void Start()
+    public void Initialize()
     {
         _playerStatsData = _entityStatsContainer.PlayerStatsData;
         ResetAP();
