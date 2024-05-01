@@ -59,5 +59,7 @@ public class RoomManager : MonoBehaviour
 		{
 			room.ResetRoom();
 		}
+
+		Camera.main.GetComponent<CameraMovement>().SetRoomCoord();
 	}
 }
