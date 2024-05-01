@@ -12,7 +12,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void CreditsMenu()
     {
-        
+        var sceneFSM = SceneController.Instance.SceneFSM;
+        sceneFSM.ChangeState(sceneFSM.CreditsState);
     }
 
     public void Quit()
