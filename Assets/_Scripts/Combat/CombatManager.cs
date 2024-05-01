@@ -136,6 +136,7 @@ public class CombatManager : MonoBehaviour
 			{
 				combatFSM.ChangeState(combatFSM.PlayerCombatState);
 				rm.LockDoors();
+				MusicManager.Instance.SwapTrack(EAudioEvent.CombatBGM);
 			}
 			else
 				combatFSM.ChangeState(combatFSM.NonCombatState);
@@ -230,7 +231,6 @@ public class CombatManager : MonoBehaviour
     public void NonCombatOutro()
     {   
         _inventoryButton.DOAnchorPosX(_inventoryButtonXPos, 0.5f);
-        MusicManager.Instance.SwapTrack(EAudioEvent.CombatBGM);
     }
 
 	public void CameraMove()
