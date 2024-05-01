@@ -58,6 +58,7 @@ public class RoomManager : MonoBehaviour
 		foreach (RoomController room in rooms)
 		{
 			room.ResetRoom();
+			room.gameObject.SetActive(false);
 		}
 
 		Camera.main.GetComponent<CameraMovement>().SetRoomCoord();

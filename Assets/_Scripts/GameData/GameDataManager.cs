@@ -110,6 +110,8 @@ public class GameDataManager : MonoBehaviour
             playerStatsContainer.SetPlayerStatsData(selectedStatsContainer.PlayerStatsData);
 
             Player.Instance.Initialize();
+
+			RoomManager.Instance.ResetRooms();
         }
     }
 
