@@ -38,11 +38,11 @@ public class PlayerHudManager : MonoBehaviour
         _staminaText.text = $"{_playerStamina.CurrentActionPoints} / {_playerStatsData.TotalActionPoints}";
     }
 
-    private void Start()
-    {
-        _healthText.text = $"{_playerHealth.CurrentHealth} / {_playerStatsData.MaxHealth}";
-        _staminaText.text = $"{_playerStamina.CurrentActionPoints} / {_playerStatsData.TotalActionPoints}";
-    }
+    // private void Start()
+    // {
+    //     _healthText.text = $"{_playerHealth.CurrentHealth} / {_playerStatsData.MaxHealth}";
+    //     _staminaText.text = $"{_playerStamina.CurrentActionPoints} / {_playerStatsData.TotalActionPoints}";
+    // }
 
     void HPChanged(int currentHealth)
     {
