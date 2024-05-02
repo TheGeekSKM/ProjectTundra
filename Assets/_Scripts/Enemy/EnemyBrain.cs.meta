@@ -11,7 +11,7 @@ MonoImporter:
   - _entityStamina: {instanceID: 0}
   - _entityLoot: {instanceID: 0}
   - _entityAnimationController: {instanceID: 0}
-  - pathNodePrefab: {fileID: 7531476692660683462, guid: 923e795c32016064694d100821311cb7, type: 3}
+  - testsprite: {fileID: 1952686365, guid: 0ca2b481bd0a63043acdc8fc906efc88, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

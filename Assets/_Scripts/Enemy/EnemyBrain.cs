@@ -24,6 +24,8 @@ public class EnemyBrain : MonoBehaviour
     bool _isMyTurn = false;
     int _attackRange = 1;
 
+	[SerializeField] Sprite testsprite;
+
     // Grab references to components if they are not set
     void Awake()
     {
@@ -34,6 +36,8 @@ public class EnemyBrain : MonoBehaviour
         if (_entityStamina == null) _entityStamina = GetComponent<EntityStamina>();
         if (_entityLoot == null) _entityLoot = GetComponent<EntityLoot>();
         if (_entityAnimationController == null) _entityAnimationController = GetComponent<EntityAnimationController>();
+
+		testsprite = gameObject.GetComponentInChildren<SpriteRenderer>().sprite;
     }
 
     void OnEnable()
@@ -186,6 +190,7 @@ public class EnemyBrain : MonoBehaviour
 				nodeGrid[x, y].transform.parent = gameObject.transform;
 
 				nodeGrid[x, y].position = new Vector2(pos.x+x+0.5f,pos.y+y+0.5f);
+				nodeGrid[x, y].gridPos = new Vector2Int(x, y);
 				nodeGrid[x, y].transform.position = nodeGrid[x,y].position;
 
 				Debug.Log("Node created, position is " + nodeGrid[x, y].position);
@@ -197,7 +202,7 @@ public class EnemyBrain : MonoBehaviour
 
 					if (hit.collider.CompareTag("Player"))
 						nodeGrid[x, y].end = true;
-					if (hit.collider.gameObject == gameObject)
+					else if (hit.collider.gameObject == gameObject)
 						nodeGrid[x, y].start = true;
 					else
 						nodeGrid[x, y].walkable = false;
@@ -209,7 +214,7 @@ public class EnemyBrain : MonoBehaviour
 		return nodeGrid;
 	}
 
-	IEnumerator Pathfind()
+	List<PathNode> Pathfind()
 	{
 		PathNode[,] nodeGrid = GenerateNodeGrid();
 
@@ -225,13 +230,6 @@ public class EnemyBrain : MonoBehaviour
 			if (node.end)
 				end = node;
 		}
-
-		if (nodeGrid.Length == 0)
-		{
-			Debug.LogError("Node grid did not generate successfully");
-			Debug.Break();
-		}
-
 		if (start == null || end == null)
 		{
 			Debug.LogError("Could not find start or end nodes");
@@ -240,16 +238,108 @@ public class EnemyBrain : MonoBehaviour
 
 		open.Add(start);
 
+		PathNode current = GetLowestCost(open);
+		while (open.Count > 0)
+		{
+			current = GetLowestCost(open);
+			open.Remove(current);
+			closed.Add(current);
 
-		yield return null;
+			if (current == end)
+			{
+				return RetracePath(start, end);
+			}
+
+			foreach (PathNode neighbor in GetNeighbors(current, nodeGrid))
+			{
+				if (!neighbor.walkable || closed.Contains(neighbor))
+					continue;
+
+				int newMoveCostToNeighbor = current.g_cost + GetDistance(current, neighbor);
+				if (newMoveCostToNeighbor < neighbor.g_cost || !open.Contains(neighbor))
+				{
+					neighbor.g_cost = newMoveCostToNeighbor;
+					neighbor.h_cost = GetDistance(neighbor, end);
+					neighbor.parent = current;
+
+					if (!open.Contains(neighbor))
+						open.Add(neighbor);
+				}
+			}
+		}
+		return RetracePath(start, current);
 	}
 
-	
-    IEnumerator MoveAction(Vector3 direction)
+	PathNode GetLowestCost(List<PathNode> list)
+	{
+		PathNode selected = list[0];
+		foreach (PathNode node in list)
+		{
+			if (node.f_cost < selected.f_cost || (node.f_cost == selected.f_cost && node.h_cost < selected.h_cost))
+				selected = node;
+		}
+		return selected;
+	}
+	List<PathNode> GetNeighbors(PathNode node, PathNode[,] grid)
+	{
+		MazeGen maze = MazeGen.Instance;
+		List<PathNode> neighbors = new List<PathNode>();
+
+		for (int x = -1; x <= 1; x++)
+		{
+			for (int y = -1; y <= 1; y++)
+			{
+				if ((x == 0 && y == 0) ||
+					(x == -1 && y == -1) || (x == -1 && y == 1) ||
+					(x == 1 && y == -1) || (x == 1 && y == 1))
+					continue;
+
+				int checkX = node.gridPos.x + x;
+				int checkY = node.gridPos.y + y;
+
+				if (checkX >= 0 && checkX < maze.roomWidth && checkY >= 0 && checkY < maze.roomHeight)
+					neighbors.Add(grid[checkX, checkY]);
+			}
+		}
+
+		return neighbors;
+	}
+	int GetDistance(PathNode nodeA, PathNode nodeB)
+	{
+		int distX = Mathf.Abs(nodeA.gridPos.x - nodeB.gridPos.x);
+		int distY = Mathf.Abs(nodeA.gridPos.y - nodeB.gridPos.y);
+
+		if (distX > distY)
+			return 14 * distY + 10 * (distX - distY);
+		return 14 * distX + 10 * (distY - distX);
+	}
+	List<PathNode> RetracePath(PathNode start, PathNode end)
+	{
+		List<PathNode> path = new List<PathNode>();
+		PathNode current = end;
+
+		while (current != start)
+		{
+			path.Add(current);
+			current = current.parent;
+		}
+
+		path.Reverse();
+		return path;
+	}
+
+	IEnumerator MoveAction(Vector3 direction)
     {
 		Debug.Log("Enemy Moving!");
 
-		StartCoroutine(Pathfind());
+		List<PathNode> path = Pathfind();
+		if (path != null)
+		{
+			foreach (PathNode n in path)
+			{
+				n.gameObject.AddComponent<SpriteRenderer>().sprite = testsprite;
+			}
+		}
 
 		yield return null;
 		/*
