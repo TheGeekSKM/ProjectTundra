@@ -8,6 +8,7 @@ public class EntityAttackManager : MonoBehaviour
 {
     private EntityStatsContainer _entityStatsContainer;
     private EntityStamina _entityStamina;
+    private EntityInventoryManager _entityInventoryManager;
     [SerializeField] Transform _attackPoint;
     [SerializeField] Transform _attackOrigin;
     public Transform AttackOrigin => _attackOrigin ? _attackOrigin : _attackPoint;
@@ -17,6 +18,7 @@ public class EntityAttackManager : MonoBehaviour
     {
         _entityStatsContainer = GetComponent<EntityStatsContainer>();
         _entityStamina = GetComponent<EntityStamina>();
+        _entityInventoryManager = GetComponent<EntityInventoryManager>();
     }
     
 
@@ -26,7 +28,7 @@ public class EntityAttackManager : MonoBehaviour
         HandleSound();
 
         // get the weapon from the player's inventory
-        var weapon = _entityStatsContainer.PlayerStatsData.ItemContainer.GetWeapon();
+        var weapon = _entityInventoryManager.EntityInventory.GetWeapon();
 
         // if player has no action points, player cannot attack
         if (_entityStamina.CurrentActionPoints <= 0) return;

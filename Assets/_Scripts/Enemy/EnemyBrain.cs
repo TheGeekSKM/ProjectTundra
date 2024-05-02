@@ -12,8 +12,10 @@ public class EnemyBrain : MonoBehaviour
     [SerializeField] EntityStamina _entityStamina;
     [SerializeField] EntityLoot _entityLoot;
     [SerializeField] EntityAnimationController _entityAnimationController;
+    [SerializeField] EntityInventoryManager _entityInventoryManager;
 
     [Header("Enemy Settings")]
+    [SerializeField] bool _useRandomEnemies = true;
     [SerializeField] float _timeBetweenActions = 1f;
     [SerializeField] float _raycastDistance = 1f;
     [SerializeField] LayerMask _obstacleLayerMask;
@@ -30,17 +32,27 @@ public class EnemyBrain : MonoBehaviour
 	// Grab references to components if they are not set
 	void Awake()
     {
-        if (_entityStatsContainer == null) _entityStatsContainer = GetComponent<EntityStatsContainer>();
-        if (_entityAttackManager == null) _entityAttackManager = GetComponent<EntityAttackManager>();
-        if (_entityMovement == null) _entityMovement = GetComponent<EntityMovement>();
-        if (_entityHealth == null) _entityHealth = GetComponent<EntityHealth>();
-        if (_entityStamina == null) _entityStamina = GetComponent<EntityStamina>();
-        if (_entityLoot == null) _entityLoot = GetComponent<EntityLoot>();
-        if (_entityAnimationController == null) _entityAnimationController = GetComponentInChildren<EntityAnimationController>();
+        
+    }
+
+    void GetReferences()
+    {
+        if (!_entityStatsContainer) _entityStatsContainer = GetComponent<EntityStatsContainer>();
+        if (!_entityAttackManager) _entityAttackManager = GetComponent<EntityAttackManager>();
+        if (!_entityMovement)_entityMovement = GetComponent<EntityMovement>();
+        if (!_entityHealth)_entityHealth = GetComponent<EntityHealth>();
+        if (!_entityStamina)_entityStamina = GetComponent<EntityStamina>();
+        if (!_entityLoot)_entityLoot = GetComponent<EntityLoot>();
+        if (!_entityAnimationController)_entityAnimationController = GetComponentInChildren<EntityAnimationController>();
+        if (!_entityInventoryManager) _entityInventoryManager = GetComponent<EntityInventoryManager>();
     }
 
     void OnEnable()
     {
+        // if the enemy is set to use random enemies, set the enemy stats data to a random enemy
+        if (_useRandomEnemies) _entityStatsContainer.SetPlayerStatsData(GameDataManager.Instance.GetRandomEnemy());
+        GetReferences();
+
 		StartCoroutine(Enabler());
         //_entityStamina.ResetAP();
         //_attackRange = _entityStatsContainer.PlayerStatsData.ItemContainer.GetWeapon().AttackRange;
@@ -50,12 +62,13 @@ public class EnemyBrain : MonoBehaviour
         _entityAnimationController.Initialize();
         _entityHealth.Initialize();
         _entityStamina.Initialize();
+        _entityInventoryManager.Initialize();
     }
 	IEnumerator Enabler()
 	{
 		yield return new WaitUntil(() => _entityStamina != null);
 		_entityStamina.ResetAP();
-		_attackRange = _entityStatsContainer.PlayerStatsData.ItemContainer.GetWeapon().AttackRange;
+		_attackRange = _entityInventoryManager.EntityInventory.GetWeapon().AttackRange;
 		CombatManager.Instance.AddEnemy(this);
 		_entityHealth.OnHealthChanged += HandleDeathCheck;
 
@@ -179,7 +192,10 @@ public class EnemyBrain : MonoBehaviour
 
 		MazeGen maze = MazeGen.Instance;
 		Camera main = Camera.main;
+        // sizeOffset is half the size of the room and is used to center the grid
 		Vector2 sizeOffset = new Vector2(maze.roomWidth / 2, maze.roomHeight / 2);
+
+        // pos is the bottom left corner of the room and is used to position the grid
 		Vector2 pos = new Vector2(main.transform.position.x - sizeOffset.x, main.transform.position.y - sizeOffset.y);
 
 		PathNode[,] nodeGrid = new PathNode[maze.roomWidth, maze.roomHeight];

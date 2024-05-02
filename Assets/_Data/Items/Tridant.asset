@@ -15,7 +15,7 @@ MonoBehaviour:
   _itemSprite: {fileID: 21300000, guid: 73101128e7deb2944981ea7c055c5ff9, type: 3}
   _itemName: Tridant
   _description: Increase damage by 1
-  _durability: -1
+  _durability: 1
   _apCost: 0
   _amountPerUse: 1
   _statType: 2

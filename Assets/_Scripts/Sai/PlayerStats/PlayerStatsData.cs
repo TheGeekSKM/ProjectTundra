@@ -150,6 +150,8 @@ public class PlayerStatsData : ScriptableObject
     [Header("Inventory")]
     [SerializeField] private ItemContainer _itemContainer;
     public ItemContainer ItemContainer => _itemContainer;
+    [SerializeField] private BaseItemData[] _possibleRandomItems;
+    public BaseItemData[] PossibleRandomItems => _possibleRandomItems; 
 
     [Header("Art")]
     [SerializeField] private Sprite _sprite;
@@ -158,6 +160,21 @@ public class PlayerStatsData : ScriptableObject
     public Sprite DeathSprite => _deathSprite;
     [SerializeField] private RuntimeAnimatorController _animatorController;
     public RuntimeAnimatorController AnimatorController => _animatorController;
+
+    public WeaponItemData EquippedWeapon {
+        get
+        {
+            foreach (var item in _itemContainer.GetItems())
+            {
+                if (item is WeaponItemData weapon)
+                {
+                    return weapon;
+                }
+            }
+            return null;
+        }
+    
+    }
 }
 
 public enum PlayerClass

@@ -36,13 +36,14 @@ public class Player : MonoBehaviour
 
     void HandleReferences()
     {
-        if (_playerStats == null) _playerStats = GetComponent<EntityStatsContainer>();
-        if (_playerMovement == null) _playerMovement = GetComponent<EntityMovement>();
-        if (_playerAttackManager == null) _playerAttackManager = GetComponent<EntityAttackManager>();
-        if (_playerInputBrain == null) _playerInputBrain = GetComponent<PlayerInputBrain>();
-        if (_playerHealth == null) _playerHealth = GetComponent<EntityHealth>();
-        if (_playerStamina == null) _playerStamina = GetComponent<EntityStamina>();
-        if (_playerAnimationController == null) _playerAnimationController = GetComponentInChildren<EntityAnimationController>();
+        _playerStats = GetComponent<EntityStatsContainer>();
+        _playerMovement = GetComponent<EntityMovement>();
+        _playerAttackManager = GetComponent<EntityAttackManager>();
+        _playerInputBrain = GetComponent<PlayerInputBrain>();
+        _playerHealth = GetComponent<EntityHealth>();
+        _playerStamina = GetComponent<EntityStamina>();
+        _playerAnimationController = GetComponentInChildren<EntityAnimationController>();
+        _playerInventoryManager = GetComponent<EntityInventoryManager>();
     }
 
     [SerializeField] EntityStatsContainer _playerStats;
@@ -59,6 +60,8 @@ public class Player : MonoBehaviour
     public PlayerInputBrain PlayerInputBrain => _playerInputBrain;
     [SerializeField] EntityAnimationController _playerAnimationController;
     public EntityAnimationController PlayerAnimationController => _playerAnimationController;
+    [SerializeField] EntityInventoryManager _playerInventoryManager;
+    public EntityInventoryManager PlayerInventoryManager => _playerInventoryManager;
 
     public System.Action OnPlayerInitialize;
 
@@ -88,6 +91,7 @@ public class Player : MonoBehaviour
         _playerAnimationController.Initialize();
         _playerHealth.Initialize();
         _playerStamina.Initialize();
+        _playerInventoryManager.Initialize();
         OnPlayerInitialize?.Invoke();
     }
 

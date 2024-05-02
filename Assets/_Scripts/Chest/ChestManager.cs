@@ -19,7 +19,7 @@ public class ChestManager : Tile
         if (!_useable) return;
 
 		base.Highlight();
-		ChestViewManager.Instance.OpenChest(_itemContainer, Player.Instance.PlayerStats.PlayerStatsData.ItemContainer);
+		ChestViewManager.Instance.OpenChest(_itemContainer, Player.Instance.PlayerInventoryManager.EntityInventory);
     }
 
     public override void Deselect()
@@ -55,7 +55,7 @@ public class ChestManager : Tile
 
         var numOfItemsToUse = Random.Range(_additionalRandomItemsRange.x, _additionalRandomItemsRange.y);
 
-        for (int i = 0; i < numOfItemsToUse; i++)
+        for (int i = 0; i < numOfItemsToUse - 1; i++)
         {
             var itemToAdd = tempArray[Random.Range(0, tempArray.Count - 1)];
 

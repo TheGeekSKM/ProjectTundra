@@ -7,6 +7,8 @@ public class GameDataManager : MonoBehaviour
     public static GameDataManager Instance { get; private set; }
 
     public System.Action OnGameDataChanged;
+
+    [Header("Character Selection and Spawning")]
     [SerializeField] bool _rangerUsed;
     public bool RangerUsed
     {
@@ -49,8 +51,14 @@ public class GameDataManager : MonoBehaviour
     public GameObject Scout => _scout;
     [SerializeField] Vector2Int _spawnPosition;
 
+    [Header("References")]
     [SerializeField] SceneController _sceneController;
 
+    [Header("Enemy Data")]
+    [SerializeField] List<PlayerStatsData> _enemies;
+    public List<PlayerStatsData> Enemies => _enemies;
+
+    [Header("Debug")]
     [SerializeField] int _playerKillCount;
     public int PlayerKillCount
     {
@@ -80,6 +88,11 @@ public class GameDataManager : MonoBehaviour
     void OnDisable()
     {
         _sceneController.OnSceneStateChanged -= OnSceneChanged;
+    }
+
+    public PlayerStatsData GetRandomEnemy()
+    {
+        return _enemies[Random.Range(0, _enemies.Count)];
     }
 
     // ADD TO THIS WHEN MORE SCENES ARE ADDED

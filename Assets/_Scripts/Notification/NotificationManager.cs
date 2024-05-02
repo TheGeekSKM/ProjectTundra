@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
@@ -15,13 +14,18 @@ public class NotificationManager : MonoBehaviour
     float _notificationPanelYPos;
     Coroutine _notificationCoroutine;
 
+    [Header("ItemInformation")]
+    [SerializeField] RectTransform _itemInfoPanel;
+    [SerializeField] TextMeshProUGUI _itemNameText;
+    [SerializeField] TextMeshProUGUI _itemDescriptionText;
+    float _itemInfoPanelYPos;
+    Coroutine _itemInfoCoroutine;
+
     [Header("Settings")]
     [SerializeField] Color _infoColor;
     [SerializeField] Color _warningColor;
     [SerializeField] Color _errorColor;
 
-    [Header("State")]
-    [SerializeField] ENotificationState _notificationState;
 
     void Awake()
     {
@@ -32,38 +36,69 @@ public class NotificationManager : MonoBehaviour
     void Start()
     {
         _notificationPanelYPos = _notificationPanel.anchoredPosition.y;
-        _notificationState = ENotificationState.Hiding;
+        _itemInfoPanelYPos = _itemInfoPanel.anchoredPosition.y;
+    }
+
+    public void DisplayConsumableInfo(ConsumableItemData item, float duration)
+    {
+        _itemNameText.text = item.ItemName;
+        var description = $"The {item.ItemName} will, upon consumption, will increase your {item.StatType} by {item.AmountPerUse}. It has {item.Durability} uses left.";
+        _itemDescriptionText.text = description;
+       
+        _itemInfoPanel.DOAnchorPosY(0, 0.5f).OnComplete(() =>
+        {
+            if (_itemInfoCoroutine != null) StopCoroutine(_itemInfoCoroutine);
+            _itemInfoCoroutine = StartCoroutine(DisplayItemInfo(duration));
+        });
+    }
+
+    public void DisplayWeaponItemInfo(WeaponItemData item, float duration)
+    {
+        _itemNameText.text = item.ItemName;
+        var description = $"The {item.ItemName} is a {item.AttackType} weapon that deals an additional {item.DamageBonus} damage. It has {item.Durability} uses left.";
+        _itemDescriptionText.text = description;
+       
+        _itemInfoPanel.DOAnchorPosY(0, 0.5f).OnComplete(() =>
+        {
+            if (_itemInfoCoroutine != null) StopCoroutine(_itemInfoCoroutine);
+            _itemInfoCoroutine = StartCoroutine(DisplayItemInfo(duration));
+        });
+    }
+
+    IEnumerator DisplayItemInfo(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        HideItemInfo();
+    }
+
+    void HideItemInfo()
+    {
+        _itemInfoPanel.DOAnchorPosY(_itemInfoPanelYPos, 0.5f);
     }
 
     public void Notify(NotificationData notificationData)
     {
-        // if notification is already displaying, just update the text
-        if (_notificationState == ENotificationState.Displaying)
+        _titleText.text = notificationData.Title;
+        _messageText.text = notificationData.Message;
+
+        switch (notificationData.Type)
         {
-            _titleText.text = notificationData.Title;
-            _messageText.text = notificationData.Message;
+            case ENotificationType.Info:
+                _titleText.color = _infoColor;
+                break;
+            case ENotificationType.Warning:
+                _titleText.color = _warningColor;
+                break;
+            case ENotificationType.Error:
+                _titleText.color = _errorColor;
+                break;
         }
+
 
         // if notification is hiding, display the new notification
         _notificationPanel.DOAnchorPosY(0, 0.5f).OnComplete(() =>
         {
-            _notificationState = ENotificationState.Displaying;
-            _titleText.text = notificationData.Title;
-            _messageText.text = notificationData.Message;
-
-            switch (notificationData.Type)
-            {
-                case ENotificationType.Info:
-                    _titleText.color = _infoColor;
-                    break;
-                case ENotificationType.Warning:
-                    _titleText.color = _warningColor;
-                    break;
-                case ENotificationType.Error:
-                    _titleText.color = _errorColor;
-                    break;
-            }
-
+            
             if (_notificationCoroutine != null) StopCoroutine(_notificationCoroutine);
             StartCoroutine(DisplayNotification(notificationData.Duration));
         });
@@ -77,10 +112,7 @@ public class NotificationManager : MonoBehaviour
 
     void HideNotification()
     {
-        _notificationPanel.DOAnchorPosY(_notificationPanelYPos, 0.5f).OnComplete(() =>
-        {
-            _notificationState = ENotificationState.Hiding;
-        });
+        _notificationPanel.DOAnchorPosY(_notificationPanelYPos, 0.5f);
     }
 }
 
