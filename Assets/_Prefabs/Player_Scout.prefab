@@ -51,7 +51,6 @@ GameObject:
   - component: {fileID: 4833069642188488504}
   - component: {fileID: 7544841905784830366}
   - component: {fileID: 709685541861048766}
-  - component: {fileID: -6870761080932285687}
   m_Layer: 6
   m_Name: Player_Scout
   m_TagString: Player
@@ -254,22 +253,6 @@ MonoBehaviour:
   _entityStatsContainer: {fileID: 4833069642188488507}
   _entityInventory:
     _containerName: Player Satchel
-    Items: []
---- !u!114 &-6870761080932285687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4833069642188488512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b65ea36f5b0dc6418bd7aa3d5ceb04d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _entityStatsContainer: {fileID: 0}
-  _entityInventory:
-    _containerName: 
     Items: []
 --- !u!1 &4833069642775468872
 GameObject:
