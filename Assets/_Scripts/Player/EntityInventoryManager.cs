@@ -53,5 +53,10 @@ public class EntityInventoryManager : MonoBehaviour
         BaseItemData randomItem = EntityStatsContainer.PlayerStatsData.PossibleRandomItems[randomItemIndex];
         _entityInventory.AddItem(randomItem);
         Debug.Log($"Added random item: {randomItem.ItemName}");
+        Debug.Log($"{EntityInventory.ContainerName} now has {EntityInventory.GetItems().Count} items.");
+        foreach (var item in EntityInventory.GetItems())
+        {
+            Debug.Log($"Item: {item.ItemName}");
+        }
     }
 }
