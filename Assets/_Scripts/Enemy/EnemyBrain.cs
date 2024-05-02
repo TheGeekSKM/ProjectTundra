@@ -173,9 +173,10 @@ public class EnemyBrain : MonoBehaviour
         
     }
 
+	#region Pathfinding
 	PathNode[,] GenerateNodeGrid()
 	{
-		Debug.Log("Fuction called successfully!");
+		//Debug.Log("Fuction called successfully!");
 
 		MazeGen maze = MazeGen.Instance;
 		Camera main = Camera.main;
@@ -193,12 +194,12 @@ public class EnemyBrain : MonoBehaviour
 				nodeGrid[x, y].gridPos = new Vector2Int(x, y);
 				nodeGrid[x, y].transform.position = nodeGrid[x,y].position;
 
-				Debug.Log("Node created, position is " + nodeGrid[x, y].position);
+				//Debug.Log("Node created, position is " + nodeGrid[x, y].position);
 
 				var hit = Physics2D.Raycast(nodeGrid[x,y].position, Vector2.zero);
 				if (hit.collider != null)
 				{
-					Debug.Log("Hit a collider: " + hit.collider.gameObject.name);
+					//Debug.Log("Hit a collider: " + hit.collider.gameObject.name);
 
 					if (hit.collider.CompareTag("Player"))
 						nodeGrid[x, y].end = true;
@@ -210,10 +211,9 @@ public class EnemyBrain : MonoBehaviour
 			}
 		}
 
-		Debug.Log("Function completed! Test: " + nodeGrid[0,0]);
+		//Debug.Log("Function completed! Test: " + nodeGrid[0,0]);
 		return nodeGrid;
 	}
-
 	List<PathNode> Pathfind()
 	{
 		PathNode[,] nodeGrid = GenerateNodeGrid();
@@ -247,7 +247,7 @@ public class EnemyBrain : MonoBehaviour
 
 			if (current == end)
 			{
-				return RetracePath(start, end);
+				return RetracePath(start, end, nodeGrid);
 			}
 
 			foreach (PathNode neighbor in GetNeighbors(current, nodeGrid))
@@ -267,9 +267,8 @@ public class EnemyBrain : MonoBehaviour
 				}
 			}
 		}
-		return RetracePath(start, current);
+		return RetracePath(start, current, nodeGrid);
 	}
-
 	PathNode GetLowestCost(List<PathNode> list)
 	{
 		PathNode selected = list[0];
@@ -313,7 +312,7 @@ public class EnemyBrain : MonoBehaviour
 			return 14 * distY + 10 * (distX - distY);
 		return 14 * distX + 10 * (distY - distX);
 	}
-	List<PathNode> RetracePath(PathNode start, PathNode end)
+	List<PathNode> RetracePath(PathNode start, PathNode end, PathNode[,] grid)
 	{
 		List<PathNode> path = new List<PathNode>();
 		PathNode current = end;
@@ -325,8 +324,15 @@ public class EnemyBrain : MonoBehaviour
 		}
 
 		path.Reverse();
+
+		foreach (PathNode node in grid)
+		{
+			if (!path.Contains(node))
+				Destroy(node.gameObject);
+		}
 		return path;
 	}
+	#endregion
 
 	IEnumerator MoveAction(Vector3 direction)
     {
