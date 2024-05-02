@@ -61,72 +61,104 @@ MonoBehaviour:
     capNorthExit:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 2304966349008715828, guid: 9054d8fa153b6be4bba1cec54f74ecee, type: 3}
+    - room: {fileID: 2304966349008715828, guid: d5e1fa932a6b89a4a885acd18fac6002, type: 3}
+      weight: 1
+    - room: {fileID: 2304966349008715828, guid: b9e6169faf0e0074a8798cfa74f4d7d6, type: 3}
       weight: 1
     capEastExit:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 7319537710489150920, guid: df6c5766f830fb041b40eacd44f10e4d, type: 3}
+    - room: {fileID: 7319537710489150920, guid: dce6a49f35791084288000328eefd256, type: 3}
+      weight: 1
+    - room: {fileID: 7319537710489150920, guid: 7bec04c8d598a4342b76aa0407958793, type: 3}
+      weight: 1
+    - room: {fileID: 7319537710489150920, guid: 64f56736d3ff76145a87ae3c0f57300f, type: 3}
       weight: 1
     capSouthExit:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 4383833804388330662, guid: bb6bcab110dd01b4fb8ee781e83fb89f, type: 3}
+    - room: {fileID: 4383833804388330662, guid: ad270ee6c3d737341a3f3478e621b35e, type: 3}
+      weight: 1
+    - room: {fileID: 4383833804388330662, guid: 47b9995bc54c66f4fae50fed1a914a29, type: 3}
       weight: 1
     capWestExit:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 1111902910821715107, guid: 2d3f5379a2d72f8458a17b82680b05fa, type: 3}
+    - room: {fileID: 1111902910821715107, guid: f75a62050b103184687467e2428fba8b, type: 3}
+      weight: 1
+    - room: {fileID: 1111902910821715107, guid: 668e43358af64244886ab981f6b6bce2, type: 3}
       weight: 1
     hallHorizontal:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 8033390016668757809, guid: 978c650ec9dfb1848a01ceac30577e6a, type: 3}
+    - room: {fileID: 8033390016668757809, guid: 4979b6282a254434795b079de602e819, type: 3}
+      weight: 1
+    - room: {fileID: 8033390016668757809, guid: 1d1e4425f3082244695ab6b2a8413f03, type: 3}
+      weight: 1
+    - room: {fileID: 8033390016668757809, guid: 2fb23cfda86370142b34803696c5567a, type: 3}
       weight: 1
     hallVertical:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 3314052345259133097, guid: 73722e4275cc57c429935fe8d3b10d28, type: 3}
+    - room: {fileID: 3314052345259133097, guid: 7ab3bf063425c8344a9885a61b30d306, type: 3}
+      weight: 1
+    - room: {fileID: 3314052345259133097, guid: 0890b59bd3a1cb34988e2f8acc80595a, type: 3}
       weight: 1
     hookNorthEast:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 6398236983750512716, guid: a95a8ff152c8d0843bb50decfed32534, type: 3}
+    - room: {fileID: 6398236983750512716, guid: 52ce8f961ce451d40a8cb6a9f65aab68, type: 3}
+      weight: 1
+    - room: {fileID: 6398236983750512716, guid: 100f8782cf390464bb62bc5b04aff7fc, type: 3}
       weight: 1
     hookSouthEast:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 3305838626960862048, guid: bc8de3556ce5a7d4b9e1a26dcb09fb87, type: 3}
+    - room: {fileID: 3305838626960862048, guid: b02b3a925c2d38646946b5240242e5e6, type: 3}
+      weight: 1
+    - room: {fileID: 3305838626960862048, guid: 21c7e5ecf826978419e9b5de419b3140, type: 3}
       weight: 1
     hookSouthWest:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 6598685367963959901, guid: dc101771024f4494e930b2bb1c5082e3, type: 3}
+    - room: {fileID: 6598685367963959901, guid: b32140799347a7848a830a62a136153d, type: 3}
+      weight: 1
+    - room: {fileID: 6598685367963959901, guid: d2bf64c9a61f4c94fa268bbd41ba1431, type: 3}
       weight: 1
     hookNorthWest:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 1266190679285794900, guid: ef0e7b9d4cf711a409e5112fab09581d, type: 3}
+    - room: {fileID: 1266190679285794900, guid: 81326eb36849bcc47997451c055b86d8, type: 3}
+      weight: 1
+    - room: {fileID: 1266190679285794900, guid: 3017aee8353a9d94da2a6b3f4b4b1287, type: 3}
       weight: 1
     tNorth:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 1434013507641878147, guid: 92d3b1b5d548cfb42b58e96047d259d6, type: 3}
+    - room: {fileID: 1434013507641878147, guid: 230b809704fa0ad4da3d29d291d10cd9, type: 3}
+      weight: 1
+    - room: {fileID: 1434013507641878147, guid: 0476ce7a735eba743ae4d319e2ed985c, type: 3}
       weight: 1
     tEast:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 3087053941880917819, guid: 6650e41b03e55cd4d9b597b5eb6a4e31, type: 3}
+    - room: {fileID: 3087053941880917819, guid: 5c59e751cc3b9d54894d8cee282443bc, type: 3}
+      weight: 1
+    - room: {fileID: 3087053941880917819, guid: d49710b154eb0a54c8f9c5754c251f4f, type: 3}
       weight: 1
     tSouth:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 418999978313872242, guid: a4dbe6e83e5221343a1453ae5f9fa826, type: 3}
+    - room: {fileID: 418999978313872242, guid: fe03b638b1147cd46b1cd1c8b8d40d06, type: 3}
+      weight: 1
+    - room: {fileID: 418999978313872242, guid: 373c6f9ea678b5d4796a9555163cec10, type: 3}
       weight: 1
     tWest:
     - room: {fileID: 0}
       weight: 0
-    - room: {fileID: 1299751113225832228, guid: 37ff5d633caa3634ab375e148e3f80dc, type: 3}
+    - room: {fileID: 1299751113225832228, guid: a92dda63636bc984984e3581c07b0c18, type: 3}
+      weight: 1
+    - room: {fileID: 1299751113225832228, guid: 547821e5e7e31d84ea60d645d0e121df, type: 3}
       weight: 1
     plus:
     - room: {fileID: 0}
