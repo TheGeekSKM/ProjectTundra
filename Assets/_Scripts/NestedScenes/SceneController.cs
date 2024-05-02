@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using TMPro;
 
 public class SceneController : MonoBehaviour
 {
@@ -15,14 +16,13 @@ public class SceneController : MonoBehaviour
     public System.Action<SceneState> OnSceneStateChanged;
 
     [Header("Scenes")]
-    [SerializeField] Object _mainMenuScene;
-    [SerializeField] Object _characterSelectMenu;
-    [SerializeField] Object _gamePlayScene;
-    [SerializeField] Object _loseMenuScene;
-    [SerializeField] Object _winMenuScene;
-    [SerializeField] Object _textBasedCutsceneScene;
-    [SerializeField] Object _creditsScene;
-
+    [SerializeField] SceneField _mainMenuScene;
+    [SerializeField] SceneField _characterSelectMenu;
+    [SerializeField] SceneField _gamePlayScene;
+    [SerializeField] SceneField _loseMenuScene;
+    [SerializeField] SceneField _winMenuScene;
+    [SerializeField] SceneField _textBasedCutsceneScene;
+    [SerializeField] SceneField _creditsScene;
 
     void Awake()
     {
@@ -32,12 +32,17 @@ public class SceneController : MonoBehaviour
         else Instance = this;
     }
 
-    public void TransitionPanelOn() => TransitionPanel.DOAnchorPosY(0f, 0.5f).SetEase(Ease.OutCubic);
+	void Start()
+	{
+		SceneFSM.ChangeState(SceneFSM.TextBasedCutsceneState, 0.5f, 0f);
+	}
+
+	public void TransitionPanelOn() => TransitionPanel.DOAnchorPosY(0f, 0.5f).SetEase(Ease.OutCubic);
     public void TransitionPanelOff() => TransitionPanel.DOAnchorPosY(_transitionPanelYPos, 0.5f).SetEase(Ease.OutCubic);
 
     public void TextBasedIntro()
     {
-        SceneManager.LoadSceneAsync(_textBasedCutsceneScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        SceneManager.LoadSceneAsync(_textBasedCutsceneScene, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
             // TransitionPanelOff();
             UpdateState(SceneState.TextBasedCutscene);
@@ -47,7 +52,7 @@ public class SceneController : MonoBehaviour
 
     public void TextBasedOutro()
     {
-        SceneManager.UnloadSceneAsync(_textBasedCutsceneScene.name).completed += (AsyncOperation obj) => 
+        SceneManager.UnloadSceneAsync(_textBasedCutsceneScene).completed += (AsyncOperation obj) => 
         {
             _sceneFSM.ChangeState(_sceneFSM.MainMenuState);
         };
@@ -55,7 +60,7 @@ public class SceneController : MonoBehaviour
 
     public void CreditsIntro()
     {
-        SceneManager.LoadSceneAsync(_creditsScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        SceneManager.LoadSceneAsync(_creditsScene, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
             // TransitionPanelOff();
             UpdateState(SceneState.Credits);
@@ -64,13 +69,13 @@ public class SceneController : MonoBehaviour
 
     public void CreditsOutro()
     {
-        SceneManager.UnloadSceneAsync(_creditsScene.name);
+        SceneManager.UnloadSceneAsync(_creditsScene);
     }
 
     public void MainMenuStateIntro()
     {
         Debug.Log("MainMenuStateIntroFunctions");
-        SceneManager.LoadSceneAsync(_mainMenuScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        SceneManager.LoadSceneAsync(_mainMenuScene, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
             // TransitionPanelOff();
             UpdateState(SceneState.MainMenu);
@@ -81,13 +86,13 @@ public class SceneController : MonoBehaviour
 
     public void MainMenuStateOutro()
     {
-        SceneManager.LoadSceneAsync(_gamePlayScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        SceneManager.LoadSceneAsync(_gamePlayScene, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
             Debug.Log("GamePlaySceneLoaded");
         };
         
         TransitionPanel.DOAnchorPosY(0f, 0.5f).SetEase(Ease.OutCubic).OnComplete(() => { 
-            SceneManager.UnloadSceneAsync(_mainMenuScene.name);
+            SceneManager.UnloadSceneAsync(_mainMenuScene);
         });
         Debug.Log("MainMenuStateOutroFunctions");
     }
@@ -96,7 +101,7 @@ public class SceneController : MonoBehaviour
     {
         Debug.Log("CharacterSelectStateIntroFunction");
         
-        SceneManager.LoadSceneAsync(_characterSelectMenu.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        SceneManager.LoadSceneAsync(_characterSelectMenu, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
             TransitionPanelOff();
             UpdateState(SceneState.CharacterSelect);
@@ -106,7 +111,7 @@ public class SceneController : MonoBehaviour
     public void CharacterSelectStateOutro()
     {
         
-        SceneManager.UnloadSceneAsync(_characterSelectMenu.name);
+        SceneManager.UnloadSceneAsync(_characterSelectMenu);
     }
 
     public void GamePlayStateIntro()
@@ -124,7 +129,7 @@ public class SceneController : MonoBehaviour
 
     public void LoseMenuStateIntro()
     {
-        SceneManager.LoadSceneAsync(_loseMenuScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        SceneManager.LoadSceneAsync(_loseMenuScene, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
             // TransitionPanelOff();
             MusicManager.Instance.SwapTrack(EAudioEvent.MainMenuBGM);
@@ -134,12 +139,12 @@ public class SceneController : MonoBehaviour
 
     public void LoseMenuStateOutro()
     {
-        SceneManager.UnloadSceneAsync(_loseMenuScene.name);
+        SceneManager.UnloadSceneAsync(_loseMenuScene);
     }
 
     public void WinMenuStateIntro()
     {
-        SceneManager.LoadSceneAsync(_winMenuScene.name, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
+        SceneManager.LoadSceneAsync(_winMenuScene, LoadSceneMode.Additive).completed += (AsyncOperation obj) => 
         {
             // TransitionPanelOff();
             UpdateState(SceneState.WinMenu);
@@ -152,7 +157,7 @@ public class SceneController : MonoBehaviour
 
     public void WinMenuStateOutro()
     {
-        SceneManager.UnloadSceneAsync(_winMenuScene.name);
+        SceneManager.UnloadSceneAsync(_winMenuScene);
     }
 
     void UpdateState(SceneState _state)
@@ -164,9 +169,9 @@ public class SceneController : MonoBehaviour
     void UnloadGamePlayLevel()
     {
         //unload game play scene only if it's loaded
-        if (SceneManager.GetSceneByName(_gamePlayScene.name).isLoaded)
+        if (SceneManager.GetSceneByName(_gamePlayScene).isLoaded)
         {
-            SceneManager.UnloadSceneAsync(_gamePlayScene.name);
+            SceneManager.UnloadSceneAsync(_gamePlayScene);
         }
     }
 }

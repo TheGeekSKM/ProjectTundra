@@ -32,8 +32,9 @@ public class EntityHealth : MonoBehaviour
     {
         HandleSound();
 
-        OnHealthChanged?.Invoke(currentHealth);
-        currentHealth -= damage;
+		currentHealth -= damage;
+		OnHealthChanged?.Invoke(currentHealth);
+        
         if (currentHealth <= 0)
         {
             currentHealth = 0;

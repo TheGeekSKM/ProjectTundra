@@ -126,8 +126,11 @@ public class EnemyBrain : MonoBehaviour
     #region TurnLogicHandlers
     void EndTurn()
     {
-		foreach (PathNode n in path)
-			Destroy(n.gameObject);
+		if (path != null)
+		{
+			foreach (PathNode n in path)
+				Destroy(n.gameObject);
+		}
 
         _isMyTurn = false;
         OnEnemyTurnEnded?.Invoke(gameObject.name);

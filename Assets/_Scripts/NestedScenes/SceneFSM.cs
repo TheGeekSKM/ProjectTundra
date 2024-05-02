@@ -14,28 +14,17 @@ public class SceneFSM : BaseStateMachine
     public TextBasedCutsceneState TextBasedCutsceneState { get; private set; }
     public CreditsState CreditsState { get; private set; }
 
-    void OnValidate()
-    {
-        if (_sceneController == null)
-        {
-            _sceneController = GetComponent<SceneController>();
-        }
-    }
-
     void Awake()
     {
-        MainMenuState = new MainMenuState(_sceneController, this);
+		if (_sceneController == null) _sceneController = GetComponent<SceneController>();
+
+		MainMenuState = new MainMenuState(_sceneController, this);
         CharacterSelectState = new CharacterSelectState(_sceneController, this);
         GamePlayState = new GamePlayState(_sceneController, this);
         LoseMenuState = new LoseMenuState(_sceneController, this);
         WinMenuState = new WinMenuState(_sceneController, this);
         TextBasedCutsceneState = new TextBasedCutsceneState(_sceneController, this);
         CreditsState = new CreditsState(_sceneController, this);
-    }
-
-    void Start()
-    {
-        ChangeState(TextBasedCutsceneState, 0.5f, 0f);
     }
 }
 

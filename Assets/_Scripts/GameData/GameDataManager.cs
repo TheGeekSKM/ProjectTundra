@@ -68,7 +68,7 @@ public class GameDataManager : MonoBehaviour
         else Instance = this;
     }
 
-    void Start()
+    void OnEnable()
     {
         _rangerUsed = false;
         _mageUsed = false;

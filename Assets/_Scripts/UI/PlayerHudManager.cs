@@ -14,8 +14,7 @@ public class PlayerHudManager : MonoBehaviour
     private void OnEnable()
     {
         Player.Instance.OnPlayerInitialize += PlayerCreated;
-        
-    }
+	}
 
     private void OnDisable()
     {
@@ -26,15 +25,17 @@ public class PlayerHudManager : MonoBehaviour
 
     void PlayerCreated()
     {
-
         _playerHealth = Player.Instance.PlayerHealth;
         _playerStatsData = Player.Instance.PlayerStats.PlayerStatsData;
         _playerStamina = Player.Instance.PlayerStamina;
 
-        _playerHealth.OnHealthChanged += HPChanged;
-        _playerStamina.OnActionPointsChanged += APChanged;
-        
-        _healthText.text = $"{_playerHealth.CurrentHealth} / {_playerStatsData.MaxHealth}";
+		//unsub/resub
+		_playerHealth.OnHealthChanged -= HPChanged;
+		_playerStamina.OnActionPointsChanged -= APChanged;
+		_playerHealth.OnHealthChanged += HPChanged;
+		_playerStamina.OnActionPointsChanged += APChanged;
+
+		_healthText.text = $"{_playerHealth.CurrentHealth} / {_playerStatsData.MaxHealth}";
         _staminaText.text = $"{_playerStamina.CurrentActionPoints} / {_playerStatsData.TotalActionPoints}";
     }
 
