@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _totalActionPoints: 3
   _maxHealth: 5
-  _damage: 1
+  _damage: 0
   _aOERange: 1
   _armor: 0
   _playerClass: 0
@@ -30,6 +30,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bf5abc94d5f45324e8171dfc2ba5ffce, type: 2}
   - {fileID: 11400000, guid: 13ea97b3b14425045aa2740a0698ae31, type: 2}
   - {fileID: 11400000, guid: cf483ad9bd1bf7844bc6df7fcda5c324, type: 2}
-  _sprite: {fileID: -564565155, guid: 9e52ca72a9c43c644a7aec71fd5392d1, type: 3}
-  _deathSprite: {fileID: 1916168144, guid: 9e52ca72a9c43c644a7aec71fd5392d1, type: 3}
+  _sprite: {fileID: -997890009, guid: 37fa42c0d50dd32488e4fe5e66868719, type: 3}
+  _deathSprite: {fileID: 599679527, guid: 89d7d9e74339632498d723d4445402e3, type: 3}
   _animatorController: {fileID: 9100000, guid: 5e090e14384d1e047b652211db2b260c, type: 2}

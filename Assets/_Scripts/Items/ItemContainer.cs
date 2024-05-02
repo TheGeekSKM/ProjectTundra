@@ -40,13 +40,23 @@ public class ItemContainer
         
         foreach (var i in Items.ToList())
         {
-            if (i is WeaponItemData)
-            {
-                int indexOfWeapon = Items.IndexOf(i);
-                SetItem(indexOfWeapon, item);
-                OnItemContainerChanged?.Invoke(item);
-                return;
-            }
+			try
+			{
+				if ((WeaponItemData)i != null && (WeaponItemData)item != null)
+				{
+					if (i is WeaponItemData)
+					{
+						int indexOfWeapon = Items.IndexOf(i);
+						SetItem(indexOfWeapon, item);
+						OnItemContainerChanged?.Invoke(item);
+						return;
+					}
+				}
+			}
+			catch
+			{
+				//ignore
+			}
         }
 
         // If the item is not a weapon, add it to the container.

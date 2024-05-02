@@ -26,8 +26,16 @@ public class EnemySelectionManager : MonoBehaviour
 		else
 		{
 			_targetImage.SetActive(true);
-			CombatManager.Instance.SetTargetedEnemy(CombatManager.Instance.Enemies[0]);
-			_targetImage.transform.position = CombatManager.Instance.Enemies[0].transform.position;
+
+			var playerWeapon = Player.Instance.PlayerStats.PlayerStatsData.EquippedWeapon;
+			if (playerWeapon == null && playerWeapon.AttackType == AttackType.Melee) return;
+
+			EnemyBrain enemy = CombatManager.Instance.Enemies[0];
+			if (Vector3.Distance(enemy.transform.position, Player.Instance.transform.position) <= playerWeapon.AttackRange)
+			{
+				CombatManager.Instance.SetTargetedEnemy(enemy);
+				_targetImage.transform.position = enemy.transform.position;
+			}
 		}
     }
 
@@ -42,17 +50,17 @@ public class EnemySelectionManager : MonoBehaviour
 
         // Get the world position of the touch
         var worldPosition = Camera.main.ScreenToWorldPoint(position);
-        
-        // If the distance between the player and the touch position is greater than the player's attack range, notify player and return
-        if (Vector3.Distance(worldPosition, Player.Instance.transform.position) > playerWeapon.AttackRange) {
+
+		var enemy = GetEnemyAtPosition(worldPosition);
+		if (enemy == null) return;
+
+		// If the distance between the player and the touch position is greater than the player's attack range, notify player and return
+		if (Vector3.Distance(enemy.transform.position, Player.Instance.transform.position) > playerWeapon.AttackRange) {
             NotificationManager.Instance.Notify(
                 new NotificationData("The selected enemy is too far", "Too Far", 1f, ENotificationType.Warning)
             );
             return;
         }
-
-        var enemy = GetEnemyAtPosition(worldPosition);
-        if (enemy == null) return;
 
         CombatManager.Instance.SetTargetedEnemy(enemy);
         _targetImage.transform.position = enemy.transform.position;

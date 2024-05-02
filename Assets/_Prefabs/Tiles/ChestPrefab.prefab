@@ -265,7 +265,7 @@ MonoBehaviour:
   _useCustomSprite: 1
   walkable: 0
   _itemContainer:
-    _containerName: TestChest
+    _containerName: Treasure
     Items: []
   _useRandomItems: 1
   _additionalRandomItemsRange: {x: 1, y: 6}
