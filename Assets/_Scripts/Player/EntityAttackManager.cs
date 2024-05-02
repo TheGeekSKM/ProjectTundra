@@ -107,12 +107,17 @@ public class EntityAttackManager : MonoBehaviour
                 _entityStatsContainer.PlayerStatsData.AOERange, 
                 _entityStatsContainer.PlayerStatsData.Damage + weapon.DamageBonus,
                 weapon, 
-                _entityStatsContainer.PlayerStatsData.EntityType);
+                _entityStatsContainer.PlayerStatsData.EntityType,
+                _attackOrigin.right);
         }
         else if (weapon.AttackType == AttackType.Ranged)
         {
             Debug.Log("Ranged attack");
-            attackObject.Initialize(20f, 3f, 0.2f, _entityStatsContainer.PlayerStatsData.Damage + weapon.DamageBonus, weapon, _entityStatsContainer.PlayerStatsData.EntityType);
+            attackObject.Initialize(20f, 3f, 0.2f, 
+                _entityStatsContainer.PlayerStatsData.Damage + weapon.DamageBonus, 
+                weapon, 
+                _entityStatsContainer.PlayerStatsData.EntityType, 
+                _attackOrigin.right);
         }
     }
 

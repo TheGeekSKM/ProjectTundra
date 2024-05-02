@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
     void TargetEnemy()
     {
         // point the attack origin at the targeted enemy
-        PlayerAttackManager.AttackOrigin.LookAt(CombatManager.Instance.TargetedEnemy.transform.position);
+        PlayerAttackManager.AttackOrigin.right = (CombatManager.Instance.TargetedEnemy.transform.position - PlayerAttackManager.AttackOrigin.position).normalized;
     }
 
     void OnDeath()

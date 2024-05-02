@@ -19,6 +19,7 @@ public class AttackObjectController : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] bool _destroyable = true;
+    [SerializeField] Vector2 _direction;
 
     bool _isInitialized = false;
 
@@ -35,7 +36,7 @@ public class AttackObjectController : MonoBehaviour
     /// <param name="scale">attack object size</param>
     /// <param name="damage">attack object total damage</param>
     /// <param name="spawnerType">the type of spawner</param>
-    public void Initialize(float speed, float lifetime, float scale, int damage, WeaponItemData weaponItemData,EntityType spawnerType)
+    public void Initialize(float speed, float lifetime, float scale, int damage, WeaponItemData weaponItemData,EntityType spawnerType, Vector2 direction)
     {
         _speed = speed;
         _lifetime = lifetime;
@@ -43,6 +44,7 @@ public class AttackObjectController : MonoBehaviour
         _damage = damage;
         _spawnerType = spawnerType;
         _weaponItemData = weaponItemData;
+        _direction = direction;
 
         var _currentScaleMultiplier = transform.localScale.x;
         transform.localScale = new Vector3(_scale * _currentScaleMultiplier, _scale * _currentScaleMultiplier, _scale * _currentScaleMultiplier);
@@ -51,7 +53,7 @@ public class AttackObjectController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (_isInitialized) _rigidbody2D.velocity = transform.right * _speed;
+        if (_isInitialized) _rigidbody2D.velocity = _direction * _speed;
         else _rigidbody2D.velocity = Vector2.zero;
     }
 

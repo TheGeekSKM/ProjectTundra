@@ -32,7 +32,7 @@ public class EnemyBrain : MonoBehaviour
         if (_entityHealth == null) _entityHealth = GetComponent<EntityHealth>();
         if (_entityStamina == null) _entityStamina = GetComponent<EntityStamina>();
         if (_entityLoot == null) _entityLoot = GetComponent<EntityLoot>();
-        if (_entityAnimationController == null) _entityAnimationController = GetComponent<EntityAnimationController>();
+        if (_entityAnimationController == null) _entityAnimationController = GetComponentInChildren<EntityAnimationController>();
     }
 
     void OnEnable()
@@ -145,7 +145,7 @@ public class EnemyBrain : MonoBehaviour
 		// Debug.Log("Distance between enemy and player is: " + dist);
 
         // the attack point should always look at the player
-        _entityAttackManager.AttackOrigin.LookAt(Player.Instance.transform);
+        _entityAttackManager.AttackOrigin.right = Player.Instance.transform.position - _entityAttackManager.AttackOrigin.position;
         
         // if the player is within attack range, attack, otherwise move
         if (dist <= _attackRange)
