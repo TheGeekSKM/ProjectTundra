@@ -336,7 +336,7 @@ public class EnemyBrain : MonoBehaviour
         // find the direction to next path
         var direction = path[pathCounter].transform.position - transform.position;
 		pathCounter++;
-		Debug.Log("Enemy direction is: " + direction);
+		//Debug.Log("Enemy direction is: " + direction);
 
         // start the movement coroutine
         _currentAction = StartCoroutine(MoveAction(direction));

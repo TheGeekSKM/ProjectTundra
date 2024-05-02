@@ -26,7 +26,7 @@ public class EntityLoot : MonoBehaviour
             return;
         }
 
-        var loot = Instantiate(_lootChestPrefab, transform.position, Quaternion.identity);
+        var loot = Instantiate(_lootChestPrefab, transform.position, Quaternion.identity, gameObject.transform.parent);
         // Set the loot chest to use the entity's item container and death sprite
         loot.Init(_entityStatsContainer.PlayerStatsData.ItemContainer, false, true, _entityStatsContainer.PlayerStatsData.DeathSprite);
 

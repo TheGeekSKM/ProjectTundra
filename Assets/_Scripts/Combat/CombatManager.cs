@@ -217,7 +217,7 @@ public class CombatManager : MonoBehaviour
 		StartCoroutine(EnemyDelay());
 		IEnumerator EnemyDelay()
 		{
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(1f);
 			_currentTurnState = CombatTurnState.Enemy;
 			FireEvent();
 			StartEnemiesTurn();

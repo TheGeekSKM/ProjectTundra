@@ -27,6 +27,7 @@ public class EnemySelectionManager : MonoBehaviour
 		{
 			_targetImage.SetActive(true);
 			CombatManager.Instance.SetTargetedEnemy(CombatManager.Instance.Enemies[0]);
+			_targetImage.transform.position = CombatManager.Instance.Enemies[0].transform.position;
 		}
     }
 

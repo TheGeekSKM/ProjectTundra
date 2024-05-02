@@ -2,7 +2,7 @@ using System.Net.Http;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
+using UnityEngine.Animations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerStatsData", menuName = "PlayerStats/PlayerStatsData")]
@@ -156,8 +156,8 @@ public class PlayerStatsData : ScriptableObject
     public Sprite EntitySprite => _sprite;
     [SerializeField] private Sprite _deathSprite;
     public Sprite DeathSprite => _deathSprite;
-    [SerializeField] private AnimatorController _animatorController;
-    public AnimatorController AnimatorController => _animatorController;    
+    [SerializeField] private RuntimeAnimatorController _animatorController;
+    public RuntimeAnimatorController AnimatorController => _animatorController;
 }
 
 public enum PlayerClass
