@@ -24,10 +24,11 @@ public class EnemyBrain : MonoBehaviour
     bool _isMyTurn = false;
     int _attackRange = 1;
 
-	[SerializeField] Sprite testsprite;
+	List<PathNode> path;
+	int pathCounter;
 
-    // Grab references to components if they are not set
-    void Awake()
+	// Grab references to components if they are not set
+	void Awake()
     {
         if (_entityStatsContainer == null) _entityStatsContainer = GetComponent<EntityStatsContainer>();
         if (_entityAttackManager == null) _entityAttackManager = GetComponent<EntityAttackManager>();
@@ -36,8 +37,6 @@ public class EnemyBrain : MonoBehaviour
         if (_entityStamina == null) _entityStamina = GetComponent<EntityStamina>();
         if (_entityLoot == null) _entityLoot = GetComponent<EntityLoot>();
         if (_entityAnimationController == null) _entityAnimationController = GetComponent<EntityAnimationController>();
-
-		testsprite = gameObject.GetComponentInChildren<SpriteRenderer>().sprite;
     }
 
     void OnEnable()
@@ -116,13 +115,20 @@ public class EnemyBrain : MonoBehaviour
         Debug.Log("Starting Enemy Turn was called by Combat Manager");
         _isMyTurn = true;
         _entityStamina.ResetAP();
-        if (_currentAction != null) StopCoroutine(_currentAction);
+
+		path = Pathfind();
+		pathCounter = 0;
+
+		if (_currentAction != null) StopCoroutine(_currentAction);
         HandleTurnLogic();
     }
 
     #region TurnLogicHandlers
     void EndTurn()
     {
+		foreach (PathNode n in path)
+			Destroy(n.gameObject);
+
         _isMyTurn = false;
         OnEnemyTurnEnded?.Invoke(gameObject.name);
     }
@@ -163,16 +169,6 @@ public class EnemyBrain : MonoBehaviour
         }
     }
 
-    void HandleMovement()
-    {
-        // find the direction to the player
-        var direction = Player.Instance.transform.position - transform.position;
-
-        // start the movement coroutine
-        _currentAction = StartCoroutine(MoveAction(direction));
-        
-    }
-
 	#region Pathfinding
 	PathNode[,] GenerateNodeGrid()
 	{
@@ -183,20 +179,21 @@ public class EnemyBrain : MonoBehaviour
 		Vector2 sizeOffset = new Vector2(maze.roomWidth / 2, maze.roomHeight / 2);
 		Vector2 pos = new Vector2(main.transform.position.x - sizeOffset.x, main.transform.position.y - sizeOffset.y);
 
-		PathNode[,] nodeGrid = new PathNode[maze.roomWidth,maze.roomHeight];
-		for (int x = 0; x < maze.roomWidth; x++) {
+		PathNode[,] nodeGrid = new PathNode[maze.roomWidth, maze.roomHeight];
+		for (int x = 0; x < maze.roomWidth; x++)
+		{
 			for (int y = 0; y < maze.roomHeight; y++)
 			{
 				nodeGrid[x, y] = new GameObject("Path Node").AddComponent<PathNode>();
-				nodeGrid[x, y].transform.parent = gameObject.transform;
+				nodeGrid[x, y].transform.parent = gameObject.transform.parent;
 
-				nodeGrid[x, y].position = new Vector2(pos.x+x+0.5f,pos.y+y+0.5f);
+				nodeGrid[x, y].position = new Vector2(pos.x + x + 0.5f, pos.y + y + 0.5f);
 				nodeGrid[x, y].gridPos = new Vector2Int(x, y);
-				nodeGrid[x, y].transform.position = nodeGrid[x,y].position;
+				nodeGrid[x, y].transform.position = nodeGrid[x, y].position;
 
 				//Debug.Log("Node created, position is " + nodeGrid[x, y].position);
 
-				var hit = Physics2D.Raycast(nodeGrid[x,y].position, Vector2.zero);
+				var hit = Physics2D.Raycast(nodeGrid[x, y].position, Vector2.zero);
 				if (hit.collider != null)
 				{
 					//Debug.Log("Hit a collider: " + hit.collider.gameObject.name);
@@ -334,76 +331,88 @@ public class EnemyBrain : MonoBehaviour
 	}
 	#endregion
 
+	void HandleMovement()
+    {
+        // find the direction to next path
+        var direction = path[pathCounter].transform.position - transform.position;
+		pathCounter++;
+		Debug.Log("Enemy direction is: " + direction);
+
+        // start the movement coroutine
+        _currentAction = StartCoroutine(MoveAction(direction));
+    }
+
 	IEnumerator MoveAction(Vector3 direction)
     {
 		Debug.Log("Enemy Moving!");
 
-		List<PathNode> path = Pathfind();
-		if (path != null)
-		{
-			foreach (PathNode n in path)
-			{
-				n.gameObject.AddComponent<SpriteRenderer>().sprite = testsprite;
-			}
-		}
-
-		yield return null;
-		/*
         // normalize the direction
         direction.Normalize();
-        
-        // check if the direction's x or y is greater
-        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-        {
-            //attempt to move in the x direction
-            if (direction.x > 0)
-            {
-                // check if there is a wall in the way
-                if (Physics2D.Raycast(transform.position, Vector2.right, _raycastDistance, _obstacleLayerMask))
-                {
-                    Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
-                    ChooseYDirection(direction);
-                }
-                else _entityMovement.MoveRight(true); // otherwise move right
-                
-            }
-            else
-            {
-                // check if there is a wall in the way
-                if (Physics2D.Raycast(transform.position, Vector2.left, _raycastDistance, _obstacleLayerMask))
-                {
-                    Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
-                    ChooseYDirection(direction);
-                }
-                else _entityMovement.MoveLeft(true); // otherwise move left
-            }
-        }
-        else
-        {
-            // move in the y direction
-            if (direction.y > 0)
-            {
-                // check if there is a wall in the way
-                if (Physics2D.Raycast(transform.position, Vector2.up, _raycastDistance, _obstacleLayerMask))
-                {
-                    Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
-                    ChooseXDirection(direction);
-                }
-                else _entityMovement.MoveUp(true);
-            }
-            else
-            {
-                // check if there is a wall in the way
-                if (Physics2D.Raycast(transform.position, Vector2.down, _raycastDistance, _obstacleLayerMask))
-                {
-                    Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
-                    ChooseXDirection(direction);
-                }
-                else _entityMovement.MoveDown(true);
-            }
-        }
 
-        #region OldMovementLogic
+		if (direction.x > 0)
+			_entityMovement.MoveRight(true);
+
+		if (direction.x < 0)
+			_entityMovement.MoveLeft(true);
+
+		if (direction.y > 0)
+			_entityMovement.MoveUp(true);
+
+		if (direction.y < 0)
+			_entityMovement.MoveDown(true);
+
+		#region OldMovementLogic
+		//// check if the direction's x or y is greater
+		//if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+  //      {
+  //          //attempt to move in the x direction
+  //          if (direction.x > 0)
+  //          {
+  //              // check if there is a wall in the way
+  //              if (Physics2D.Raycast(transform.position, Vector2.right, _raycastDistance, _obstacleLayerMask))
+  //              {
+  //                  Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
+  //                  ChooseYDirection(direction);
+  //              }
+  //              else _entityMovement.MoveRight(true); // otherwise move right
+                
+  //          }
+  //          else
+  //          {
+  //              // check if there is a wall in the way
+  //              if (Physics2D.Raycast(transform.position, Vector2.left, _raycastDistance, _obstacleLayerMask))
+  //              {
+  //                  Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
+  //                  ChooseYDirection(direction);
+  //              }
+  //              else _entityMovement.MoveLeft(true); // otherwise move left
+  //          }
+  //      }
+  //      else
+  //      {
+  //          // move in the y direction
+  //          if (direction.y > 0)
+  //          {
+  //              // check if there is a wall in the way
+  //              if (Physics2D.Raycast(transform.position, Vector2.up, _raycastDistance, _obstacleLayerMask))
+  //              {
+  //                  Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
+  //                  ChooseXDirection(direction);
+  //              }
+  //              else _entityMovement.MoveUp(true);
+  //          }
+  //          else
+  //          {
+  //              // check if there is a wall in the way
+  //              if (Physics2D.Raycast(transform.position, Vector2.down, _raycastDistance, _obstacleLayerMask))
+  //              {
+  //                  Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
+  //                  ChooseXDirection(direction);
+  //              }
+  //              else _entityMovement.MoveDown(true);
+  //          }
+  //      }
+
         // // check if the direction's x or y is greater
         // if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         // {
@@ -461,17 +470,17 @@ public class EnemyBrain : MonoBehaviour
         //     }
         // }
         #endregion
+
         // once movement is done, wait for the time between actions
         yield return new WaitForSeconds(_timeBetweenActions);
         HandleTurnLogic();
-		*/
     }
 
-
-    /// <summary>
-    ///  Choose the y direction to move in
-    /// </summary>
-    void ChooseYDirection(Vector2 direction)
+	#region OldMovementLogic
+	/// <summary>
+	///  Choose the y direction to move in
+	/// </summary>
+	void ChooseYDirection(Vector2 direction)
     {
         if (direction.y > 0)
         {
@@ -525,8 +534,9 @@ public class EnemyBrain : MonoBehaviour
             else _entityMovement.MoveLeft(true); // otherwise move left
         }
     }
+	#endregion
 
-    void HandleAttack()
+	void HandleAttack()
     {
         _entityAttackManager.Attack();
         _currentAction = StartCoroutine(WaitForNextAction());
