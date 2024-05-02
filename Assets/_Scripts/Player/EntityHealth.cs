@@ -57,24 +57,28 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
-    public void Heal(int amount)
+    public void Heal()
     {
-        // Check if enough stamina to heal
-        if (playerStatsData.HealCost > entityStamina.CurrentActionPoints)
-        {
-            Debug.Log("Not enough stamina to heal");
-            return;
-        }
+        #region Old Code
+        // // Check if enough stamina to heal
+        // if (playerStatsData.HealCost > entityStamina.CurrentActionPoints)
+        // {
+        //     Debug.Log("Not enough stamina to heal");
+        //     return;
+        // }
 
-        OnHealthChanged?.Invoke(currentHealth);
-        currentHealth += amount;
+        // OnHealthChanged?.Invoke(currentHealth);
+        // currentHealth += amount;
 
-        // Check if health is already full
-        if (currentHealth > playerStatsData.MaxHealth)
-            currentHealth = playerStatsData.MaxHealth;
+        // // Check if health is already full
+        // if (currentHealth > playerStatsData.MaxHealth)
+        //     currentHealth = playerStatsData.MaxHealth;
 
-        // Subtract stamina
-        entityStamina.SubtractAP(playerStatsData.HealCost);
+        // // Subtract stamina
+        // entityStamina.SubtractAP(playerStatsData.HealCost);
+        #endregion
+
+        
     }
 
     public void Die()

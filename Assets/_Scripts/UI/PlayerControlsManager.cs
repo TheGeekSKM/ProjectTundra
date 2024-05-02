@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class PlayerControlsManager : MonoBehaviour
 {
     [SerializeField] Button _attackButton;
-    [SerializeField] Button _healButton;
+    [SerializeField] Button _inventoryButton;
     [SerializeField] Button _moveButton;
+    [SerializeField] Button _backButton;
 
     UIInputManager _uiInputManager;
 
@@ -26,11 +27,16 @@ public class PlayerControlsManager : MonoBehaviour
         // Subscribe to the button click events
         _attackButton?.onClick.AddListener(() => _uiInputManager.Attack());
         
-        _healButton?.onClick.AddListener(() => _uiInputManager.Heal());
+        _inventoryButton?.onClick.AddListener(() => ChestViewManager.Instance.OpenPlayerInventory());
 
         _moveButton?.onClick.AddListener(() => {
             CombatManager.Instance.AnimatePlayerControlsOutro();
             CombatManager.Instance.AnimatePlayerMovementControlsIntro();
+        });
+
+        _backButton?.onClick.AddListener(() => {
+            CombatManager.Instance.AnimatePlayerMovementControlsOutro();
+            CombatManager.Instance.AnimatePlayerControlsIntro();
         });
     }
     

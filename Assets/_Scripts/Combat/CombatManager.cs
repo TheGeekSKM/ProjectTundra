@@ -37,6 +37,8 @@ public class CombatManager : MonoBehaviour
     float _movementControlsPanelYPos;
     [SerializeField] RectTransform _inventoryButton;
     float _inventoryButtonXPos;
+    [SerializeField] RectTransform _backButton;
+    float _backButtonXPos;
 
     int _currentEnemyIndex = 0;
 
@@ -72,6 +74,7 @@ public class CombatManager : MonoBehaviour
 			combatFSM.ChangeState(combatFSM.NonCombatState);
 
         _inventoryButtonXPos = _inventoryButton.anchoredPosition.x;
+        _backButtonXPos = _backButton.anchoredPosition.x;
     }
 
     // Check if player has enough action points, and if they don't, switch to enemy turn
@@ -196,11 +199,16 @@ public class CombatManager : MonoBehaviour
     public void AnimatePlayerMovementControlsIntro()
     {
         _movementControlsPanel.DOAnchorPosY(0, 0.5f);
+        if (_currentTurnState != CombatTurnState.NonCombat)
+        {
+            _backButton.DOAnchorPosX(-50, 0.5f);
+        }
     }
 
     public void AnimatePlayerMovementControlsOutro()
     {
         _movementControlsPanel.DOAnchorPosY(_movementControlsPanelYPos, 0.5f);
+        _backButton.DOAnchorPosX(_backButtonXPos, 0.5f);
     }
 
     public void EnemyTurnIntro()
@@ -240,9 +248,19 @@ public class CombatManager : MonoBehaviour
     {
         _currentTurnState = CombatTurnState.NonCombat;
         FireEvent();
-		if (MusicManager.Instance.currentTrack.audioEvent != EAudioEvent.NonCombatBGM)
-			MusicManager.Instance.SwapTrack(EAudioEvent.NonCombatBGM);
         _inventoryButton.DOAnchorPosX(0, 0.5f);
+
+        if (!MusicManager.Instance) return;
+        if (!MusicManager.Instance.currentTrack)
+        {
+            MusicManager.Instance.SwapTrack(EAudioEvent.NonCombatBGM);
+            return;
+        }
+        else if (MusicManager.Instance.currentTrack.audioEvent != EAudioEvent.NonCombatBGM)
+        {
+            MusicManager.Instance.SwapTrack(EAudioEvent.NonCombatBGM);
+        }
+        
     }
 
     public void NonCombatOutro()
