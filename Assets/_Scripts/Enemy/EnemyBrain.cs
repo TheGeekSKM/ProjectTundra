@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
@@ -23,8 +24,11 @@ public class EnemyBrain : MonoBehaviour
     bool _isMyTurn = false;
     int _attackRange = 1;
 
-    // Grab references to components if they are not set
-    void Awake()
+	List<PathNode> path;
+	int pathCounter;
+
+	// Grab references to components if they are not set
+	void Awake()
     {
         if (_entityStatsContainer == null) _entityStatsContainer = GetComponent<EntityStatsContainer>();
         if (_entityAttackManager == null) _entityAttackManager = GetComponent<EntityAttackManager>();
@@ -111,13 +115,20 @@ public class EnemyBrain : MonoBehaviour
         Debug.Log("Starting Enemy Turn was called by Combat Manager");
         _isMyTurn = true;
         _entityStamina.ResetAP();
-        if (_currentAction != null) StopCoroutine(_currentAction);
+
+		path = Pathfind();
+		pathCounter = 0;
+
+		if (_currentAction != null) StopCoroutine(_currentAction);
         HandleTurnLogic();
     }
 
     #region TurnLogicHandlers
     void EndTurn()
     {
+		foreach (PathNode n in path)
+			Destroy(n.gameObject);
+
         _isMyTurn = false;
         OnEnemyTurnEnded?.Invoke(gameObject.name);
     }
@@ -158,75 +169,250 @@ public class EnemyBrain : MonoBehaviour
         }
     }
 
-    void HandleMovement()
+	#region Pathfinding
+	PathNode[,] GenerateNodeGrid()
+	{
+		//Debug.Log("Fuction called successfully!");
+
+		MazeGen maze = MazeGen.Instance;
+		Camera main = Camera.main;
+		Vector2 sizeOffset = new Vector2(maze.roomWidth / 2, maze.roomHeight / 2);
+		Vector2 pos = new Vector2(main.transform.position.x - sizeOffset.x, main.transform.position.y - sizeOffset.y);
+
+		PathNode[,] nodeGrid = new PathNode[maze.roomWidth, maze.roomHeight];
+		for (int x = 0; x < maze.roomWidth; x++)
+		{
+			for (int y = 0; y < maze.roomHeight; y++)
+			{
+				nodeGrid[x, y] = new GameObject("Path Node").AddComponent<PathNode>();
+				nodeGrid[x, y].transform.parent = gameObject.transform.parent;
+
+				nodeGrid[x, y].position = new Vector2(pos.x + x + 0.5f, pos.y + y + 0.5f);
+				nodeGrid[x, y].gridPos = new Vector2Int(x, y);
+				nodeGrid[x, y].transform.position = nodeGrid[x, y].position;
+
+				//Debug.Log("Node created, position is " + nodeGrid[x, y].position);
+
+				var hit = Physics2D.Raycast(nodeGrid[x, y].position, Vector2.zero);
+				if (hit.collider != null)
+				{
+					//Debug.Log("Hit a collider: " + hit.collider.gameObject.name);
+
+					if (hit.collider.CompareTag("Player"))
+						nodeGrid[x, y].end = true;
+					else if (hit.collider.gameObject == gameObject)
+						nodeGrid[x, y].start = true;
+					else
+						nodeGrid[x, y].walkable = false;
+				}
+			}
+		}
+
+		//Debug.Log("Function completed! Test: " + nodeGrid[0,0]);
+		return nodeGrid;
+	}
+	List<PathNode> Pathfind()
+	{
+		PathNode[,] nodeGrid = GenerateNodeGrid();
+
+		List<PathNode> open = new List<PathNode>();
+		List<PathNode> closed = new List<PathNode>();
+		PathNode start = null;
+		PathNode end = null;
+
+		foreach (PathNode node in nodeGrid)
+		{
+			if (node.start)
+				start = node;
+			if (node.end)
+				end = node;
+		}
+		if (start == null || end == null)
+		{
+			Debug.LogError("Could not find start or end nodes");
+			Debug.Break();
+		}
+
+		open.Add(start);
+
+		PathNode current = GetLowestCost(open);
+		while (open.Count > 0)
+		{
+			current = GetLowestCost(open);
+			open.Remove(current);
+			closed.Add(current);
+
+			if (current == end)
+			{
+				return RetracePath(start, end, nodeGrid);
+			}
+
+			foreach (PathNode neighbor in GetNeighbors(current, nodeGrid))
+			{
+				if (!neighbor.walkable || closed.Contains(neighbor))
+					continue;
+
+				int newMoveCostToNeighbor = current.g_cost + GetDistance(current, neighbor);
+				if (newMoveCostToNeighbor < neighbor.g_cost || !open.Contains(neighbor))
+				{
+					neighbor.g_cost = newMoveCostToNeighbor;
+					neighbor.h_cost = GetDistance(neighbor, end);
+					neighbor.parent = current;
+
+					if (!open.Contains(neighbor))
+						open.Add(neighbor);
+				}
+			}
+		}
+		return RetracePath(start, current, nodeGrid);
+	}
+	PathNode GetLowestCost(List<PathNode> list)
+	{
+		PathNode selected = list[0];
+		foreach (PathNode node in list)
+		{
+			if (node.f_cost < selected.f_cost || (node.f_cost == selected.f_cost && node.h_cost < selected.h_cost))
+				selected = node;
+		}
+		return selected;
+	}
+	List<PathNode> GetNeighbors(PathNode node, PathNode[,] grid)
+	{
+		MazeGen maze = MazeGen.Instance;
+		List<PathNode> neighbors = new List<PathNode>();
+
+		for (int x = -1; x <= 1; x++)
+		{
+			for (int y = -1; y <= 1; y++)
+			{
+				if ((x == 0 && y == 0) ||
+					(x == -1 && y == -1) || (x == -1 && y == 1) ||
+					(x == 1 && y == -1) || (x == 1 && y == 1))
+					continue;
+
+				int checkX = node.gridPos.x + x;
+				int checkY = node.gridPos.y + y;
+
+				if (checkX >= 0 && checkX < maze.roomWidth && checkY >= 0 && checkY < maze.roomHeight)
+					neighbors.Add(grid[checkX, checkY]);
+			}
+		}
+
+		return neighbors;
+	}
+	int GetDistance(PathNode nodeA, PathNode nodeB)
+	{
+		int distX = Mathf.Abs(nodeA.gridPos.x - nodeB.gridPos.x);
+		int distY = Mathf.Abs(nodeA.gridPos.y - nodeB.gridPos.y);
+
+		if (distX > distY)
+			return 14 * distY + 10 * (distX - distY);
+		return 14 * distX + 10 * (distY - distX);
+	}
+	List<PathNode> RetracePath(PathNode start, PathNode end, PathNode[,] grid)
+	{
+		List<PathNode> path = new List<PathNode>();
+		PathNode current = end;
+
+		while (current != start)
+		{
+			path.Add(current);
+			current = current.parent;
+		}
+
+		path.Reverse();
+
+		foreach (PathNode node in grid)
+		{
+			if (!path.Contains(node))
+				Destroy(node.gameObject);
+		}
+		return path;
+	}
+	#endregion
+
+	void HandleMovement()
     {
-        // find the direction to the player
-        var direction = Player.Instance.transform.position - transform.position;
+        // find the direction to next path
+        var direction = path[pathCounter].transform.position - transform.position;
+		pathCounter++;
+		Debug.Log("Enemy direction is: " + direction);
 
         // start the movement coroutine
         _currentAction = StartCoroutine(MoveAction(direction));
-        
     }
 
-    IEnumerator MoveAction(Vector3 direction)
+	IEnumerator MoveAction(Vector3 direction)
     {
 		Debug.Log("Enemy Moving!");
 
         // normalize the direction
         direction.Normalize();
-        
-        // check if the direction's x or y is greater
-        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-        {
-            //attempt to move in the x direction
-            if (direction.x > 0)
-            {
-                // check if there is a wall in the way
-                if (Physics2D.Raycast(transform.position, Vector2.right, _raycastDistance, _obstacleLayerMask))
-                {
-                    Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
-                    ChooseYDirection(direction);
-                }
-                else _entityMovement.MoveRight(true); // otherwise move right
-                
-            }
-            else
-            {
-                // check if there is a wall in the way
-                if (Physics2D.Raycast(transform.position, Vector2.left, _raycastDistance, _obstacleLayerMask))
-                {
-                    Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
-                    ChooseYDirection(direction);
-                }
-                else _entityMovement.MoveLeft(true); // otherwise move left
-            }
-        }
-        else
-        {
-            // move in the y direction
-            if (direction.y > 0)
-            {
-                // check if there is a wall in the way
-                if (Physics2D.Raycast(transform.position, Vector2.up, _raycastDistance, _obstacleLayerMask))
-                {
-                    Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
-                    ChooseXDirection(direction);
-                }
-                else _entityMovement.MoveUp(true);
-            }
-            else
-            {
-                // check if there is a wall in the way
-                if (Physics2D.Raycast(transform.position, Vector2.down, _raycastDistance, _obstacleLayerMask))
-                {
-                    Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
-                    ChooseXDirection(direction);
-                }
-                else _entityMovement.MoveDown(true);
-            }
-        }
 
-        #region OldMovementLogic
+		if (direction.x > 0)
+			_entityMovement.MoveRight(true);
+
+		if (direction.x < 0)
+			_entityMovement.MoveLeft(true);
+
+		if (direction.y > 0)
+			_entityMovement.MoveUp(true);
+
+		if (direction.y < 0)
+			_entityMovement.MoveDown(true);
+
+		#region OldMovementLogic
+		//// check if the direction's x or y is greater
+		//if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+  //      {
+  //          //attempt to move in the x direction
+  //          if (direction.x > 0)
+  //          {
+  //              // check if there is a wall in the way
+  //              if (Physics2D.Raycast(transform.position, Vector2.right, _raycastDistance, _obstacleLayerMask))
+  //              {
+  //                  Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
+  //                  ChooseYDirection(direction);
+  //              }
+  //              else _entityMovement.MoveRight(true); // otherwise move right
+                
+  //          }
+  //          else
+  //          {
+  //              // check if there is a wall in the way
+  //              if (Physics2D.Raycast(transform.position, Vector2.left, _raycastDistance, _obstacleLayerMask))
+  //              {
+  //                  Debug.Log($"{gameObject.name}: Wall in the way, moving in the y direction");
+  //                  ChooseYDirection(direction);
+  //              }
+  //              else _entityMovement.MoveLeft(true); // otherwise move left
+  //          }
+  //      }
+  //      else
+  //      {
+  //          // move in the y direction
+  //          if (direction.y > 0)
+  //          {
+  //              // check if there is a wall in the way
+  //              if (Physics2D.Raycast(transform.position, Vector2.up, _raycastDistance, _obstacleLayerMask))
+  //              {
+  //                  Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
+  //                  ChooseXDirection(direction);
+  //              }
+  //              else _entityMovement.MoveUp(true);
+  //          }
+  //          else
+  //          {
+  //              // check if there is a wall in the way
+  //              if (Physics2D.Raycast(transform.position, Vector2.down, _raycastDistance, _obstacleLayerMask))
+  //              {
+  //                  Debug.Log($"{gameObject.name}: Wall in the way, moving in the x direction");
+  //                  ChooseXDirection(direction);
+  //              }
+  //              else _entityMovement.MoveDown(true);
+  //          }
+  //      }
+
         // // check if the direction's x or y is greater
         // if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         // {
@@ -284,16 +470,17 @@ public class EnemyBrain : MonoBehaviour
         //     }
         // }
         #endregion
+
         // once movement is done, wait for the time between actions
         yield return new WaitForSeconds(_timeBetweenActions);
         HandleTurnLogic();
     }
 
-
-    /// <summary>
-    ///  Choose the y direction to move in
-    /// </summary>
-    void ChooseYDirection(Vector2 direction)
+	#region OldMovementLogic
+	/// <summary>
+	///  Choose the y direction to move in
+	/// </summary>
+	void ChooseYDirection(Vector2 direction)
     {
         if (direction.y > 0)
         {
@@ -347,8 +534,9 @@ public class EnemyBrain : MonoBehaviour
             else _entityMovement.MoveLeft(true); // otherwise move left
         }
     }
+	#endregion
 
-    void HandleAttack()
+	void HandleAttack()
     {
         _entityAttackManager.Attack();
         _currentAction = StartCoroutine(WaitForNextAction());

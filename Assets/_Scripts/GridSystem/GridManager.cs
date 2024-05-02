@@ -5,8 +5,10 @@ using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
+	public static GridManager Instance;
+
     [Header("Grid Settings")]
-    [SerializeField] private Vector2Int _gridSize;
+    public Vector2Int gridSize;
     [SerializeField] private Vector2 _cameraOffset;
     [SerializeField] bool _followCamera = false;
     
@@ -17,7 +19,7 @@ public class GridManager : MonoBehaviour
     
     private Dictionary<Vector2, Tile> _tiles;
 
-    void OnEnable()
+	void OnEnable()
     {
         TouchManager.Instance.OnTap += TouchPerformed;
         CombatManager.Instance.OnTurnChanged += HandleTurnChange;
@@ -30,13 +32,14 @@ public class GridManager : MonoBehaviour
     }
  
     void Start() {
-		_cameraOffset = Camera.main.transform.position - transform.position;
-    }
+		gridSize = new Vector2Int(MazeGen.Instance.roomWidth, MazeGen.Instance.roomHeight);
+		_cameraOffset = new Vector2(gridSize.x / 2,gridSize.y / 2);
+	}
 
 	void HandleTurnChange(CombatTurnState state)
 	{
 		//if (state != CombatTurnState.NonCombat && state != CombatTurnState.CameraMove)
-		//	GenerateGrid();
+			//FollowCamera();
 		//else
 		//	ClearAllTiles();
 	}
@@ -52,8 +55,8 @@ public class GridManager : MonoBehaviour
         }
 
         _tiles = new Dictionary<Vector2, Tile>();
-        for (int x = 0; x < _gridSize.x; x++) {
-            for (int y = 0; y < _gridSize.y; y++) {
+        for (int x = 0; x < gridSize.x; x++) {
+            for (int y = 0; y < gridSize.y; y++) {
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(transform.position.x+x, transform.position.y+y), Quaternion.identity);
                 spawnedTile.name = $"Tile {x} {y}";
  
