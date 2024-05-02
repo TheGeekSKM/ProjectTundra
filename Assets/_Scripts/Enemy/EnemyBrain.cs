@@ -143,6 +143,7 @@ public class EnemyBrain : MonoBehaviour
 		{
 			foreach (PathNode n in path)
 				Destroy(n.gameObject);
+			path = null;
 		}
 
         _isMyTurn = false;
