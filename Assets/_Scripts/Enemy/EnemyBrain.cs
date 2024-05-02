@@ -354,6 +354,19 @@ public class EnemyBrain : MonoBehaviour
 	void HandleMovement()
     {
         // find the direction to next path
+
+		try
+		{
+			var test = path[pathCounter];
+		}
+		catch
+		{
+			Debug.Log("Out of path, Attacking instead!");
+
+			HandleAttack();
+			return;
+		}
+
         var direction = path[pathCounter].transform.position - transform.position;
 		pathCounter++;
 		//Debug.Log("Enemy direction is: " + direction);

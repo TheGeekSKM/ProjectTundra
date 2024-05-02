@@ -18,7 +18,7 @@ MonoBehaviour:
   _apCost: 4
   _damageBonus: 10
   _damageType: 1
-  _attackRange: 0
+  _attackRange: 1
   _attackPrefab: {fileID: 4369071744538415893, guid: cae175b6376db4247b4c712f2beb3041, type: 3}
   _hitEffectPrefab: {fileID: 0}
   _attackType: 0
