@@ -11,10 +11,6 @@ public abstract class BaseItemData : ScriptableObject
     [SerializeField] private string _itemName;
     public string ItemName => _itemName;
 
-    [TextArea(3, 10)]
-    [SerializeField] private string _description;
-    public string Description => _description;
-
     [SerializeField] private int _durability = 1;
     public int Durability => _durability;
 

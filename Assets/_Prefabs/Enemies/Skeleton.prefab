@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 1253335324565120076}
   - component: {fileID: 9200236155138192272}
   - component: {fileID: 3288952562686748812}
+  - component: {fileID: 8645730132860026781}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
@@ -269,6 +270,8 @@ MonoBehaviour:
   _entityStamina: {fileID: 1253335324565120076}
   _entityLoot: {fileID: 3288952562686748812}
   _entityAnimationController: {fileID: 0}
+  _entityInventoryManager: {fileID: 0}
+  _useRandomEnemies: 1
   _timeBetweenActions: 1
   _raycastDistance: 1
   _obstacleLayerMask:
@@ -288,7 +291,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entityStatsContainer: {fileID: 9200236155138192276}
   _entityHealth: {fileID: 2148506912791187773}
+  _entityInventoryManager: {fileID: 0}
   _lootChestPrefab: {fileID: 5797976351967328401, guid: 147f150a33ccb82489cc6e5598f5d92a, type: 3}
+--- !u!114 &8645730132860026781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9200236155138192281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b65ea36f5b0dc6418bd7aa3d5ceb04d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entityStatsContainer: {fileID: 0}
+  _entityInventory:
+    _containerName: 
+    Items: []
 --- !u!1 &9200236155454963708
 GameObject:
   m_ObjectHideFlags: 0

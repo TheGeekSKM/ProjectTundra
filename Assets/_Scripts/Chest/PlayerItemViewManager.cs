@@ -39,7 +39,7 @@ public class PlayerItemViewManager : MonoBehaviour
             if (_itemData == null) return;
 
             // drop the item
-            Player.Instance.PlayerStats.PlayerStatsData.ItemContainer.RemoveItem(_itemData);
+            Player.Instance.PlayerInventoryManager.EntityInventory.RemoveItem(_itemData);
             Destroy(gameObject);
         });
     }

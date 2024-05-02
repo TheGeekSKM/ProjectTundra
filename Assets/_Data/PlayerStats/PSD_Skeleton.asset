@@ -21,12 +21,17 @@ MonoBehaviour:
   _enemyClass: 0
   _movementCost: 1
   _healCost: 1
-  _entityAttackType: 0
+  _entityAttackType: 1
   _entityType: 1
   _itemContainer:
     _containerName: 
-    Items:
-    - {fileID: 11400000, guid: a5c5eccbb446d254ab45624dbc6a4b94, type: 2}
+    Items: []
+  _possibleRandomItems:
+  - {fileID: 11400000, guid: b7e9de5949b169b4190266adf1d68b60, type: 2}
+  - {fileID: 11400000, guid: e583d14d4d1e3c7409cbec5689950815, type: 2}
+  - {fileID: 11400000, guid: 9ccb41f408b6101428d67e0da8286b45, type: 2}
+  - {fileID: 11400000, guid: f3fe8c99ecadf2e488d66f9056cd227c, type: 2}
+  - {fileID: 11400000, guid: 48928bc6341dec7498a885bf20966797, type: 2}
   _sprite: {fileID: -564565155, guid: 9e52ca72a9c43c644a7aec71fd5392d1, type: 3}
   _deathSprite: {fileID: 1916168144, guid: 9e52ca72a9c43c644a7aec71fd5392d1, type: 3}
   _animatorController: {fileID: 9100000, guid: 7737217accd24484ab5dba792a7dde89, type: 2}

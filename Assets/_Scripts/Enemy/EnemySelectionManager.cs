@@ -33,18 +33,33 @@ public class EnemySelectionManager : MonoBehaviour
 
     void TouchPerformed(Vector2 position)
     {
+        // If it's not the player's turn, return
         if (CombatManager.Instance.CurrentTurnState != CombatTurnState.Player) return;
+        
+        // If the player doesn't have a weapon or the weapon is melee, return
+        var playerWeapon = Player.Instance.PlayerStats.PlayerStatsData.EquippedWeapon;
+        if (playerWeapon == null && playerWeapon.AttackType == AttackType.Melee) return;
 
-        var enemy = GetEnemyAtPosition(position);
+        // Get the world position of the touch
+        var worldPosition = Camera.main.ScreenToWorldPoint(position);
+        
+        // If the distance between the player and the touch position is greater than the player's attack range, notify player and return
+        if (Vector3.Distance(worldPosition, Player.Instance.transform.position) > playerWeapon.AttackRange) {
+            NotificationManager.Instance.Notify(
+                new NotificationData("The selected enemy is too far", "Too Far", 1f, ENotificationType.Warning)
+            );
+            return;
+        }
+
+        var enemy = GetEnemyAtPosition(worldPosition);
         if (enemy == null) return;
 
         CombatManager.Instance.SetTargetedEnemy(enemy);
         _targetImage.transform.position = enemy.transform.position;
     }
 
-    EnemyBrain GetEnemyAtPosition(Vector2 position)
+    EnemyBrain GetEnemyAtPosition(Vector2 worldPosition)
     {
-        var worldPosition = Camera.main.ScreenToWorldPoint(position);
         var hit = Physics2D.Raycast(worldPosition, Vector2.zero);
         if (hit.collider == null) return null;
 

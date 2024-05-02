@@ -25,8 +25,11 @@ MonoBehaviour:
   _entityType: 1
   _itemContainer:
     _containerName: 
-    Items:
-    - {fileID: 11400000, guid: a5c5eccbb446d254ab45624dbc6a4b94, type: 2}
+    Items: []
+  _possibleRandomItems:
+  - {fileID: 11400000, guid: bf5abc94d5f45324e8171dfc2ba5ffce, type: 2}
+  - {fileID: 11400000, guid: 13ea97b3b14425045aa2740a0698ae31, type: 2}
+  - {fileID: 11400000, guid: cf483ad9bd1bf7844bc6df7fcda5c324, type: 2}
   _sprite: {fileID: -564565155, guid: 9e52ca72a9c43c644a7aec71fd5392d1, type: 3}
   _deathSprite: {fileID: 1916168144, guid: 9e52ca72a9c43c644a7aec71fd5392d1, type: 3}
   _animatorController: {fileID: 9100000, guid: 743a9a4c916573a47b5066949593f019, type: 2}

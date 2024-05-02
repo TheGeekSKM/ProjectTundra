@@ -14,13 +14,13 @@ public class ItemContainer
             else return _containerName;
         }
     }
-    [SerializeField] List<BaseItemData> Items;
+    [SerializeField] List<BaseItemData> Items = new List<BaseItemData>();
 
     /// <summary>
     /// Gets the list of items in the container.
     /// </summary>
     /// <returns>The list of items.</returns>
-    public List<BaseItemData> GetItems() => Items;
+    public List<BaseItemData> GetItems() => Items == null ? new List<BaseItemData>() : Items;
 
     public event System.Action<BaseItemData> OnItemContainerChanged;
 
@@ -31,6 +31,13 @@ public class ItemContainer
     public void AddItem(BaseItemData item)
     {
         // If the item is a weapon, replace the existing weapon.
+        if (Items == null || Items.Count == 0)
+        {
+            Items.Add(item);
+            OnItemContainerChanged?.Invoke(item);
+            return;
+        }
+        
         foreach (var i in Items.ToList())
         {
             if (i is WeaponItemData)

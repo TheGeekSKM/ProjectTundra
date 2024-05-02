@@ -50,8 +50,8 @@ public class ChestViewManager : MonoBehaviour
 
     public void OpenPlayerInventory()
     {
-        _chestInventory = Player.Instance.PlayerStats.PlayerStatsData.ItemContainer;
-        _chestOpeningInventory = Player.Instance.PlayerStats.PlayerStatsData.ItemContainer;
+        _chestInventory = Player.Instance.PlayerInventoryManager.EntityInventory;
+        _chestOpeningInventory = Player.Instance.PlayerInventoryManager.EntityInventory;
         _isPlayerInventoryOpen = true;
 
         _chestViewFSM.ChangeState(_chestViewFSM.OpenState);
@@ -124,7 +124,14 @@ public class ChestViewManager : MonoBehaviour
     public void DisplayItemInfo(BaseItemData item)
     {
         // display the item info
-        Debug.Log(item.ItemName);
+        if (item is ConsumableItemData consumableItem)
+        {
+            NotificationManager.Instance.DisplayConsumableInfo(consumableItem, 3f);
+        }
+        else if (item is WeaponItemData weaponItem)
+        {
+            NotificationManager.Instance.DisplayWeaponItemInfo(weaponItem, 3f);
+        }
     }
 
     public void AddItemToPlayerInventory(BaseItemData item)

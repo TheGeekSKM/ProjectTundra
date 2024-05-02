@@ -4,6 +4,7 @@ public class EntityLoot : MonoBehaviour
 {
     [SerializeField] EntityStatsContainer _entityStatsContainer;
     [SerializeField] EntityHealth _entityHealth;
+    [SerializeField] EntityInventoryManager _entityInventoryManager;
     [SerializeField] ChestManager _lootChestPrefab;
     public System.Action OnLootDropped;
 
@@ -11,6 +12,7 @@ public class EntityLoot : MonoBehaviour
     {
         if (_entityStatsContainer == null) _entityStatsContainer = GetComponent<EntityStatsContainer>();
         if (_entityHealth == null) _entityHealth = GetComponent<EntityHealth>();
+        if (_entityInventoryManager == null) _entityInventoryManager = GetComponent<EntityInventoryManager>();
     }
 
     void OnEnable() => _entityHealth.OnDeath += DropLoot;
@@ -28,7 +30,7 @@ public class EntityLoot : MonoBehaviour
 
         var loot = Instantiate(_lootChestPrefab, transform.position, Quaternion.identity, gameObject.transform.parent);
         // Set the loot chest to use the entity's item container and death sprite
-        loot.Init(_entityStatsContainer.PlayerStatsData.ItemContainer, false, true, _entityStatsContainer.PlayerStatsData.DeathSprite);
+        loot.Init(_entityInventoryManager.EntityInventory, false, true, _entityStatsContainer.PlayerStatsData.DeathSprite);
 
         OnLootDropped?.Invoke();        
     }

@@ -26,7 +26,14 @@ MonoBehaviour:
   _itemContainer:
     _containerName: Player Satchel
     Items:
-    - {fileID: 11400000, guid: a4abc0aaf8f16204e998061977745b8d, type: 2}
+    - {fileID: 11400000, guid: b7e9de5949b169b4190266adf1d68b60, type: 2}
+  _possibleRandomItems:
+  - {fileID: 11400000, guid: e12b052955317c343b1106a3704a204f, type: 2}
+  - {fileID: 11400000, guid: 8fd2dea16214d96499d99a4f6ba37936, type: 2}
+  - {fileID: 11400000, guid: 4ee5ab3ca507d3e4ea9b4b73830d9663, type: 2}
+  - {fileID: 11400000, guid: 8f88002f3c9c3d747ba5d752f1a30ac9, type: 2}
+  - {fileID: 11400000, guid: 009c76dc0e728944e9e8d325a9e494f9, type: 2}
+  - {fileID: 11400000, guid: ec396f7ab33a5b1459838c3dfa6bf7f7, type: 2}
   _sprite: {fileID: -518283795, guid: 09be1a272bf9d33488345958aac61686, type: 3}
   _deathSprite: {fileID: 0}
   _animatorController: {fileID: 9100000, guid: 07bbc622d53ff7646befea88bf71cec9, type: 2}
