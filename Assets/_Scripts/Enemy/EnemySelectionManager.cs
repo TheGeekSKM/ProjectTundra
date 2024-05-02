@@ -22,8 +22,12 @@ public class EnemySelectionManager : MonoBehaviour
     // When the turn changes, show the target image if it's the player's turn
     private void HandleTurnChange(CombatTurnState state)
     {
-        if (state != CombatTurnState.Player) _targetImage.SetActive(false);
-        else _targetImage.SetActive(true);
+		if (state != CombatTurnState.Player) _targetImage.SetActive(false);
+		else
+		{
+			_targetImage.SetActive(true);
+			CombatManager.Instance.SetTargetedEnemy(CombatManager.Instance.Enemies[0]);
+		}
     }
 
     void TouchPerformed(Vector2 position)
