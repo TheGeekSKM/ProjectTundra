@@ -18,6 +18,7 @@ public class CameraMovement : MonoBehaviour
 		MazeGen maze = MazeGen.Instance;
 
 		roomCoord = RoomManager.Instance.startRoom;
+
 		transform.position = new Vector3((roomCoord.x * maze.roomWidth) + maze.roomCenterOffset.x, 
 										 (roomCoord.y * maze.roomHeight)+ maze.roomCenterOffset.y, 
 										 transform.position.z);

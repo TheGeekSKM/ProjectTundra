@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 4101fe5f531337445a25c117e2cfb4d0
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Primeform Pro Demo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d27ee60c77d1d054aaf231cfd38b4cd5, type: 3}
+  - {fileID: 12800000, guid: 20d8a2cb0482a4549ae58b2f30a90dfc, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

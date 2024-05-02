@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d27ee60c77d1d054aaf231cfd38b4cd5
+guid: 20d8a2cb0482a4549ae58b2f30a90dfc
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -10,7 +10,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Primeform Pro Demo
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d27ee60c77d1d054aaf231cfd38b4cd5, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

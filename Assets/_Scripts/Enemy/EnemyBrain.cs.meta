@@ -3,7 +3,15 @@ guid: 4c8854f8e6e757b4ca90503880957245
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _entityStatsContainer: {instanceID: 0}
+  - _entityAttackManager: {instanceID: 0}
+  - _entityMovement: {instanceID: 0}
+  - _entityHealth: {instanceID: 0}
+  - _entityStamina: {instanceID: 0}
+  - _entityLoot: {instanceID: 0}
+  - _entityAnimationController: {instanceID: 0}
+  - pathNodePrefab: {fileID: 7531476692660683462, guid: 923e795c32016064694d100821311cb7, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

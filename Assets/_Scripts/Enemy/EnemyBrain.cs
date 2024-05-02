@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
@@ -168,10 +169,90 @@ public class EnemyBrain : MonoBehaviour
         
     }
 
+	PathNode[,] GenerateNodeGrid()
+	{
+		Debug.Log("Fuction called successfully!");
+
+		MazeGen maze = MazeGen.Instance;
+		Camera main = Camera.main;
+		Vector2 sizeOffset = new Vector2(maze.roomWidth / 2, maze.roomHeight / 2);
+		Vector2 pos = new Vector2(main.transform.position.x - sizeOffset.x, main.transform.position.y - sizeOffset.y);
+
+		PathNode[,] nodeGrid = new PathNode[maze.roomWidth,maze.roomHeight];
+		for (int x = 0; x < maze.roomWidth; x++) {
+			for (int y = 0; y < maze.roomHeight; y++)
+			{
+				nodeGrid[x, y] = new GameObject("Path Node").AddComponent<PathNode>();
+				nodeGrid[x, y].transform.parent = gameObject.transform;
+
+				nodeGrid[x, y].position = new Vector2(pos.x+x+0.5f,pos.y+y+0.5f);
+				nodeGrid[x, y].transform.position = nodeGrid[x,y].position;
+
+				Debug.Log("Node created, position is " + nodeGrid[x, y].position);
+
+				var hit = Physics2D.Raycast(nodeGrid[x,y].position, Vector2.zero);
+				if (hit.collider != null)
+				{
+					Debug.Log("Hit a collider: " + hit.collider.gameObject.name);
+
+					if (hit.collider.CompareTag("Player"))
+						nodeGrid[x, y].end = true;
+					if (hit.collider.gameObject == gameObject)
+						nodeGrid[x, y].start = true;
+					else
+						nodeGrid[x, y].walkable = false;
+				}
+			}
+		}
+
+		Debug.Log("Function completed! Test: " + nodeGrid[0,0]);
+		return nodeGrid;
+	}
+
+	IEnumerator Pathfind()
+	{
+		PathNode[,] nodeGrid = GenerateNodeGrid();
+
+		List<PathNode> open = new List<PathNode>();
+		List<PathNode> closed = new List<PathNode>();
+		PathNode start = null;
+		PathNode end = null;
+
+		foreach (PathNode node in nodeGrid)
+		{
+			if (node.start)
+				start = node;
+			if (node.end)
+				end = node;
+		}
+
+		if (nodeGrid.Length == 0)
+		{
+			Debug.LogError("Node grid did not generate successfully");
+			Debug.Break();
+		}
+
+		if (start == null || end == null)
+		{
+			Debug.LogError("Could not find start or end nodes");
+			Debug.Break();
+		}
+
+		open.Add(start);
+
+
+		yield return null;
+	}
+
+	
     IEnumerator MoveAction(Vector3 direction)
     {
 		Debug.Log("Enemy Moving!");
 
+		StartCoroutine(Pathfind());
+
+		yield return null;
+		/*
         // normalize the direction
         direction.Normalize();
         
@@ -287,6 +368,7 @@ public class EnemyBrain : MonoBehaviour
         // once movement is done, wait for the time between actions
         yield return new WaitForSeconds(_timeBetweenActions);
         HandleTurnLogic();
+		*/
     }
 
 

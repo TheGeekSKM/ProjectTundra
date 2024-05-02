@@ -912,6 +912,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f309abffd738d124c9535f81c0099544, type: 2}
   _audioSource1: {fileID: 600882321}
   _audioSource2: {fileID: 600882320}
+  currentTrack: {fileID: 0}
 --- !u!4 &600882323
 Transform:
   m_ObjectHideFlags: 0
